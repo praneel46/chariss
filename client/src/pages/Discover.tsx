@@ -16,11 +16,11 @@ export const Discover: React.FC = () => {
 
   const categories = [
     { id: 'all', label: 'All Curations' },
-    { id: 'wellness_gourmet', label: 'Gourmet & Wellness' },
-    { id: 'home_decor', label: 'Home Ambiance' },
-    { id: 'stationery', label: 'Fine Stationery' },
-    { id: 'lifestyle', label: 'Slow Living' },
-    { id: 'gift_sets', label: 'Signature Bundles' },
+    { id: 'wearables_eyewear', label: 'Smart Wearables & Eyewear' },
+    { id: 'smart_home', label: 'Intelligent Home & Living' },
+    { id: 'content_creation', label: 'Content Creation Tech' },
+    { id: 'wellness_health', label: 'AI Wellness & Health' },
+    { id: 'curated_boxes', label: 'Luxury Bags & Keepsakes' },
   ];
 
   const filteredProducts = useMemo(() => {
@@ -76,7 +76,7 @@ export const Discover: React.FC = () => {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search by keyword, recipient, hobby..."
+              placeholder="Search smart glasses, rings, watches, bags, lifestyle..."
               className="w-full pl-10 pr-4 py-2.5 rounded-md bg-white border border-[#292820]/15 text-xs text-[#292820] placeholder:text-stone-400 focus:outline-none focus:border-[#B69A78]"
             />
           </div>
@@ -155,7 +155,7 @@ export const Discover: React.FC = () => {
                     <button
                       onClick={() => toggleWishlist(product.id)}
                       aria-label="Wishlist"
-                      className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 backdrop-blur-xs flex items-center justify-center text-[#292820] hover:text-red-600 transition-colors z-10 shadow-xs"
+                      className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 backdrop-blur-xs flex items-center justify-center text-[#292820] hover:text-red-600 transition-colors z-10 shadow-xs cursor-pointer"
                     >
                       <Heart className={`w-4 h-4 ${isWish ? 'fill-red-500 text-red-500' : ''}`} />
                     </button>
@@ -194,7 +194,7 @@ export const Discover: React.FC = () => {
                     <div className="mt-5 pt-3 border-t border-[#292820]/10 flex items-center justify-between">
                       <button
                         onClick={() => handleAdd(product)}
-                        className="w-full flex items-center justify-between text-xs font-mono uppercase tracking-widest font-bold text-[#292820] hover:text-[#B69A78] py-1 transition-colors"
+                        className="w-full flex items-center justify-between text-xs font-mono uppercase tracking-widest font-bold text-[#292820] hover:text-[#B69A78] py-1 transition-colors cursor-pointer"
                       >
                         <span>{isAdded ? 'Added to Bag' : 'Add to Bag'}</span>
                         {isAdded ? <Check className="w-4 h-4 text-emerald-600" /> : <Plus className="w-4 h-4" />}

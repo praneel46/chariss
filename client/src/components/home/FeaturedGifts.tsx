@@ -51,7 +51,7 @@ export const FeaturedGifts: React.FC = () => {
 
         {/* 3-Column Catalogue Grid (Forensic match to video sec 04 & 06) */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {CURATED_PRODUCTS.map((product) => {
+          {CURATED_PRODUCTS.slice(0, 6).map((product) => {
             const isWish = wishlist.includes(product.id);
             const isJustAdded = addedId === product.id;
 

@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ArrowUp, Sparkles, Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { PrivacyModal } from './PrivacyModal';
 
 export const Footer: React.FC = () => {
+  const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -87,9 +90,13 @@ export const Footer: React.FC = () => {
                 </a>
               </li>
               <li>
-                <span className="text-[#FAF9F6]/40 cursor-default">
+                <button
+                  type="button"
+                  onClick={() => setIsPrivacyOpen(true)}
+                  className="hover:text-[#FAF9F6] transition-colors cursor-pointer text-left"
+                >
                   Privacy Safeguards
-                </span>
+                </button>
               </li>
             </ul>
           </div>
@@ -139,6 +146,9 @@ export const Footer: React.FC = () => {
           </button>
         </div>
       </div>
+
+      {/* Interactive Privacy Safeguards Covenant Modal */}
+      <PrivacyModal isOpen={isPrivacyOpen} onClose={() => setIsPrivacyOpen(false)} />
     </footer>
   );
 };
