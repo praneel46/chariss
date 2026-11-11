@@ -1,36 +1,61 @@
-# Charis
+# CHARIS (charis.) 🎁
+> *"Every gift has a feeling. Find yours."*
 
-Charis is a full-stack gift consultation and delivery app. Product requirements come from the supplied build specification. The UI will be implemented from the user's video references; the visual direction in the PDF is superseded.
+**CHARIS** is an AI-powered personalized gifting platform that understands relationships, occasions, personality traits, and emotional intent — recommending verified real catalogue products from independent artisans and enabling custom handwritten gift card creation.
 
-## Stack
+---
 
-- Next.js App Router with React and strict TypeScript
-- Tailwind CSS
-- ESLint and Prettier
+## 🏗️ Architecture
 
-## Development
-
-```sh
-pnpm install
-pnpm dev
+```
+charis/
+├── client/              # React 19 + TypeScript + Vite + Tailwind CSS v4 + Framer Motion
+│   ├── src/
+│   │   ├── components/  # Hero, Navbar, FeaturedGifts, GiftStudio, BagDrawer, etc.
+│   │   ├── pages/       # Home, Discover, Occasions, Consultation, Recommendations, GiftStudio
+│   │   ├── context/     # Bag & Wishlist state
+│   │   └── data/        # Curated artisan catalogue
+│   ├── vercel.json      # Client-side SPA routing config for Vercel
+│   └── vite.config.ts
+├── server/              # Node.js + Express + MongoDB + Mongoose + Zod + Helmet + CORS
+│   ├── src/
+│   │   ├── controllers/ # Products, Consultations, Gift Cards
+│   │   ├── models/      # Mongoose Schemas (Product, Consultation, GiftCard)
+│   │   ├── routes/      # REST API (/api/v1)
+│   │   ├── app.js       # Express App with Health Check & CORS
+│   │   └── server.js    # Entry point
+│   └── seeds/           # Product catalogue seed script
+├── vercel.json          # Root Vercel deployment blueprint
+├── render.yaml          # Render Blueprint for 1-click backend deployment
+└── DEPLOYMENT.md        # Step-by-step deployment guide
 ```
 
-Open `http://localhost:3000`.
+---
 
-## Quality commands
+## 🚀 Quick Start (Local Development)
 
-```sh
-pnpm lint
-pnpm typecheck
-pnpm format:check
+### 1. Run Client
+```bash
+cd client
+npm install
+npm run dev
+# Running at http://localhost:5173
 ```
 
-## Environment
+### 2. Run Server
+```bash
+cd server
+npm install
+cp .env.example .env
+npm run dev
+# Running at http://localhost:5000
+```
 
-Copy `.env.example` to `.env.local` and fill in local credentials as features are added. Never commit `.env.local` or real secrets.
+---
 
-## Decisions
+## ☁️ Deployment
 
-- The attached PDF is the product and build specification. Its UI direction is not used; the user-provided videos are the UI reference.
-- Guest consultation is the default entry to the product; account creation is deferred until saving or sharing.
-- Product recommendations must be grounded in catalog IDs and must never invent products.
+- **Frontend (Vercel)**: Point to GitHub repo. Set Root Directory to `client` (or use root with included `vercel.json`).
+- **Backend (Render)**: Connect repo on Render. Render reads `render.yaml` automatically, or create a Web Service with Root Directory `server`.
+
+👉 See **[DEPLOYMENT.md](./DEPLOYMENT.md)** for complete step-by-step instructions.
