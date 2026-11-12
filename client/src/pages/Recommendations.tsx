@@ -6,6 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import type { Product, ConsultationProfile } from '../types';
 import { Sparkles, Heart, Check, RotateCcw, PenTool, BookmarkCheck, ShoppingBag } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { FramedGiftCardModal } from '../components/gift/FramedGiftCardModal';
 
 export const Recommendations: React.FC = () => {
   const { addToBag } = useBag();
@@ -15,6 +16,7 @@ export const Recommendations: React.FC = () => {
   const [profile, setProfile] = useState<ConsultationProfile | null>(null);
   const [addedId, setAddedId] = useState<string | null>(null);
   const [sessionSavedNotice, setSessionSavedNotice] = useState(false);
+  const [cardProduct, setCardProduct] = useState<Product | null>(null);
 
   useEffect(() => {
     try {
@@ -181,7 +183,7 @@ export const Recommendations: React.FC = () => {
                 </div>
 
                 {/* Bottom Actions */}
-                <div className="p-6 pt-0 flex items-center justify-between border-t border-[#141110]/5">
+                <div className="p-6 pt-0 flex flex-wrap items-center justify-between gap-3 border-t border-[#141110]/5">
                   <button
                     onClick={() => toggleWishlist(product.id)}
                     className="flex items-center gap-1.5 text-xs font-archivo uppercase tracking-wider text-[#141110]/70 hover:text-[#ef4a23] transition-colors cursor-pointer"
@@ -190,31 +192,55 @@ export const Recommendations: React.FC = () => {
                     <span>{isWish ? 'Saved' : 'Wishlist'}</span>
                   </button>
 
-                  <button
-                    onClick={() => handleAdd(product)}
-                    className={`px-5 py-2.5 rounded-full font-archivo uppercase text-xs tracking-wider font-bold transition-all flex items-center gap-2 cursor-pointer ${
-                      isAdded
-                        ? 'bg-emerald-600 text-white'
-                        : 'bg-[#141110] hover:bg-[#ef4a23] text-white shadow-sm'
-                    }`}
-                  >
-                    {isAdded ? (
-                      <>
-                        <Check className="w-3.5 h-3.5" />
-                        <span>Added to Bag</span>
-                      </>
-                    ) : (
-                      <>
-                        <ShoppingBag className="w-3.5 h-3.5" />
-                        <span>Add to Bag</span>
-                      </>
-                    )}
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => setCardProduct(product)}
+                      className="px-4 py-2.5 rounded-full border border-[#ef4a23]/30 text-[#ef4a23] hover:bg-[#ef4a23] hover:text-white font-archivo uppercase text-xs tracking-wider font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-xs"
+                      title="Personalize AI Gift Card for this recommendation"
+                    >
+                      <PenTool className="w-3.5 h-3.5" />
+                      <span>Framed Card</span>
+                    </button>
+
+                    <button
+                      onClick={() => handleAdd(product)}
+                      className={`px-5 py-2.5 rounded-full font-archivo uppercase text-xs tracking-wider font-bold transition-all flex items-center gap-2 cursor-pointer ${
+                        isAdded
+                          ? 'bg-emerald-600 text-white'
+                          : 'bg-[#141110] hover:bg-[#ef4a23] text-white shadow-sm'
+                      }`}
+                    >
+                      {isAdded ? (
+                        <>
+                          <Check className="w-3.5 h-3.5" />
+                          <span>Added</span>
+                        </>
+                      ) : (
+                        <>
+                          <ShoppingBag className="w-3.5 h-3.5" />
+                          <span>Add to Bag</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
                 </div>
               </div>
             );
           })}
         </div>
+
+        {/* Framed Gift Card Modal for Recommendations */}
+        {cardProduct && (
+          <FramedGiftCardModal
+            isOpen={!!cardProduct}
+            onClose={() => setCardProduct(null)}
+            giftName={cardProduct.name}
+            giftPrice={cardProduct.price}
+            giftCategory={cardProduct.categoryName}
+            initialRecipientName={profile?.recipientName || 'Recipient'}
+            initialEmotion={profile?.desiredEmotion || 'romance'}
+          />
+        )}
 
       </div>
     </div>

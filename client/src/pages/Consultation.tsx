@@ -19,7 +19,7 @@ export const Consultation: React.FC = () => {
     interests: ['Fine Horology & Watches', 'Niche Perfumes & Scents'],
     personality: ['innovative', 'refined'],
     desiredEmotion: 'romance',
-    budget: { min: 10000, max: 35000, currency: 'INR' },
+    budget: { min: 1500, max: 3500, currency: 'INR' },
     productCategories: ['wearables_eyewear', 'curated_boxes'],
     exclusions: [],
     notes: ''
@@ -81,9 +81,9 @@ export const Consultation: React.FC = () => {
   ];
 
   const budgetTiers = [
-    { min: 3000, max: 10000, label: 'Bespoke Keepsakes', range: '₹3,000 – ₹10,000', desc: 'Star maps, engraved metal tokens, custom journals' },
-    { min: 10000, max: 35000, label: 'Atelier Curations', range: '₹10,000 – ₹35,000', desc: 'Biometric rings, niche perfumes, Italian leather' },
-    { min: 35000, max: 85000, label: 'Signature Heirlooms', range: '₹35,000 – ₹85,000+', desc: 'Swiss automatic chronographs, luxury travel bags' },
+    { min: 500, max: 1500, label: 'Thoughtful Tokens', range: '₹500 – ₹1,500', desc: 'Star maps, engraved metal tokens, custom journals & candles' },
+    { min: 1500, max: 3500, label: 'Crafted Keepsakes', range: '₹1,500 – ₹3,500', desc: 'Touch lamps, soundwave art, leather goods & cozy blankets' },
+    { min: 3500, max: 6500, label: 'Signature Heirlooms', range: '₹3,500 – ₹6,500', desc: 'Smart wearables, instant cameras, decanters & timepieces' },
   ];
 
   const toggleInterest = (id: string) => {

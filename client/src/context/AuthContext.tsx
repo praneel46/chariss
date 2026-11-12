@@ -84,14 +84,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     if (user) {
       localStorage.setItem('charis_user', JSON.stringify(user));
+      // Load user-specific saved sessions
+      const userKey = `charis_saved_sessions_${user.email.toLowerCase()}`;
+      const userSaved = localStorage.getItem(userKey);
+      if (userSaved) {
+        try {
+          setSavedSessions(JSON.parse(userSaved));
+        } catch {
+          // ignore
+        }
+      }
     } else {
       localStorage.removeItem('charis_user');
     }
   }, [user]);
 
   useEffect(() => {
+    if (user?.email) {
+      const userKey = `charis_saved_sessions_${user.email.toLowerCase()}`;
+      localStorage.setItem(userKey, JSON.stringify(savedSessions));
+    }
     localStorage.setItem('charis_saved_sessions', JSON.stringify(savedSessions));
-  }, [savedSessions]);
+  }, [savedSessions, user?.email]);
 
   const login = async (email: string, _password = ''): Promise<boolean> => {
     // Demo authentication saves user profile to local state and persists across page reloads

@@ -2,11 +2,7 @@ import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useBag } from '../../context/BagContext';
 
-interface KolibrieNavProps {
-  onOpenAteliers?: () => void;
-}
-
-export const KolibrieNav: React.FC<KolibrieNavProps> = ({ onOpenAteliers }) => {
+export const KolibrieNav: React.FC = () => {
   const { totalCount, setIsBagOpen } = useBag();
   const location = useLocation();
   const navigate = useNavigate();
@@ -26,15 +22,6 @@ export const KolibrieNav: React.FC<KolibrieNavProps> = ({ onOpenAteliers }) => {
     } else if (!isHome && targetId.startsWith('#')) {
       e.preventDefault();
       navigate('/' + targetId);
-    }
-  };
-
-  const handleAteliersClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (onOpenAteliers) {
-      onOpenAteliers();
-    } else {
-      document.dispatchEvent(new CustomEvent('open:atelier-modal'));
     }
   };
 
@@ -59,7 +46,7 @@ export const KolibrieNav: React.FC<KolibrieNavProps> = ({ onOpenAteliers }) => {
       </div>
 
       {/* Centre Pill (Desktop only, hidden ≤991px) */}
-      <div className="hidden lg:flex pointer-events-auto absolute left-1/2 -translate-x-1/2 top-[1.25rem] h-[3rem] px-[1.25rem] bg-white rounded-full shadow-[0_4px_20px_rgba(20,17,16,0.06)] items-center gap-[1.5rem]">
+      <div className="hidden lg:flex pointer-events-auto absolute left-1/2 -translate-x-1/2 top-[1.25rem] h-[3rem] px-[1.25rem] bg-white rounded-full shadow-[0_4px_20px_rgba(20,17,16,0.06)] items-center gap-[1.75rem]">
         <Link
           to="/consultation"
           className="font-archivo text-[#141110] text-[1.05rem] uppercase tracking-[-0.01em] relative flex flex-col items-center py-[0.2rem] group"
@@ -88,12 +75,12 @@ export const KolibrieNav: React.FC<KolibrieNavProps> = ({ onOpenAteliers }) => {
 
         {isHome ? (
           <a
-            href="#drops"
-            onClick={(e) => handleSmoothScroll(e, '#drops')}
-            className="font-archivo text-[#141110] text-[1.05rem] uppercase tracking-[-0.01em] relative flex flex-col items-center py-[0.2rem] group"
+            href="#curators"
+            onClick={(e) => handleSmoothScroll(e, '#curators')}
+            className="font-archivo text-[#141110] hover:text-[#ef4a23] text-[1.05rem] uppercase tracking-[-0.01em] relative flex flex-col items-center py-[0.2rem] group cursor-pointer"
             style={{ fontWeight: 700, fontStretch: '72%' }}
           >
-            <span>Curations</span>
+            <span>Curators</span>
             <span
               data-draw-line
               data-line-color="#ef4a23"
@@ -102,11 +89,11 @@ export const KolibrieNav: React.FC<KolibrieNavProps> = ({ onOpenAteliers }) => {
           </a>
         ) : (
           <Link
-            to="/#drops"
-            className="font-archivo text-[#141110] text-[1.05rem] uppercase tracking-[-0.01em] relative flex flex-col items-center py-[0.2rem] group"
+            to="/#curators"
+            className="font-archivo text-[#141110] hover:text-[#ef4a23] text-[1.05rem] uppercase tracking-[-0.01em] relative flex flex-col items-center py-[0.2rem] group cursor-pointer"
             style={{ fontWeight: 700, fontStretch: '72%' }}
           >
-            <span>Curations</span>
+            <span>Curators</span>
             <span
               data-draw-line
               data-line-color="#ef4a23"
@@ -114,19 +101,6 @@ export const KolibrieNav: React.FC<KolibrieNavProps> = ({ onOpenAteliers }) => {
             />
           </Link>
         )}
-
-        <button
-          onClick={handleAteliersClick}
-          className="font-archivo text-[#141110] hover:text-[#ef4a23] text-[1.05rem] uppercase tracking-[-0.01em] relative flex flex-col items-center py-[0.2rem] group cursor-pointer"
-          style={{ fontWeight: 700, fontStretch: '72%' }}
-        >
-          <span>Ateliers</span>
-          <span
-            data-draw-line
-            data-line-color="#ef4a23"
-            className="absolute top-full left-0 w-full h-[0.5em] pointer-events-none"
-          />
-        </button>
       </div>
 
       {/* Right Studio & Bag Pill */}
@@ -175,13 +149,24 @@ export const KolibrieNav: React.FC<KolibrieNavProps> = ({ onOpenAteliers }) => {
           <span>Studio</span>
         </Link>
 
-        <button
-          onClick={handleAteliersClick}
-          className="flex flex-col items-center gap-0.5 text-[0.7rem] font-archivo uppercase font-bold tracking-wider text-[#141110]/70 hover:text-[#ef4a23] cursor-pointer"
-        >
-          <span className="text-base leading-none">🏛️</span>
-          <span>Ateliers</span>
-        </button>
+        {isHome ? (
+          <a
+            href="#curators"
+            onClick={(e) => handleSmoothScroll(e, '#curators')}
+            className="flex flex-col items-center gap-0.5 text-[0.7rem] font-archivo uppercase font-bold tracking-wider text-[#141110]/70 hover:text-[#ef4a23] cursor-pointer"
+          >
+            <span className="text-base leading-none">👥</span>
+            <span>Curators</span>
+          </a>
+        ) : (
+          <Link
+            to="/#curators"
+            className="flex flex-col items-center gap-0.5 text-[0.7rem] font-archivo uppercase font-bold tracking-wider text-[#141110]/70 hover:text-[#ef4a23]"
+          >
+            <span className="text-base leading-none">👥</span>
+            <span>Curators</span>
+          </Link>
+        )}
 
         <Link
           to="/consultation"

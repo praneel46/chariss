@@ -1,12 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Sparkles, ArrowRight, ShieldCheck, Lock, Mail, User as UserIcon } from 'lucide-react';
 
 export const Login: React.FC = () => {
   const { login, register } = useAuth();
   const navigate = useNavigate();
-  const [isRegisterMode, setIsRegisterMode] = useState(false);
+  const [searchParams] = useSearchParams();
+  const [isRegisterMode, setIsRegisterMode] = useState(() => searchParams.get('mode') === 'signup');
+
+  useEffect(() => {
+    if (searchParams.get('mode') === 'signup') {
+      setIsRegisterMode(true);
+    } else if (searchParams.get('mode') === 'login') {
+      setIsRegisterMode(false);
+    }
+  }, [searchParams]);
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -45,6 +54,32 @@ export const Login: React.FC = () => {
     <div className="w-full min-h-screen bg-[#faf3e4] text-[#141110] pt-[8rem] pb-[6rem] px-4 sm:px-8 flex items-center justify-center">
       <div className="max-w-md w-full space-y-8 bg-white p-8 sm:p-10 rounded-3xl border border-[#141110]/10 shadow-xl">
         
+        {/* Tab Switcher for Sign In / Sign Up */}
+        <div className="flex p-1 bg-[#faf3e4] rounded-full border border-[#141110]/10">
+          <button
+            type="button"
+            onClick={() => setIsRegisterMode(false)}
+            className={`flex-1 py-2 text-xs font-archivo uppercase tracking-wider font-bold rounded-full transition-all cursor-pointer ${
+              !isRegisterMode
+                ? 'bg-[#141110] text-[#faf3e4] shadow-sm'
+                : 'text-[#141110]/60 hover:text-[#141110]'
+            }`}
+          >
+            Sign In
+          </button>
+          <button
+            type="button"
+            onClick={() => setIsRegisterMode(true)}
+            className={`flex-1 py-2 text-xs font-archivo uppercase tracking-wider font-bold rounded-full transition-all cursor-pointer ${
+              isRegisterMode
+                ? 'bg-[#ef4a23] text-white shadow-sm'
+                : 'text-[#141110]/60 hover:text-[#141110]'
+            }`}
+          >
+            Create Account
+          </button>
+        </div>
+
         {/* Header */}
         <div className="text-center space-y-2">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#faf3e4] text-[10px] font-archivo uppercase tracking-widest text-[#ef4a23] font-bold">

@@ -12,8 +12,8 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Iconic Wayfarer design infused with cutting-edge tech. Features 5-microphone array for crystal-clear calls, ultra-wide 12MP camera, open-ear discrete speakers, and multimodal AI voice control.',
     categoryId: 'wearables_eyewear',
     categoryName: 'Smart Wearables & Eyewear',
-    price: 29990,
-    originalPrice: 32990,
+    price: 1500,
+    originalPrice: 1930,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -44,8 +44,8 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Ultra-lightweight aerospace-grade titanium ring with 18 sensor pathways. Delivers real-time physiological tracking for cardiovascular health, sleep architecture, and daily readiness score.',
     categoryId: 'wearables_eyewear',
     categoryName: 'Smart Wearables & Eyewear',
-    price: 34900,
-    originalPrice: 38000,
+    price: 1549,
+    originalPrice: 1980,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -76,8 +76,8 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Precision milled titanium and ceramic casing. Powered by S11 SiP with 4-core Neural Engine for offline Siri dictation, sleep apnea detection, ECG, and optical cardiac monitoring.',
     categoryId: 'wearables_eyewear',
     categoryName: 'Smart Wearables & Eyewear',
-    price: 49900,
-    originalPrice: 54900,
+    price: 1699,
+    originalPrice: 2149,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -108,7 +108,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Industry-leading noise cancellation powered by dual QN2e neural audio chips. Features 40mm carbon fiber drivers, LDAC high-resolution sound, and 45-hour quick-charge battery.',
     categoryId: 'wearables_eyewear',
     categoryName: 'Smart Wearables & Eyewear',
-    price: 32990,
+    price: 1530,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -139,8 +139,8 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Credit-card slim aluminum chassis attaches magnetically to smartphones. Records calls and meetings, transcribes in 57 languages, and outputs executive summaries and action items in seconds.',
     categoryId: 'content_creation',
     categoryName: 'Content Creation & Digital Tech',
-    price: 15490,
-    originalPrice: 17990,
+    price: 1355,
+    originalPrice: 1780,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -171,7 +171,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Weighing only 76g, these AR sunglasses feature dual Sony micro-OLED 120Hz displays with 6DoF spatial tracking and gesture controls. Connects to MacBook, iPhone, and gaming consoles.',
     categoryId: 'wearables_eyewear',
     categoryName: 'Smart Wearables & Eyewear',
-    price: 46900,
+    price: 1669,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -202,7 +202,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Lightweight titanium finish resistant to scratches. Tracks sleep stages, skin temperature, heart rate variations, and calculates your personalized daily energy score.',
     categoryId: 'wearables_eyewear',
     categoryName: 'Smart Wearables & Eyewear',
-    price: 38999,
+    price: 1590,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -233,8 +233,8 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Handcrafted in Florence using certified Tuscan vegetable-tanned leather. Includes padded 16-inch laptop chamber, RFID passport pocket, and wireless charging powerbank passthrough.',
     categoryId: 'curated_boxes',
     categoryName: 'Curated Luxury Bags & Keepsakes',
-    price: 24500,
-    originalPrice: 28000,
+    price: 1445,
+    originalPrice: 1880,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -269,7 +269,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Mirror-finish polished steel ring that monitors temperature, humidity, and occupancy patterns to intuitively sculpt indoor comfort while trimming energy waste.',
     categoryId: 'smart_home',
     categoryName: 'Intelligent Home & Lifestyle',
-    price: 26900,
+    price: 1469,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -300,8 +300,8 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Ultra-thin 7.98cm profile cleans beneath low sofas with 18,500Pa hyper-suction. Dual spinning mops lift automatically when transitioning to wool carpets.',
     categoryId: 'smart_home',
     categoryName: 'Intelligent Home & Lifestyle',
-    price: 68900,
-    originalPrice: 75900,
+    price: 1889,
+    originalPrice: 2359,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -332,7 +332,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Syncs your smart living room lights with films, console games, and music at 8K 60Hz and 4K 120Hz for an ultra-immersive spatial lighting experience.',
     categoryId: 'smart_home',
     categoryName: 'Intelligent Home & Lifestyle',
-    price: 28500,
+    price: 1485,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -363,7 +363,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Transform bare walls into responsive illuminated art pieces. Dynamic lighting scenes synchronize with desktop screens, playlists, and voice prompts.',
     categoryId: 'smart_home',
     categoryName: 'Intelligent Home & Lifestyle',
-    price: 18999,
+    price: 1390,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -398,8 +398,8 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Pocket-sized motorized cinema camera. Features rotatable 2-inch OLED touchscreen, 4K 120fps recording, 10-bit D-Log M color grading, and wireless mic transmitter.',
     categoryId: 'content_creation',
     categoryName: 'Content Creation & Digital Tech',
-    price: 58990,
-    originalPrice: 63990,
+    price: 1790,
+    originalPrice: 2240,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -430,8 +430,8 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Ergonomic electromagnetic MagSpeed scroll wheel that scrolls 1,000 lines per second. Seamlessly switches across 3 computers and triggers AI workflow commands with one tap.',
     categoryId: 'content_creation',
     categoryName: 'Content Creation & Digital Tech',
-    price: 9495,
-    originalPrice: 10995,
+    price: 1295,
+    originalPrice: 1710,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -462,7 +462,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Trigger complex AI shortcuts, studio lighting, audio dampening, and recording workflows with one tactile button tap. Features removable faceplate and detachable stand.',
     categoryId: 'content_creation',
     categoryName: 'Content Creation & Digital Tech',
-    price: 14999,
+    price: 1350,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -497,7 +497,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Deep muscle treatment tool reaching 16mm amplitude with 60 lbs stall force. OLED display connects to Therabody app to prescribe recovery sessions based on biometric strain.',
     categoryId: 'wellness_health',
     categoryName: 'AI Wellness & Health Tech',
-    price: 54999,
+    price: 1750,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -528,7 +528,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'High-velocity downward air blades straightens hair without extreme heat damage. Glass bead thermistors regulate airflow temperature 16 times per second.',
     categoryId: 'wellness_health',
     categoryName: 'AI Wellness & Health Tech',
-    price: 45900,
+    price: 1659,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -559,7 +559,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: '7 finely calibrated EEG electroencephalogram sensors measure brain rhythms, heart rate, and breath cadence to guide deep relaxation and focus states during meditation.',
     categoryId: 'wellness_health',
     categoryName: 'AI Wellness & Health Tech',
-    price: 24900,
+    price: 1449,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -594,7 +594,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'A physical moving photo frame with no buttons, switches, or apps. Hand-poured clear acrylic reveals a permanently animated tribute of your cherished anniversary or family moment.',
     categoryId: 'curated_boxes',
     categoryName: 'Curated Luxury Bags & Keepsakes',
-    price: 18500,
+    price: 1385,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -625,8 +625,8 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'An heirloom collector chess ensemble designed through topology generative algorithms. Cast in solid bronze and aerospace steel, set upon a monolithic smoked walnut board.',
     categoryId: 'curated_boxes',
     categoryName: 'Curated Luxury Bags & Keepsakes',
-    price: 36000,
-    originalPrice: 42000,
+    price: 1560,
+    originalPrice: 2020,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1529699211952-734e80c4d42b?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -657,7 +657,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Keep cherished pets safe with 360-degree room coverage, color night vision, 2-way real-time audio, and AI alerts for emergency glass breaking, barking, or home activity.',
     categoryId: 'curated_boxes',
     categoryName: 'Curated Luxury Bags & Keepsakes',
-    price: 19999,
+    price: 1400,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -688,7 +688,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Break language barriers seamlessly. Employs HybridComm dual-channel technology with 95% accuracy and 0.5-second latency for natural multinational conversation without pauses.',
     categoryId: 'wearables_eyewear',
     categoryName: 'Smart Wearables & Eyewear',
-    price: 28990,
+    price: 1490,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -719,7 +719,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Clips magnetically onto clothing. Powered by dedicated neural processors and projected directly onto your palm with a virtual laser interface for intuitive messaging and search.',
     categoryId: 'wearables_eyewear',
     categoryName: 'Smart Wearables & Eyewear',
-    price: 58000,
+    price: 1780,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1579586337278-3befd40fd17a?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -750,7 +750,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Discreet and lightweight woven band that monitors heart rate variability, skin temperature, sleep debt, and muscular strain to deliver individualized recovery coaching.',
     categoryId: 'wearables_eyewear',
     categoryName: 'Smart Wearables & Eyewear',
-    price: 24900,
+    price: 1449,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1510017803434-a899398421b3?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -781,7 +781,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'An iconic tribute to Alberto Santos-Dumont. Polished stainless steel case with visible screws, silvered sunray brushed dial, Roman numerals, and sapphire cabochon crown.',
     categoryId: 'wearables_eyewear',
     categoryName: 'Smart Wearables & Eyewear',
-    price: 385000,
+    price: 1550,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -812,7 +812,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'The timepiece worn on all lunar missions. Stainless steel 42mm case with black step dial, dot over ninety bezel, and Co-Axial Master Chronometer caliber 3861.',
     categoryId: 'wearables_eyewear',
     categoryName: 'Smart Wearables & Eyewear',
-    price: 590000,
+    price: 3600,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1547996160-71dfabb1a7b1?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -843,7 +843,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Understated vintage aesthetic handcrafted in Italy. Features custom embedded filigree core wire, polarized anti-reflective lenses, and subtle keyhole bridge design.',
     categoryId: 'wearables_eyewear',
     categoryName: 'Smart Wearables & Eyewear',
-    price: 34500,
+    price: 1545,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -874,7 +874,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Individually numbered collectible eyewear honoring Bob Dylan\'s 1960s world tour. Sculpted bold silhouette adorned with 18k gold hardware and custom tension hinges.',
     categoryId: 'wearables_eyewear',
     categoryName: 'Smart Wearables & Eyewear',
-    price: 78000,
+    price: 1980,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -905,7 +905,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'First introduced in the 1960s as the world\'s first folding sunglasses. Hand-assembled in Italy with patented 10-step folding mechanism and crystal green polarized lenses.',
     categoryId: 'wearables_eyewear',
     categoryName: 'Smart Wearables & Eyewear',
-    price: 29500,
+    price: 1495,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -936,7 +936,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Intelligent floorcare station that automatically tests wash water optical clarity to determine if floors need another pass. Features 8,200Pa suction and 7-week dust compression.',
     categoryId: 'smart_home',
     categoryName: 'Intelligent Home & Lifestyle',
-    price: 79990,
+    price: 2000,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -967,7 +967,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Grow aromatic botanicals and lush greenery indoors all year without soil. Full-color touchscreen gives water reminders and automatically modulates custom daylight spectrums.',
     categoryId: 'smart_home',
     categoryName: 'Intelligent Home & Lifestyle',
-    price: 32000,
+    price: 1520,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -998,7 +998,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'The pinnacle of personalized luxury living. Integrated multi-colored ambient lighting, built-in surround sound speakers, heated seating, and intuitive remote controls.',
     categoryId: 'smart_home',
     categoryName: 'Intelligent Home & Lifestyle',
-    price: 680000,
+    price: 4500,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -1029,7 +1029,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Sleek key-free lock offering seamless biometric recognition, auto-unlock on approach, and smart notifications whenever family members return home safely.',
     categoryId: 'smart_home',
     categoryName: 'Intelligent Home & Lifestyle',
-    price: 24900,
+    price: 1449,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -1060,7 +1060,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'High-definition 11-inch screen that tracks your movement during video calls. Serves as the central nerve system for smart home climate, lighting, and daily calendar synch.',
     categoryId: 'smart_home',
     categoryName: 'Intelligent Home & Lifestyle',
-    price: 22999,
+    price: 1430,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1543512214-318c7553f230?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -1091,7 +1091,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Adapts bed temperature between 55°F to 110°F automatically based on sleep stages, bedroom ambient weather, and heart rate metrics to lengthen restorative REM sleep.',
     categoryId: 'smart_home',
     categoryName: 'Intelligent Home & Lifestyle',
-    price: 189000,
+    price: 3090,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1540518614846-7ede433c4ef9?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -1122,7 +1122,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Effortless content creation in your palm. Fast tracking locks onto subjects through zooms and spins with zero app setup required on iOS, fold-out tripod, and 12-hour battery bank.',
     categoryId: 'content_creation',
     categoryName: 'Content Creation & Digital Tech',
-    price: 16990,
+    price: 1370,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1589802829985-817e51171b92?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -1153,7 +1153,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Transform broadcasts and high-stakes executive calls. Uncompressed 4K 24FPS recording with customized AI face tracking, hardware bokeh blur, and genuine HDR exposure.',
     categoryId: 'content_creation',
     categoryName: 'Content Creation & Digital Tech',
-    price: 28999,
+    price: 1490,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -1184,7 +1184,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Build prototypes, design sculptures, and custom mechanical objects at 5x standard speeds. Integrated AI camera detects spaghetti printing errors instantly to avoid wasted material.',
     categoryId: 'content_creation',
     categoryName: 'Content Creation & Digital Tech',
-    price: 64999,
+    price: 1850,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1631553127988-3486ecba7c0e?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -1215,7 +1215,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Engineered specifically for digital illustrators and concept artists. Features ultra-fine pressure sensitivity curves, customizable OLED shortcut keypad, and seamless macOS/Windows drivers.',
     categoryId: 'content_creation',
     categoryName: 'Content Creation & Digital Tech',
-    price: 33900,
+    price: 1539,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -1246,7 +1246,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Professional XLR and USB-C hybrid podcast microphone. Eliminates background ambient room echo, features customizable LED touch strip, and ensures rich radio-ready presence.',
     categoryId: 'content_creation',
     categoryName: 'Content Creation & Digital Tech',
-    price: 27900,
+    price: 1479,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -1277,7 +1277,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Command video color grading, audio volume curves, and AI prompt libraries with tactile rotary knobs and responsive touch surfaces. Built to accelerate editing velocity.',
     categoryId: 'content_creation',
     categoryName: 'Content Creation & Digital Tech',
-    price: 18999,
+    price: 1390,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -1308,7 +1308,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Weighs only 365g and slips into pockets. The detachable AI sensor tracks faces without bluetooth connection or specialized apps, with 3-color adjustable fill lighting.',
     categoryId: 'content_creation',
     categoryName: 'Content Creation & Digital Tech',
-    price: 11999,
+    price: 1320,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1512790182412-b19e6d62bc39?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -1339,7 +1339,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Measure your metabolic flexibility in a single breath. The CO2 sensor provides instantaneous personalized dietary guidance and fuel recommendations directly to your phone.',
     categoryId: 'wellness_health',
     categoryName: 'AI Wellness & Health Tech',
-    price: 24900,
+    price: 1449,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1505576399279-565b52d4ac71?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -1370,7 +1370,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Revolutionary magnetic micro-vibrations paired with interactive charging stand that coaches brushing pressure, time, and quadrant coverage without needing your phone in the bathroom.',
     categoryId: 'wellness_health',
     categoryName: 'AI Wellness & Health Tech',
-    price: 36990,
+    price: 1570,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1559591937-e105e463519c?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -1401,7 +1401,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Equipped with retractable four-electrode handle to isolate torso, arm, and leg muscle balance. Delivers medical-grade 6-lead ECG and vascular age evaluation right at home.',
     categoryId: 'wellness_health',
     categoryName: 'AI Wellness & Health Tech',
-    price: 39999,
+    price: 1600,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -1432,7 +1432,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Blends single-dose active cosmetic capsules at optimal human skin temperature in 100 seconds. Ensures pure potency of retinol and peptides with zero oxidization.',
     categoryId: 'wellness_health',
     categoryName: 'AI Wellness & Health Tech',
-    price: 42000,
+    price: 1620,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -1463,7 +1463,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Measures tiny sounds generated by your inner ear to tune frequency response specifically to your auditory profile. Delivers bit-perfect lossless CD-quality streaming.',
     categoryId: 'wellness_health',
     categoryName: 'AI Wellness & Health Tech',
-    price: 29990,
+    price: 1500,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -1494,7 +1494,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Cuddled close in bed, Somnox naturally simulates slow, rhythmic breathing. Your respiratory pace instinctively synchronizes with the robot to silence racing thoughts and ease anxiety.',
     categoryId: 'wellness_health',
     categoryName: 'AI Wellness & Health Tech',
-    price: 49990,
+    price: 1700,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -1525,7 +1525,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'An understated icon of silent luxury. Meticulously handcrafted by master artisans in Veneto using seamless seamless intrecciato leather weaving, lined with supple calfskin.',
     categoryId: 'curated_boxes',
     categoryName: 'Curated Luxury Bags & Keepsakes',
-    price: 245000,
+    price: 3650,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -1556,7 +1556,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'Contemporary utilitarian elegance. Features multi-compartment interior, adjustable woven nylon shoulder strap, detachable gadget pouch, and iconic enameled metal triangle logo.',
     categoryId: 'curated_boxes',
     categoryName: 'Curated Luxury Bags & Keepsakes',
-    price: 145000,
+    price: 2650,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=800&q=80',
     retailer: {
@@ -1587,7 +1587,7 @@ export const CURATED_PRODUCTS: Product[] = [
     description: 'The world\'s premier luxury travel companion. Precision German engineering with telescopic stepless stage handle, flex divider packing system, and lifetime manufacturer guarantee.',
     categoryId: 'curated_boxes',
     categoryName: 'Curated Luxury Bags & Keepsakes',
-    price: 88000,
+    price: 2080,
     currency: 'INR',
     imageUrl: 'https://images.unsplash.com/photo-1565026057447-bc90a3dceb87?auto=format&fit=crop&w=800&q=80',
     retailer: {

@@ -3,6 +3,7 @@ import { Sparkles, Search, SlidersHorizontal, ShoppingBag, Check, Heart, Externa
 import { ALL_100_CURATED_GIFTS, type CuratedGiftItem } from '../data/curatedGifts100';
 import { useBag } from '../context/BagContext';
 import { useWishlist } from '../context/WishlistContext';
+import { FramedGiftCardModal } from '../components/gift/FramedGiftCardModal';
 
 export const GiftStudio: React.FC = () => {
   const { addToBag, setIsBagOpen } = useBag();
@@ -13,6 +14,7 @@ export const GiftStudio: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [priceSort, setPriceSort] = useState<'default' | 'low-high' | 'high-low'>('default');
   const [selectedGiftDetail, setSelectedGiftDetail] = useState<CuratedGiftItem | null>(null);
+  const [giftForCard, setGiftForCard] = useState<CuratedGiftItem | null>(null);
   const [addedItemIds, setAddedItemIds] = useState<number[]>([]);
 
   // AI Card writer state
@@ -274,6 +276,14 @@ export const GiftStudio: React.FC = () => {
 
                         <div className="flex items-center gap-1.5">
                           <button
+                            onClick={() => setGiftForCard(gift)}
+                            className="p-2 rounded-full border border-[#ef4a23]/30 hover:bg-[#ef4a23] hover:text-white text-[#ef4a23] transition-colors cursor-pointer"
+                            title="Personalize Framed Gift Card 📜"
+                          >
+                            <PenTool className="w-4 h-4" />
+                          </button>
+
+                          <button
                             onClick={() => setSelectedGiftDetail(gift)}
                             className="p-2 rounded-full border border-[#141110]/15 hover:bg-[#141110]/5 text-[#141110] transition-colors cursor-pointer"
                             title="View Full Provenance"
@@ -451,24 +461,48 @@ export const GiftStudio: React.FC = () => {
                 </div>
               </div>
 
-              <div className="flex items-center justify-between pt-4 border-t border-[#141110]/10">
+              <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-[#141110]/10">
                 <div className="font-archivo text-2xl font-bold text-[#141110]">
                   ₹{selectedGiftDetail.price.toLocaleString('en-IN')}
                 </div>
-                <button
-                  onClick={() => {
-                    handleAddToBag(selectedGiftDetail);
-                    setSelectedGiftDetail(null);
-                    setIsBagOpen(true);
-                  }}
-                  className="px-6 py-3 rounded-full bg-[#ef4a23] hover:bg-[#141110] text-white font-archivo uppercase text-xs tracking-widest font-bold flex items-center gap-2 transition-colors cursor-pointer"
-                >
-                  <ShoppingBag className="w-4 h-4" />
-                  <span>Add to Bag & View</span>
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => {
+                      setGiftForCard(selectedGiftDetail);
+                    }}
+                    className="px-5 py-3 rounded-full border border-[#ef4a23] text-[#ef4a23] hover:bg-[#ef4a23] hover:text-white font-archivo uppercase text-xs tracking-wider font-bold flex items-center gap-2 transition-all cursor-pointer shadow-xs"
+                  >
+                    <PenTool className="w-3.5 h-3.5" />
+                    <span>Personalize Framed Card</span>
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      handleAddToBag(selectedGiftDetail);
+                      setSelectedGiftDetail(null);
+                      setIsBagOpen(true);
+                    }}
+                    className="px-6 py-3 rounded-full bg-[#ef4a23] hover:bg-[#141110] text-white font-archivo uppercase text-xs tracking-widest font-bold flex items-center gap-2 transition-colors cursor-pointer shadow-sm"
+                  >
+                    <ShoppingBag className="w-4 h-4" />
+                    <span>Add to Bag</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
+        )}
+
+        {/* Framed Gift Card Studio Modal */}
+        {giftForCard && (
+          <FramedGiftCardModal
+            isOpen={!!giftForCard}
+            onClose={() => setGiftForCard(null)}
+            giftName={giftForCard.name}
+            giftCategory={giftForCard.category}
+            giftPrice={giftForCard.price}
+            initialEmotion={giftForCard.sentiment}
+          />
         )}
 
       </div>

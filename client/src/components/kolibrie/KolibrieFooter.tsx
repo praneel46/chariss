@@ -86,6 +86,35 @@ export const KolibrieFooter: React.FC<KolibrieFooterProps> = ({ onOpenModal }) =
           </div>
         </div>
 
+        {/* Member Access / Login & Sign Up Banner */}
+        <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10 flex flex-col md:flex-row items-center justify-between gap-5">
+          <div className="space-y-1 text-center md:text-left">
+            <div className="flex items-center justify-center md:justify-start gap-2 text-xs font-archivo uppercase tracking-widest text-[#ffd46e] font-bold">
+              <span>Member Sanctuary</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#ef4a23]" />
+              <span>Saved Consultation Memory</span>
+            </div>
+            <p className="font-playfair text-sm text-[#faf3e4]/75 italic max-w-xl">
+              Save your calibrated emotional consultations, personalized framed gift cards, and chosen keepsakes securely across devices.
+            </p>
+          </div>
+
+          <div className="flex items-center gap-3 shrink-0">
+            <Link
+              to="/login?mode=login"
+              className="px-5 py-2.5 rounded-full bg-white/10 hover:bg-white hover:text-[#141110] text-xs font-archivo uppercase tracking-wider font-bold transition-all text-[#faf3e4]"
+            >
+              Sign In
+            </Link>
+            <Link
+              to="/login?mode=signup"
+              className="px-5 py-2.5 rounded-full bg-[#ef4a23] hover:bg-[#ffd46e] hover:text-[#141110] text-white text-xs font-archivo uppercase tracking-wider font-bold transition-all shadow-md"
+            >
+              Create Account (Sign Up)
+            </Link>
+          </div>
+        </div>
+
         {/* Bottom Row: Navigation Links & Copyright */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-4 text-xs">
           <div className="flex flex-wrap items-center gap-6 font-archivo uppercase tracking-wider text-[#faf3e4]/80">
@@ -95,15 +124,21 @@ export const KolibrieFooter: React.FC<KolibrieFooterProps> = ({ onOpenModal }) =
             <Link to="/gift-studio" className="hover:text-[#ef4a23] transition-colors">
               Gift Studio (100 Curated)
             </Link>
+            <a href="/#curators" className="hover:text-[#ef4a23] transition-colors">
+              Meet Curators
+            </a>
+            <Link to="/login?mode=login" className="hover:text-[#ef4a23] transition-colors">
+              Sign In
+            </Link>
+            <Link to="/login?mode=signup" className="hover:text-[#ffd46e] font-bold transition-colors">
+              Sign Up
+            </Link>
             <button
               onClick={() => onOpenModal('ateliers')}
               className="hover:text-[#ef4a23] transition-colors uppercase font-archivo cursor-pointer"
             >
               What are Ateliers?
             </button>
-            <Link to="/login" className="hover:text-[#ef4a23] transition-colors">
-              Account
-            </Link>
           </div>
 
           <p className="font-mono text-[#faf3e4]/50 text-center sm:text-right">

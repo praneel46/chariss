@@ -18,7 +18,7 @@ export const MainLayout: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col bg-[#faf3e4] text-[#141110] font-archivo selection:bg-[#ef4a23] selection:text-white">
       {/* Universal Kolibrie Fixed Header */}
-      <KolibrieNav onOpenAteliers={() => setActiveModal('ateliers')} />
+      <KolibrieNav />
 
       {/* Universal Cursor Marquee */}
       <CursorMarquee />
