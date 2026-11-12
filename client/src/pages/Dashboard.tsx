@@ -2,7 +2,7 @@ import React from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useWishlist } from '../context/WishlistContext';
 import { CURATED_PRODUCTS } from '../data/mockData';
-import { Sparkles, Calendar, Heart, ArrowUpRight, LogOut, ShieldCheck, PenTool, Plus } from 'lucide-react';
+import { Sparkles, Calendar, ArrowUpRight, LogOut, PenTool, Plus } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
 export const Dashboard: React.FC = () => {
@@ -12,12 +12,12 @@ export const Dashboard: React.FC = () => {
 
   if (!user) {
     return (
-      <div className="bg-[#FAF9F6] py-20 px-4 text-center">
-        <h2 className="font-serif text-2xl font-bold text-[#292820]">Session Required</h2>
-        <p className="text-sm text-[#292820]/70 mt-2">Please sign in to access your saved consultations.</p>
+      <div className="w-full min-h-screen bg-[#faf3e4] text-[#141110] pt-[8rem] pb-[6rem] px-4 text-center flex flex-col items-center justify-center space-y-4">
+        <h2 className="font-archivo uppercase text-3xl font-bold">Session Required</h2>
+        <p className="font-playfair text-base text-[#141110]/70 italic">Please sign in to access your saved consultations and curations.</p>
         <Link
           to="/login"
-          className="mt-4 inline-flex items-center gap-2 px-6 py-2.5 rounded-md bg-[#151419] text-[#FAF9F6] text-xs font-bold uppercase tracking-wider shadow-brutal"
+          className="px-6 py-3 rounded-full bg-[#ef4a23] hover:bg-[#141110] text-white font-archivo uppercase text-xs tracking-widest font-bold transition-colors shadow-sm"
         >
           Sign In Now
         </Link>
@@ -33,25 +33,28 @@ export const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className="bg-[#FAF9F6] py-12 md:py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+    <div className="w-full min-h-screen bg-[#faf3e4] text-[#141110] pt-[7rem] pb-[6rem] px-4 sm:px-8">
+      <div className="max-w-7xl mx-auto space-y-10">
         
-        {/* User Sanctuary Profile Card */}
-        <div className="bg-white rounded-2xl p-6 sm:p-8 border border-[#292820]/10 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-          <div className="flex items-center gap-4">
-            <div className="w-16 h-16 rounded-full bg-[#151419] text-[#D4A359] font-serif text-2xl font-bold flex items-center justify-center border-2 border-[#D4A359]">
+        {/* User Atelier Profile Card */}
+        <div className="bg-white rounded-3xl p-6 sm:p-10 border border-[#141110]/10 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div className="flex items-center gap-5">
+            <div className="w-16 h-16 rounded-full bg-[#141110] text-[#ffd46e] font-archivo text-2xl font-bold flex items-center justify-center border-2 border-[#ef4a23]">
               {user.name.slice(0, 2).toUpperCase()}
             </div>
-            <div>
-              <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#B69A78] font-bold">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2 text-xs font-archivo uppercase tracking-widest text-[#ef4a23] font-bold">
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>Verified Member Session</span>
               </div>
-              <h1 className="font-serif text-2xl sm:text-3xl font-bold text-[#292820]">
+              <h1
+                className="font-archivo uppercase text-2xl sm:text-4xl font-bold tracking-tight text-[#141110] leading-none"
+                style={{ fontStretch: '72%' }}
+              >
                 {user.name}
               </h1>
-              <p className="text-xs text-stone-500 font-mono mt-0.5">
-                {user.email} • Active Consultations: {savedSessions.length}
+              <p className="text-xs text-[#141110]/60 font-mono">
+                {user.email} • {savedSessions.length} Active Consultations
               </p>
             </div>
           </div>
@@ -59,119 +62,90 @@ export const Dashboard: React.FC = () => {
           <div className="flex items-center gap-3">
             <Link
               to="/consultation"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-[#151419] text-[#FAF9F6] text-xs font-bold uppercase tracking-wider shadow-brutal hover:bg-[#292820]"
+              className="px-5 py-2.5 rounded-full bg-[#ef4a23] hover:bg-[#141110] text-white font-archivo uppercase text-xs tracking-wider font-bold transition-colors flex items-center gap-1.5 shadow-sm"
             >
-              <Plus className="w-3.5 h-3.5 text-[#D4A359]" />
+              <Plus className="w-3.5 h-3.5" />
               <span>New Consultation</span>
             </Link>
 
             <button
               onClick={handleLogout}
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-md bg-[#EDE5DA]/60 hover:bg-[#EDE5DA] text-xs font-mono uppercase tracking-wider text-[#292820] font-bold transition-colors cursor-pointer"
+              className="px-4 py-2.5 rounded-full border border-[#141110]/15 hover:bg-[#141110]/5 text-xs font-archivo uppercase tracking-wider text-[#141110] font-bold transition-colors flex items-center gap-1.5 cursor-pointer"
             >
-              <LogOut className="w-3.5 h-3.5 text-stone-600" />
+              <LogOut className="w-3.5 h-3.5" />
               <span>Sign Out</span>
             </button>
           </div>
         </div>
 
-        {/* Saved Consultations Section */}
+        {/* Saved Consultations Grid */}
         <div className="space-y-6">
-          <div className="flex items-center justify-between border-b border-[#292820]/10 pb-4">
-            <div>
-              <h2 className="font-serif text-2xl font-bold text-[#292820]">
-                Saved AI Consultations ({savedSessions.length})
-              </h2>
-              <p className="text-xs text-[#292820]/60 mt-0.5">
-                Every consultation records recipient quirks, desired emotion, and calibrated gift matches.
-              </p>
-            </div>
+          <div className="flex items-center justify-between border-b border-[#141110]/10 pb-3">
+            <h2 className="font-archivo uppercase text-2xl font-bold text-[#141110]">
+              Saved Consultations & Profiles ({savedSessions.length})
+            </h2>
             <Link
               to="/consultation"
-              className="text-xs font-mono uppercase tracking-wider text-[#B69A78] hover:text-[#292820] font-bold flex items-center gap-1"
+              className="text-xs font-archivo uppercase tracking-wider text-[#ef4a23] font-bold hover:underline"
             >
-              <span>Launch Engine</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
+              Start New Calibration →
             </Link>
           </div>
 
           {savedSessions.length === 0 ? (
-            <div className="text-center py-12 bg-white rounded-xl border border-[#292820]/10 p-6">
-              <p className="font-serif text-lg font-bold text-[#292820]">No consultations saved yet</p>
-              <p className="text-xs text-[#292820]/60 mt-1 max-w-sm mx-auto">
-                Take our 2-minute guided consultation to generate explainable recommendations for someone special.
-              </p>
+            <div className="p-10 rounded-2xl bg-white border border-[#141110]/10 text-center space-y-3">
+              <p className="font-playfair text-lg text-[#141110]/70 italic">No consultations saved yet.</p>
               <Link
                 to="/consultation"
-                className="mt-4 inline-flex items-center gap-2 px-5 py-2 rounded-md bg-[#151419] text-[#FAF9F6] text-xs font-bold uppercase tracking-wider shadow-brutal"
+                className="inline-block px-6 py-2.5 rounded-full bg-[#ef4a23] text-white font-archivo uppercase text-xs tracking-widest font-bold"
               >
-                Start First Consultation
+                Begin Your First Session
               </Link>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {savedSessions.map((session) => (
                 <div
                   key={session.id}
-                  className="bg-white rounded-xl border border-[#292820]/10 p-6 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between"
+                  className="bg-white rounded-2xl p-6 border border-[#141110]/10 shadow-xs hover:shadow-lg transition-all space-y-4 flex flex-col justify-between"
                 >
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between text-xs font-mono text-stone-400">
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between text-[11px] font-mono text-[#141110]/50">
                       <span className="flex items-center gap-1">
-                        <Calendar className="w-3.5 h-3.5" /> {session.date}
+                        <Calendar className="w-3 h-3" />
+                        {session.date}
                       </span>
-                      <span className="px-2 py-0.5 rounded-full bg-[#EDE5DA] text-[#292820] font-bold uppercase text-[10px]">
-                        {session.occasion}
-                      </span>
+                      <span className="text-[#ef4a23] font-bold uppercase">{session.occasion}</span>
                     </div>
 
-                    <div>
-                      <h3 className="font-serif text-xl font-bold text-[#292820]">
-                        For {session.recipientName} ({session.relationship})
-                      </h3>
-                      <p className="text-xs text-[#B69A78] font-mono mt-0.5">
-                        Target Emotion: <strong className="text-[#292820]">{session.desiredEmotion}</strong> • Budget: {session.budgetFormatted}
-                      </p>
-                    </div>
+                    <h3 className="font-archivo uppercase text-xl font-bold text-[#141110]">
+                      For {session.recipientName}
+                    </h3>
 
-                    <div className="flex flex-wrap gap-1.5 pt-1">
-                      {session.interests.map((int, i) => (
-                        <span key={i} className="px-2 py-0.5 bg-[#FAF9F6] border border-[#292820]/10 text-[10px] font-mono text-stone-600 rounded-sm">
-                          {int}
-                        </span>
-                      ))}
-                    </div>
+                    <p className="text-xs font-playfair text-[#141110]/70 italic">
+                      Bond: <strong className="text-[#141110] capitalize">{session.relationship}</strong> • Emotion: <strong className="text-[#ef4a23] capitalize">{session.desiredEmotion}</strong>
+                    </p>
 
-                    {session.chosenGiftName && (
-                      <div className="p-3 bg-[#EDE5DA]/40 rounded-lg border border-[#EDE5DA] text-xs flex items-center justify-between">
-                        <div>
-                          <span className="text-[10px] font-mono uppercase text-[#B69A78] font-bold block">
-                            Chosen Match
-                          </span>
-                          <strong className="text-[#292820] font-serif">{session.chosenGiftName}</strong>
-                        </div>
-                        <span className="text-[10px] font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-sm border border-emerald-200">
-                          Verified
-                        </span>
-                      </div>
-                    )}
+                    <div className="text-xs font-mono text-[#141110]/60 pt-2 border-t border-[#141110]/10">
+                      Budget: {session.budgetFormatted}
+                    </div>
                   </div>
 
-                  <div className="pt-4 border-t border-[#292820]/10 mt-6 flex items-center justify-between">
+                  <div className="flex items-center justify-between pt-2">
                     <Link
                       to="/recommendations"
-                      className="text-xs font-mono uppercase tracking-wider text-[#151419] font-bold hover:text-[#B69A78] flex items-center gap-1"
+                      className="inline-flex items-center gap-1 text-xs font-archivo uppercase tracking-wider font-bold text-[#ef4a23] hover:underline"
                     >
-                      <span>View Results</span>
+                      <span>View Curations</span>
                       <ArrowUpRight className="w-3.5 h-3.5" />
                     </Link>
 
                     <Link
                       to="/gift-studio"
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#151419] text-[#FAF9F6] text-[11px] font-mono uppercase tracking-wider shadow-xs"
+                      className="p-2 rounded-full border border-[#141110]/10 hover:bg-[#141110]/5 text-[#141110]"
+                      title="Write Stationery Card"
                     >
-                      <PenTool className="w-3 h-3 text-[#D4A359]" />
-                      <span>Card Studio</span>
+                      <PenTool className="w-3.5 h-3.5" />
                     </Link>
                   </div>
                 </div>
@@ -180,62 +154,46 @@ export const Dashboard: React.FC = () => {
           )}
         </div>
 
-        {/* Wishlist Bookmarks */}
-        <div className="space-y-6 pt-4">
-          <div className="flex items-center justify-between border-b border-[#292820]/10 pb-4">
-            <div>
-              <h2 className="font-serif text-2xl font-bold text-[#292820]">
-                Saved Keepsakes & Wishlist ({wishlistedProducts.length})
-              </h2>
-              <p className="text-xs text-[#292820]/60 mt-0.5">
-                Bookmarked pieces across smart wearables, fine timepieces, and novelties.
-              </p>
-            </div>
-            <Link
-              to="/discover"
-              className="text-xs font-mono uppercase tracking-wider text-[#B69A78] hover:text-[#292820] font-bold"
-            >
-              Explore Full Collection ↗
-            </Link>
+        {/* Wishlist Items */}
+        <div className="space-y-6">
+          <div className="border-b border-[#141110]/10 pb-3">
+            <h2 className="font-archivo uppercase text-2xl font-bold text-[#141110]">
+              Bookmarked Keepsakes & Heirlooms ({wishlistedProducts.length})
+            </h2>
           </div>
 
           {wishlistedProducts.length === 0 ? (
-            <div className="text-center py-10 bg-white rounded-xl border border-[#292820]/10 p-6">
-              <Heart className="w-8 h-8 text-stone-300 mx-auto mb-2" />
-              <p className="font-serif text-base font-bold text-[#292820]">Your wishlist is currently empty</p>
-              <p className="text-xs text-[#292820]/60 mt-1">Tap the heart icon on any curated gift to bookmark it here.</p>
+            <div className="p-8 rounded-2xl bg-white border border-[#141110]/10 text-center space-y-2">
+              <p className="font-playfair text-base text-[#141110]/70 italic">No bookmarked items yet.</p>
+              <Link to="/gift-studio" className="text-xs font-archivo uppercase text-[#ef4a23] font-bold underline">
+                Browse 100 Curated Gifts
+              </Link>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {wishlistedProducts.map((prod) => (
-                <div key={prod.id} className="bg-white rounded-xl border border-[#292820]/10 p-4 flex flex-col justify-between">
-                  <div className="aspect-square rounded-lg overflow-hidden bg-[#EDE5DA] mb-3">
+                <div key={prod.id} className="bg-white rounded-2xl border border-[#141110]/10 overflow-hidden shadow-xs flex flex-col justify-between">
+                  <div className="aspect-[4/3] bg-stone-100 overflow-hidden">
                     <img src={prod.imageUrl} alt={prod.name} className="w-full h-full object-cover" />
                   </div>
-                  <div>
-                    <span className="text-[10px] font-mono uppercase text-[#B69A78] font-bold">{prod.categoryName}</span>
-                    <h4 className="font-serif text-sm font-bold text-[#292820] line-clamp-1">{prod.name}</h4>
-                    <p className="font-mono text-xs font-bold text-[#292820] mt-1">₹{prod.price.toLocaleString('en-IN')}</p>
+                  <div className="p-4 space-y-2">
+                    <h4 className="font-archivo uppercase text-sm font-bold text-[#141110] line-clamp-1">{prod.name}</h4>
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-archivo font-bold text-[#141110]">₹{prod.price.toLocaleString('en-IN')}</span>
+                      <Link to="/gift-studio" className="text-[#ef4a23] font-bold text-[11px] font-archivo uppercase">
+                        View in Studio
+                      </Link>
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
           )}
-        </div>
-
-        {/* Privacy Safeguards Info Box */}
-        <div className="p-6 bg-[#EDE5DA]/40 rounded-2xl border border-[#292820]/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <ShieldCheck className="w-6 h-6 text-emerald-700 shrink-0" />
-            <div>
-              <h4 className="font-serif text-sm font-bold text-[#292820]">Confidential Personal Session</h4>
-              <p className="text-xs text-[#292820]/70">Your relationship memories and consultation answers are sandboxed and never sold to ad networks.</p>
-            </div>
-          </div>
-          <span className="text-xs font-mono uppercase text-[#B69A78] font-bold">CHARIS Privacy Guarantee</span>
         </div>
 
       </div>
     </div>
   );
 };
+
+export default Dashboard;

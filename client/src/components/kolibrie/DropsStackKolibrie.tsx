@@ -2,11 +2,41 @@ import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 const SLIDES = [
-  { id: 1, title: 'CHRONO SCULPT', frameColor: '#ef4a23', crop: 'work1:0' },
-  { id: 2, title: 'NEURAL VISION', frameColor: '#8fc6e8', crop: 'work1:1' },
-  { id: 3, title: 'DEEP BIOMETRIC', frameColor: '#ffd46e', crop: 'work1:2' },
-  { id: 4, title: 'SONIC SOLACE', frameColor: '#b9c48a', crop: 'work1:3' },
-  { id: 5, title: 'ATELIER LEATHER', frameColor: '#f6a9c2', crop: 'work2:0' }
+  {
+    id: 1,
+    title: 'CHRONO SCULPT',
+    subtitle: 'Swiss Automatic Horology',
+    frameColor: '#ef4a23',
+    image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1600&q=85'
+  },
+  {
+    id: 2,
+    title: 'AMBER & IRIS',
+    subtitle: 'Niche Extrait de Parfum',
+    frameColor: '#8fc6e8',
+    image: 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=1600&q=85'
+  },
+  {
+    id: 3,
+    title: 'SOLAR TITANIUM',
+    subtitle: 'Handcrafted Aviator Eyewear',
+    frameColor: '#ffd46e',
+    image: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1600&q=85'
+  },
+  {
+    id: 4,
+    title: 'TITANIUM HALO',
+    subtitle: 'Biometric Health Ring',
+    frameColor: '#b9c48a',
+    image: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1600&q=85'
+  },
+  {
+    id: 5,
+    title: 'ATELIER TOTE',
+    subtitle: 'Full-Grain Tuscan Leather',
+    frameColor: '#f6a9c2',
+    image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=1600&q=85'
+  }
 ];
 
 export const DropsStackKolibrie: React.FC = () => {
@@ -223,31 +253,44 @@ export const DropsStackKolibrie: React.FC = () => {
                   padding: '1.75vh'
                 }}
               >
-                {/* Photo Crop Box */}
-                <div
-                  className="crop w-full h-full rounded-[0.25rem] overflow-hidden relative"
-                  data-crop={slide.crop}
-                />
+                {/* Real Luxury Photo / Crop Box */}
+                {slide.image ? (
+                  <div className="w-full h-full rounded-[0.25rem] overflow-hidden relative">
+                    <img
+                      src={slide.image}
+                      alt={slide.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                    />
+                  </div>
+                ) : (
+                  <div
+                    className="crop w-full h-full rounded-[0.25rem] overflow-hidden relative"
+                    data-crop={(slide as any).crop}
+                  />
+                )}
 
                 {/* Bottom Shadow Gradient */}
                 <div
                   className="absolute inset-[1.75vh] rounded-[0.25rem] pointer-events-none"
                   style={{
-                    background: 'linear-gradient(rgba(0,0,0,0) 55%, rgba(0,0,0,0.65))'
+                    background: 'linear-gradient(rgba(0,0,0,0) 45%, rgba(0,0,0,0.75))'
                   }}
                 />
 
-                {/* Slide Title */}
-                <div className="absolute inset-0 flex items-end justify-center pointer-events-none pb-[2.4em] max-[991px]:pb-[1.6em]">
+                {/* Slide Title & Subtitle */}
+                <div className="absolute inset-0 flex flex-col items-center justify-end pointer-events-none pb-[2.4em] max-[991px]:pb-[1.6em] gap-1">
                   <span
                     className="font-archivo uppercase text-[7.5vh] max-[991px]:text-[3.4rem] max-[600px]:text-[2rem] leading-[0.8] tracking-[-0.02em] text-[#faf3e4] text-center px-4"
                     style={{
                       fontWeight: 800,
                       fontStretch: '72%',
-                      textShadow: '0 0.05em 0.3em rgba(0,0,0,0.35)'
+                      textShadow: '0 0.05em 0.3em rgba(0,0,0,0.45)'
                     }}
                   >
                     {slide.title}
+                  </span>
+                  <span className="font-playfair text-[#faf3e4]/80 text-[1.4rem] max-[600px]:text-[0.95rem] tracking-wide italic">
+                    {slide.subtitle}
                   </span>
                 </div>
               </Link>

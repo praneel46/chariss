@@ -1,12 +1,19 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useBag } from '../../context/BagContext';
 
-export const KolibrieNav: React.FC = () => {
+interface KolibrieNavProps {
+  onOpenAteliers?: () => void;
+}
+
+export const KolibrieNav: React.FC<KolibrieNavProps> = ({ onOpenAteliers }) => {
   const { totalCount, setIsBagOpen } = useBag();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isHome = location.pathname === '/';
 
   const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
-    if (targetId.startsWith('#')) {
+    if (isHome && targetId.startsWith('#')) {
       e.preventDefault();
       const target = document.querySelector(targetId);
       if (target) {
@@ -16,6 +23,18 @@ export const KolibrieNav: React.FC = () => {
           target.scrollIntoView({ behavior: 'smooth' });
         }
       }
+    } else if (!isHome && targetId.startsWith('#')) {
+      e.preventDefault();
+      navigate('/' + targetId);
+    }
+  };
+
+  const handleAteliersClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (onOpenAteliers) {
+      onOpenAteliers();
+    } else {
+      document.dispatchEvent(new CustomEvent('open:atelier-modal'));
     }
   };
 
@@ -26,9 +45,8 @@ export const KolibrieNav: React.FC = () => {
     >
       {/* Left Wordmark */}
       <div className="pointer-events-auto">
-        <a
-          href="#"
-          onClick={(e) => handleSmoothScroll(e, '#root')}
+        <Link
+          to="/"
           className="font-yellowtail text-[#ef4a23] text-[3.6rem] max-[600px]:text-[2.6rem] leading-none inline-block mt-[0.2rem] select-none hover:opacity-90 transition-opacity"
           style={{
             transform: 'rotate(-8deg)',
@@ -37,7 +55,7 @@ export const KolibrieNav: React.FC = () => {
           }}
         >
           charis.
-        </a>
+        </Link>
       </div>
 
       {/* Centre Pill (Desktop only, hidden ≤991px) */}
@@ -47,7 +65,7 @@ export const KolibrieNav: React.FC = () => {
           className="font-archivo text-[#141110] text-[1.05rem] uppercase tracking-[-0.01em] relative flex flex-col items-center py-[0.2rem] group"
           style={{ fontWeight: 700, fontStretch: '72%' }}
         >
-          <span>Consultation</span>
+          <span className={location.pathname === '/consultation' ? 'text-[#ef4a23]' : ''}>Consultation</span>
           <span
             data-draw-line
             data-line-color="#ef4a23"
@@ -55,24 +73,51 @@ export const KolibrieNav: React.FC = () => {
           />
         </Link>
 
-        <a
-          href="#drops"
-          onClick={(e) => handleSmoothScroll(e, '#drops')}
+        <Link
+          to="/gift-studio"
           className="font-archivo text-[#141110] text-[1.05rem] uppercase tracking-[-0.01em] relative flex flex-col items-center py-[0.2rem] group"
           style={{ fontWeight: 700, fontStretch: '72%' }}
         >
-          <span>Curations</span>
+          <span className={location.pathname === '/gift-studio' ? 'text-[#ef4a23]' : ''}>Gift Studio</span>
           <span
             data-draw-line
             data-line-color="#ef4a23"
             className="absolute top-full left-0 w-full h-[0.5em] pointer-events-none"
           />
-        </a>
+        </Link>
 
-        <a
-          href="#curators"
-          onClick={(e) => handleSmoothScroll(e, '#curators')}
-          className="font-archivo text-[#141110] text-[1.05rem] uppercase tracking-[-0.01em] relative flex flex-col items-center py-[0.2rem] group"
+        {isHome ? (
+          <a
+            href="#drops"
+            onClick={(e) => handleSmoothScroll(e, '#drops')}
+            className="font-archivo text-[#141110] text-[1.05rem] uppercase tracking-[-0.01em] relative flex flex-col items-center py-[0.2rem] group"
+            style={{ fontWeight: 700, fontStretch: '72%' }}
+          >
+            <span>Curations</span>
+            <span
+              data-draw-line
+              data-line-color="#ef4a23"
+              className="absolute top-full left-0 w-full h-[0.5em] pointer-events-none"
+            />
+          </a>
+        ) : (
+          <Link
+            to="/#drops"
+            className="font-archivo text-[#141110] text-[1.05rem] uppercase tracking-[-0.01em] relative flex flex-col items-center py-[0.2rem] group"
+            style={{ fontWeight: 700, fontStretch: '72%' }}
+          >
+            <span>Curations</span>
+            <span
+              data-draw-line
+              data-line-color="#ef4a23"
+              className="absolute top-full left-0 w-full h-[0.5em] pointer-events-none"
+            />
+          </Link>
+        )}
+
+        <button
+          onClick={handleAteliersClick}
+          className="font-archivo text-[#141110] hover:text-[#ef4a23] text-[1.05rem] uppercase tracking-[-0.01em] relative flex flex-col items-center py-[0.2rem] group cursor-pointer"
           style={{ fontWeight: 700, fontStretch: '72%' }}
         >
           <span>Ateliers</span>
@@ -81,18 +126,18 @@ export const KolibrieNav: React.FC = () => {
             data-line-color="#ef4a23"
             className="absolute top-full left-0 w-full h-[0.5em] pointer-events-none"
           />
-        </a>
+        </button>
       </div>
 
       {/* Right Studio & Bag Pill */}
       <div className="pointer-events-auto flex items-center gap-[0.75rem]">
         <Link
-          to="/gift-studio"
+          to="/consultation"
           className="h-[3rem] max-[600px]:h-[2.5rem] px-[1.25rem] max-[600px]:px-[0.9rem] bg-white rounded-full shadow-[0_4px_20px_rgba(20,17,16,0.06)] flex items-center gap-[0.5rem] font-archivo uppercase text-[1.05rem] max-[600px]:text-[0.95rem] tracking-[-0.01em] text-[#141110] hover:text-[#ef4a23] transition-colors"
           style={{ fontWeight: 700, fontStretch: '72%' }}
         >
           <span className="w-[0.45rem] h-[0.45rem] rounded-full bg-[#ef4a23] shrink-0" />
-          <span>Studio</span>
+          <span>Consult</span>
         </Link>
 
         <button

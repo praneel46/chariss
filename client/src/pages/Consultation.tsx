@@ -1,37 +1,36 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Sparkles, ArrowRight, ArrowLeft, Check, Shield, Zap, Eye } from 'lucide-react';
+import { Sparkles, ArrowRight, ArrowLeft, Check, Shield, Watch, Glasses, Gem, Sparkle, Heart, Compass } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
-import { CURATED_PRODUCTS } from '../data/mockData';
 import type { ConsultationProfile } from '../types';
 
 export const Consultation: React.FC = () => {
   const navigate = useNavigate();
-  const { saveSession, isAuthenticated } = useAuth();
+  const { saveSession } = useAuth();
   
   const [currentStep, setCurrentStep] = useState(1);
   const [isCalibrating, setIsCalibrating] = useState(false);
-  const totalSteps = 6;
+  const totalSteps = 5;
 
   const [formData, setFormData] = useState<ConsultationProfile>({
     recipientName: '',
     relationship: 'partner',
     occasion: 'anniversary',
-    interests: ['Smart Wearables & Audio', 'Smart Living & Tech'],
+    interests: ['Fine Horology & Watches', 'Niche Perfumes & Scents'],
     personality: ['innovative', 'refined'],
     desiredEmotion: 'romance',
-    budget: { min: 15000, max: 45000, currency: 'INR' },
+    budget: { min: 10000, max: 35000, currency: 'INR' },
     productCategories: ['wearables_eyewear', 'curated_boxes'],
     exclusions: [],
     notes: ''
   });
 
   const relationships = [
-    { id: 'partner', label: 'Partner / Spouse', icon: '💍', desc: 'Intimate, lasting, celebratory' },
-    { id: 'best_friend', label: 'Best Friend', icon: '✨', desc: 'Inside jokes, mutual passions' },
+    { id: 'partner', label: 'Partner / Spouse', icon: '💍', desc: 'Intimate, lasting heirloom of devotion' },
+    { id: 'best_friend', label: 'Best Friend', icon: '✨', desc: 'Inside memories, shared journeys' },
     { id: 'father', label: 'Father', icon: '👔', desc: 'Quiet admiration, utility & prestige' },
     { id: 'mother', label: 'Mother', icon: '🌸', desc: 'Deep care, pampering & grace' },
-    { id: 'sibling', label: 'Brother / Sister', icon: '🎈', desc: 'Dynamic, modern lifestyle' },
+    { id: 'sibling', label: 'Brother / Sister', icon: '⚡', desc: 'Modern lifestyle, dynamic tech' },
     { id: 'colleague', label: 'Mentor / Colleague', icon: '💼', desc: 'Refined professional milestone' },
   ];
 
@@ -39,279 +38,241 @@ export const Consultation: React.FC = () => {
     { id: 'anniversary', label: 'Cherished Anniversary', tag: 'Romance & Heirloom', icon: '🥂' },
     { id: 'birthday', label: 'Milestone Birthday', tag: 'Personal Celebration', icon: '🎂' },
     { id: 'thank_you', label: 'Deep Gratitude', tag: 'Sincere Appreciation', icon: '🙏' },
-    { id: 'promotion', label: 'Career Breakthrough / Graduation', tag: 'Achievement', icon: '🚀' },
-    { id: 'housewarming', label: 'New Sanctuary / Housewarming', tag: 'Smart Living', icon: '🏡' },
+    { id: 'promotion', label: 'Career Breakthrough', tag: 'Milestone Triumph', icon: '🚀' },
+    { id: 'housewarming', label: 'New Sanctuary / Home', tag: 'Ambient Living', icon: '🏡' },
     { id: 'just_because', label: 'Just Because / Unprompted', tag: 'Pure Delight', icon: '🎁' },
   ];
 
-  const interestCategories = [
-    { id: 'Smart Wearables & Audio', label: 'Smart Glasses & Wearables', icon: '🕶️' },
-    { id: 'Biometrics & Rings', label: 'Biometric Rings & Health Tech', icon: '💍' },
-    { id: 'Smart Living & Tech', label: 'Smart Home & Ambient Lighting', icon: '💡' },
-    { id: 'Content Creation & Gear', label: 'Content Creation & Gimbal Cameras', icon: '📸' },
-    { id: 'Luxury Leather & Bags', label: 'Luxury Bags & Travel Gear', icon: '👜' },
-    { id: 'Fine Timepieces', label: 'Smartwatches & Horology', icon: '⌚' },
-    { id: 'Biohacking & Wellness', label: 'Metabolism & Deep Recovery Tech', icon: '🧘' },
-    { id: 'Robotics & Automation', label: 'Autonomous Home & Pet Robotics', icon: '🤖' },
+  // Zero food items! Pure luxury tech, watches, perfumes, sunglasses, leather, and keepsakes.
+  const aestheticCategories = [
+    { id: 'Fine Horology & Watches', label: 'Luxury Watches & Horology', icon: <Watch className="w-5 h-5" />, desc: 'Mechanical automatic timepieces' },
+    { id: 'Niche Perfumes & Scents', label: 'Artisan Perfume & Botanical Scents', icon: <Sparkle className="w-5 h-5" />, desc: 'Single-harvest Grasse extraits' },
+    { id: 'Handcrafted Sunglasses', label: 'Designer Sunglasses & Eyewear', icon: <Glasses className="w-5 h-5" />, desc: 'Japanese titanium & acetate frames' },
+    { id: 'Biometric Rings & Health', label: 'Biometric Rings & Smart Recovery', icon: <Gem className="w-5 h-5" />, desc: 'Titanium biometric wellness rings' },
+    { id: 'Tuscan Leather & Totes', label: 'Handcrafted Italian Leather Goods', icon: <Compass className="w-5 h-5" />, desc: 'Full-grain bags, wallets & journals' },
+    { id: 'Bespoke Keepsakes & Maps', label: 'Bespoke Star Maps & Engraved Art', icon: <Heart className="w-5 h-5" />, desc: 'Coordinate bracelets & soundwave art' },
   ];
 
   const emotions = [
     {
       id: 'romance',
       title: 'Tender Romance & Devotion',
-      subtitle: 'A meaningful heirloom that deepens your shared bond.',
-      gradient: 'from-amber-50 to-rose-50 border-rose-200'
+      subtitle: 'A meaningful heirloom that deepens your shared intimacy.',
+      tag: 'Cherished Bond'
     },
     {
       id: 'appreciation',
       title: 'Quiet Respect & Gratitude',
       subtitle: 'Making them feel genuinely recognized and treasured.',
-      gradient: 'from-stone-50 to-amber-50 border-amber-200'
+      tag: 'Sincere Honor'
     },
     {
       id: 'celebration',
-      title: 'Breakthrough Joy & Wonder',
+      title: 'Breakthrough Wonder & Joy',
       subtitle: 'An awe-inspiring innovation that sparks pure excitement.',
-      gradient: 'from-amber-50 to-emerald-50 border-emerald-200'
+      tag: 'Triumph'
     },
     {
       id: 'comfort',
-      title: 'Restoration & Daily Ease',
-      subtitle: 'Effortless luxury that brings peace to their daily life.',
-      gradient: 'from-blue-50 to-stone-50 border-blue-200'
+      title: 'Daily Solace & Warm Haven',
+      subtitle: 'Effortless luxury that brings restorative peace to their life.',
+      tag: 'Restoration'
     },
   ];
 
-  const budgetPresets = [
-    { min: 5000, max: 15000, label: 'Bespoke Essentials', range: '₹5,000 – ₹15,000' },
-    { min: 15000, max: 35000, label: 'Curated Smart Luxury', range: '₹15,000 – ₹35,000' },
-    { min: 35000, max: 70000, label: 'Signature Heirlooms', range: '₹35,000 – ₹70,000+' },
+  const budgetTiers = [
+    { min: 3000, max: 10000, label: 'Bespoke Keepsakes', range: '₹3,000 – ₹10,000', desc: 'Star maps, engraved metal tokens, custom journals' },
+    { min: 10000, max: 35000, label: 'Atelier Curations', range: '₹10,000 – ₹35,000', desc: 'Biometric rings, niche perfumes, Italian leather' },
+    { min: 35000, max: 85000, label: 'Signature Heirlooms', range: '₹35,000 – ₹85,000+', desc: 'Swiss automatic chronographs, luxury travel bags' },
   ];
 
-  const exclusionTags = [
-    'No Screen Devices',
-    'No Leather Goods',
-    'Minimalist Only',
-    'iOS / Apple Ecosystem Only',
-    'Quiet / Screenless Only'
-  ];
-
-  // Dynamic live matching count based on current form
-  const liveMatchCount = CURATED_PRODUCTS.filter(p => {
-    return p.price <= (formData.budget.max || 100000);
-  }).length;
-
-  const handleInterestToggle = (interest: string) => {
-    setFormData(prev => ({
-      ...prev,
-      interests: prev.interests.includes(interest)
-        ? prev.interests.filter(i => i !== interest)
-        : [...prev.interests, interest]
-    }));
-  };
-
-  const handleExclusionToggle = (tag: string) => {
-    setFormData(prev => ({
-      ...prev,
-      exclusions: prev.exclusions.includes(tag)
-        ? prev.exclusions.filter(t => t !== tag)
-        : [...prev.exclusions, tag]
-    }));
+  const toggleInterest = (id: string) => {
+    setFormData(prev => {
+      const exists = prev.interests.includes(id);
+      return {
+        ...prev,
+        interests: exists
+          ? prev.interests.filter(item => item !== id)
+          : [...prev.interests, id]
+      };
+    });
   };
 
   const handleNext = () => {
     if (currentStep < totalSteps) {
-      setCurrentStep(currentStep + 1);
+      setCurrentStep(prev => prev + 1);
+      window.scrollTo({ top: 120, behavior: 'smooth' });
     } else {
-      // Trigger AI calibration animation
-      setIsCalibrating(true);
-      setTimeout(() => {
-        localStorage.setItem('charis_active_consultation', JSON.stringify(formData));
-        
-        // Save to member session
-        saveSession({
-          recipientName: formData.recipientName || 'Recipient',
-          relationship: formData.relationship,
-          occasion: formData.occasion,
-          desiredEmotion: formData.desiredEmotion,
-          budgetFormatted: `₹${formData.budget.min.toLocaleString('en-IN')} – ₹${formData.budget.max.toLocaleString('en-IN')}`,
-          interests: formData.interests
-        });
-
-        navigate('/recommendations');
-      }, 1500);
+      runCalibration();
     }
   };
 
   const handleBack = () => {
-    if (currentStep > 1) setCurrentStep(currentStep - 1);
+    if (currentStep > 1) {
+      setCurrentStep(prev => prev - 1);
+      window.scrollTo({ top: 120, behavior: 'smooth' });
+    }
   };
 
-  const progressPercentage = Math.round((currentStep / totalSteps) * 100);
-
-  if (isCalibrating) {
-    return (
-      <div className="bg-[#FAF9F6] py-32 px-4 flex flex-col items-center justify-center text-center min-h-[75vh]">
-        <div className="relative mb-6">
-          <div className="w-20 h-20 rounded-full border-4 border-[#EDE5DA] border-t-[#D4A359] animate-spin flex items-center justify-center" />
-          <Sparkles className="w-8 h-8 text-[#D4A359] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse" />
-        </div>
-        <h2 className="font-serif text-3xl font-bold text-[#292820]">
-          Synthesizing Emotional Match...
-        </h2>
-        <p className="text-sm text-[#292820]/70 mt-2 max-w-md font-mono">
-          Calibrating 50+ verified smart wearables, timepieces, luxury leather, and home innovations against {formData.recipientName || 'your recipient'}'s profile.
-        </p>
-      </div>
-    );
-  }
+  const runCalibration = () => {
+    setIsCalibrating(true);
+    setTimeout(() => {
+      saveSession({
+        recipientName: formData.recipientName || 'Recipient',
+        relationship: formData.relationship,
+        occasion: formData.occasion,
+        desiredEmotion: formData.desiredEmotion,
+        budgetFormatted: `₹${formData.budget.min.toLocaleString('en-IN')} – ₹${formData.budget.max.toLocaleString('en-IN')}`,
+        interests: formData.interests
+      });
+      navigate('/recommendations', { state: { profile: formData } });
+    }, 2400);
+  };
 
   return (
-    <div className="bg-[#FAF9F6] py-10 md:py-16 min-h-[85vh]">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6">
-        
-        {/* Dynamic Neural HUD Banner */}
-        <div className="bg-white rounded-2xl p-4 sm:p-5 border border-[#292820]/10 shadow-xs mb-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-[#151419] text-[#D4A359] flex items-center justify-center shrink-0">
-              <Zap className="w-4 h-4 fill-[#D4A359]" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-[10px] font-mono uppercase tracking-widest text-[#B69A78] font-bold">
-                  CHARIS Concierge AI • Active Engine
-                </span>
-              </div>
-              <p className="text-xs text-[#292820] font-medium mt-0.5">
-                Calibrating live matches for <strong className="font-serif">{formData.recipientName || 'Your Recipient'}</strong>
-              </p>
-            </div>
-          </div>
+    <div className="w-full min-h-screen bg-[#faf3e4] text-[#141110] pt-[7rem] pb-[6rem] px-4 sm:px-8">
+      <div className="max-w-4xl mx-auto space-y-10">
 
-          {/* Real-time match counter indicator */}
-          <div className="flex items-center gap-2 bg-[#EDE5DA]/50 px-3 py-1.5 rounded-full border border-[#292820]/10">
-            <Eye className="w-3.5 h-3.5 text-[#B69A78]" />
-            <span className="text-xs font-mono font-bold text-[#292820]">
-              {liveMatchCount} Curated Pieces Calibrated
-            </span>
+        {/* Header (Continuous Kolibrie Styling) */}
+        <div className="text-center space-y-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/80 border border-[#141110]/10 text-xs font-archivo uppercase tracking-widest text-[#ef4a23] font-bold shadow-xs">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>AI Sentiment Calibration</span>
+          </div>
+          <h1
+            className="font-archivo uppercase text-4xl sm:text-6xl font-bold tracking-tight text-[#141110] leading-none"
+            style={{ fontStretch: '72%' }}
+          >
+            THE CONSULTATION <span className="font-playfair italic font-normal text-[#ef4a23] lowercase">session.</span>
+          </h1>
+          <p className="font-playfair text-base sm:text-lg text-[#141110]/75 max-w-xl mx-auto leading-relaxed italic">
+            Calibrate intent, aesthetic nuances, and personal coordinates to discover gifts that feel truly irreplaceable.
+          </p>
+
+          {/* Step Indicator Progress Bar */}
+          <div className="pt-6 max-w-md mx-auto">
+            <div className="flex justify-between items-center text-xs font-archivo uppercase tracking-wider text-[#141110]/60 mb-2 font-bold">
+              <span>Step 0{currentStep}</span>
+              <span>Total 0{totalSteps}</span>
+            </div>
+            <div className="h-2 w-full bg-[#141110]/10 rounded-full overflow-hidden p-0.5">
+              <div
+                className="h-full bg-[#ef4a23] rounded-full transition-all duration-500 ease-out"
+                style={{ width: `${(currentStep / totalSteps) * 100}%` }}
+              />
+            </div>
           </div>
         </div>
 
-        {/* Step Indicator & Fluid Progress Bar */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between text-xs font-mono uppercase tracking-widest text-[#B69A78] font-bold mb-2">
-            <span>Stage 0{currentStep} / 0{totalSteps}</span>
-            <span>{progressPercentage}% Calibrated</span>
-          </div>
-          <div className="w-full h-1.5 bg-[#EDE5DA] rounded-full overflow-hidden">
-            <div
-              className="h-full bg-[#151419] transition-all duration-300 rounded-full"
-              style={{ width: `${progressPercentage}%` }}
-            />
-          </div>
-        </div>
-
-        {/* Main Wizard Card Container */}
-        <div className="bg-white p-6 sm:p-10 rounded-2xl border border-[#292820]/10 shadow-lg relative transition-all">
+        {/* INTERACTIVE WORKSPACE CARD */}
+        <div className="bg-white rounded-3xl border border-[#141110]/10 shadow-[0_20px_50px_rgba(20,17,16,0.06)] p-6 sm:p-10 relative overflow-hidden">
           
-          {/* STEP 1: RELATIONSHIP */}
+          {/* STEP 1: RECIPIENT & RELATIONSHIP */}
           {currentStep === 1 && (
-            <div className="space-y-6">
+            <div className="space-y-8 animate-in fade-in duration-300">
               <div>
-                <span className="text-xs font-mono uppercase tracking-widest text-[#B69A78] font-bold">
-                  Stage 01 • The Connection
-                </span>
-                <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#292820] mt-1">
-                  Who are you looking to honor?
+                <span className="text-xs font-mono uppercase tracking-widest text-[#ef4a23] font-bold">Step 01 / 05</span>
+                <h2 className="font-archivo uppercase text-2xl sm:text-3xl font-bold text-[#141110] mt-1">
+                  Who are we honoring today?
                 </h2>
-                <p className="text-sm text-[#292820]/70 mt-1 leading-relaxed">
-                  Relationship dynamics govern emotional intimacy, gift etiquette, and perceived thoughtfulness.
+                <p className="font-playfair text-sm sm:text-base text-[#141110]/70 mt-1 italic">
+                  Every relationship speaks its own subtle language.
                 </p>
               </div>
 
+              {/* Name Input */}
               <div className="space-y-2">
-                <label className="block text-xs font-mono uppercase text-[#292820]/80">
-                  Recipient Name or Preferred Nickname
+                <label className="block text-xs font-archivo uppercase tracking-wider font-bold text-[#141110]/80">
+                  Recipient Name or Personal Nickname *
                 </label>
                 <input
                   type="text"
+                  placeholder="e.g. Eleanor, Marcus, Mom, Dev"
                   value={formData.recipientName}
                   onChange={(e) => setFormData({ ...formData, recipientName: e.target.value })}
-                  placeholder="e.g. Maya, Julian, Dad, Sarah"
-                  className="w-full px-4 py-3 rounded-lg bg-[#FAF9F6] border border-[#292820]/15 text-sm text-[#292820] focus:outline-none focus:border-[#B69A78]"
+                  className="w-full px-5 py-4 bg-[#faf3e4]/40 rounded-2xl border border-[#141110]/15 text-lg font-archivo focus:outline-none focus:border-[#ef4a23] focus:bg-white transition-all shadow-xs"
                 />
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 pt-2">
-                {relationships.map((rel) => (
-                  <button
-                    key={rel.id}
-                    onClick={() => setFormData({ ...formData, relationship: rel.id })}
-                    className={`p-4 rounded-xl border text-left transition-all cursor-pointer flex flex-col justify-between ${
-                      formData.relationship === rel.id
-                        ? 'border-[#292820] bg-[#FAF9F6] ring-2 ring-[#151419]'
-                        : 'border-[#292820]/15 hover:border-[#292820]/40 bg-white'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="text-2xl">{rel.icon}</span>
-                      {formData.relationship === rel.id && (
-                        <span className="w-2 h-2 rounded-full bg-[#D4A359]" />
-                      )}
-                    </div>
-                    <div className="mt-3">
-                      <p className="font-serif text-sm font-bold text-[#292820]">
-                        {rel.label}
-                      </p>
-                      <p className="text-[11px] text-stone-500 font-mono mt-0.5">
-                        {rel.desc}
-                      </p>
-                    </div>
-                  </button>
-                ))}
+              {/* Relationship Cards */}
+              <div className="space-y-3">
+                <label className="block text-xs font-archivo uppercase tracking-wider font-bold text-[#141110]/80">
+                  Your Bond with Them
+                </label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                  {relationships.map((rel) => {
+                    const isSelected = formData.relationship === rel.id;
+                    return (
+                      <button
+                        key={rel.id}
+                        type="button"
+                        onClick={() => setFormData({ ...formData, relationship: rel.id })}
+                        className={`p-4 rounded-2xl border text-left transition-all duration-200 cursor-pointer flex flex-col justify-between ${
+                          isSelected
+                            ? 'bg-[#141110] text-[#faf3e4] border-[#141110] shadow-md scale-[1.02]'
+                            : 'bg-white hover:bg-[#faf3e4]/50 border-[#141110]/10 text-[#141110]'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <span className="text-2xl">{rel.icon}</span>
+                          {isSelected && <Check className="w-4 h-4 text-[#ffd46e]" />}
+                        </div>
+                        <div className="mt-3">
+                          <h4 className="font-archivo uppercase text-xs font-bold tracking-wide">
+                            {rel.label}
+                          </h4>
+                          <p className={`text-[11px] font-playfair mt-0.5 line-clamp-1 italic ${isSelected ? 'text-[#faf3e4]/70' : 'text-[#141110]/60'}`}>
+                            {rel.desc}
+                          </p>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           )}
 
-          {/* STEP 2: OCCASION */}
+          {/* STEP 2: OCCASION & MILESTONE */}
           {currentStep === 2 && (
-            <div className="space-y-6">
+            <div className="space-y-8 animate-in fade-in duration-300">
               <div>
-                <span className="text-xs font-mono uppercase tracking-widest text-[#B69A78] font-bold">
-                  Stage 02 • The Occasion
-                </span>
-                <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#292820] mt-1">
-                  What moment are we celebrating?
+                <span className="text-xs font-mono uppercase tracking-widest text-[#ef4a23] font-bold">Step 02 / 05</span>
+                <h2 className="font-archivo uppercase text-2xl sm:text-3xl font-bold text-[#141110] mt-1">
+                  What is the occasion?
                 </h2>
-                <p className="text-sm text-[#292820]/70 mt-1">
-                  Occasions set the celebratory tenor, surprise factor, and commemorative weight.
+                <p className="font-playfair text-sm sm:text-base text-[#141110]/70 mt-1 italic">
+                  Gifts mark chapters in time. Tell us what we are commemorating.
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {occasions.map((occ) => {
                   const isSelected = formData.occasion === occ.id;
                   return (
                     <button
                       key={occ.id}
+                      type="button"
                       onClick={() => setFormData({ ...formData, occasion: occ.id })}
-                      className={`p-4 rounded-xl border text-left transition-all flex items-start gap-3 cursor-pointer ${
+                      className={`p-5 rounded-2xl border text-left transition-all duration-200 cursor-pointer flex flex-col justify-between ${
                         isSelected
-                          ? 'border-[#292820] bg-[#FAF9F6] ring-2 ring-[#151419]'
-                          : 'border-[#292820]/15 hover:border-[#292820]/40 bg-white'
+                          ? 'bg-[#141110] text-[#faf3e4] border-[#141110] shadow-md scale-[1.02]'
+                          : 'bg-white hover:bg-[#faf3e4]/50 border-[#141110]/10 text-[#141110]'
                       }`}
                     >
-                      <span className="text-2xl">{occ.icon}</span>
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between">
-                          <h4 className="font-serif text-sm font-bold text-[#292820]">{occ.label}</h4>
-                          {isSelected && <Check className="w-4 h-4 text-[#D4A359]" />}
-                        </div>
-                        <span className="text-[10px] font-mono text-[#B69A78] uppercase font-bold mt-0.5 block">
+                      <div className="flex items-center justify-between">
+                        <span className="text-2xl">{occ.icon}</span>
+                        <span className={`text-[10px] font-archivo uppercase tracking-wider px-2 py-0.5 rounded-full ${
+                          isSelected ? 'bg-[#ef4a23] text-white' : 'bg-stone-100 text-[#141110]/70'
+                        }`}>
                           {occ.tag}
                         </span>
                       </div>
+                      <div className="mt-4">
+                        <h4 className="font-archivo uppercase text-sm font-bold tracking-tight">
+                          {occ.label}
+                        </h4>
+                      </div>
                     </button>
                   );
                 })}
@@ -319,43 +280,47 @@ export const Consultation: React.FC = () => {
             </div>
           )}
 
-          {/* STEP 3: PASSIONS & LIFESTYLE */}
+          {/* STEP 3: AESTHETIC & LIFESTYLE (NO FOOD!) */}
           {currentStep === 3 && (
-            <div className="space-y-6">
+            <div className="space-y-8 animate-in fade-in duration-300">
               <div>
-                <span className="text-xs font-mono uppercase tracking-widest text-[#B69A78] font-bold">
-                  Stage 03 • Daily Rituals & Passions
-                </span>
-                <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#292820] mt-1">
-                  What captures {formData.recipientName || 'their'} curiosity?
+                <span className="text-xs font-mono uppercase tracking-widest text-[#ef4a23] font-bold">Step 03 / 05</span>
+                <h2 className="font-archivo uppercase text-2xl sm:text-3xl font-bold text-[#141110] mt-1">
+                  What aesthetic & craft matches their style?
                 </h2>
-                <p className="text-sm text-[#292820]/70 mt-1">
-                  Select 2 or more areas of lifestyle interest. (No food/beverage items).
+                <p className="font-playfair text-sm sm:text-base text-[#141110]/70 mt-1 italic">
+                  Select all that resonate. Handcrafted horology, fragrances, titanium eyewear, or leather.
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {interestCategories.map((cat) => {
-                  const isSelected = formData.interests.includes(cat.id);
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {aestheticCategories.map((item) => {
+                  const isSelected = formData.interests.includes(item.id);
                   return (
                     <button
-                      key={cat.id}
-                      onClick={() => handleInterestToggle(cat.id)}
-                      className={`p-3.5 rounded-xl border text-left transition-all flex items-center justify-between cursor-pointer ${
+                      key={item.id}
+                      type="button"
+                      onClick={() => toggleInterest(item.id)}
+                      className={`p-5 rounded-2xl border text-left transition-all duration-200 cursor-pointer flex items-start gap-4 ${
                         isSelected
-                          ? 'border-[#151419] bg-[#151419] text-[#FAF9F6]'
-                          : 'border-[#292820]/15 hover:border-[#292820]/40 bg-[#FAF9F6] text-[#292820]'
+                          ? 'bg-[#ef4a23] text-white border-[#ef4a23] shadow-md'
+                          : 'bg-white hover:bg-[#faf3e4]/50 border-[#141110]/10 text-[#141110]'
                       }`}
                     >
-                      <div className="flex items-center gap-3">
-                        <span className="text-xl">{cat.icon}</span>
-                        <span className="font-serif text-xs sm:text-sm font-bold">{cat.label}</span>
+                      <div className={`p-3 rounded-xl ${isSelected ? 'bg-white/20 text-white' : 'bg-[#faf3e4] text-[#ef4a23]'}`}>
+                        {item.icon}
                       </div>
-                      {isSelected ? (
-                        <Check className="w-4 h-4 text-[#D4A359]" />
-                      ) : (
-                        <span className="text-xs font-mono text-stone-400">+</span>
-                      )}
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between">
+                          <h4 className="font-archivo uppercase text-sm font-bold tracking-tight">
+                            {item.label}
+                          </h4>
+                          {isSelected && <Check className="w-4 h-4 text-white" />}
+                        </div>
+                        <p className={`text-xs font-playfair mt-1 italic ${isSelected ? 'text-white/80' : 'text-[#141110]/60'}`}>
+                          {item.desc}
+                        </p>
+                      </div>
                     </button>
                   );
                 })}
@@ -363,18 +328,16 @@ export const Consultation: React.FC = () => {
             </div>
           )}
 
-          {/* STEP 4: EMOTIONAL INTENT */}
+          {/* STEP 4: DESIRED SENTIMENT */}
           {currentStep === 4 && (
-            <div className="space-y-6">
+            <div className="space-y-8 animate-in fade-in duration-300">
               <div>
-                <span className="text-xs font-mono uppercase tracking-widest text-[#B69A78] font-bold">
-                  Stage 04 • The Emotional Resonance
-                </span>
-                <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#292820] mt-1">
-                  What feeling do you wish to awaken?
+                <span className="text-xs font-mono uppercase tracking-widest text-[#ef4a23] font-bold">Step 04 / 05</span>
+                <h2 className="font-archivo uppercase text-2xl sm:text-3xl font-bold text-[#141110] mt-1">
+                  What feeling should this gift evoke?
                 </h2>
-                <p className="text-sm text-[#292820]/70 mt-1">
-                  Every gift carries an emotional frequency. Choose the sentiment you want them to feel upon opening.
+                <p className="font-playfair text-sm sm:text-base text-[#141110]/70 mt-1 italic">
+                  The heart of CHARIS. Every gift has an emotional intent.
                 </p>
               </div>
 
@@ -384,186 +347,154 @@ export const Consultation: React.FC = () => {
                   return (
                     <button
                       key={emo.id}
+                      type="button"
                       onClick={() => setFormData({ ...formData, desiredEmotion: emo.id })}
-                      className={`p-5 rounded-xl border text-left transition-all cursor-pointer bg-gradient-to-br ${emo.gradient} ${
+                      className={`p-6 rounded-2xl border text-left transition-all duration-200 cursor-pointer flex flex-col justify-between ${
                         isSelected
-                          ? 'border-[#151419] ring-2 ring-[#151419] shadow-sm'
-                          : 'border-opacity-60 hover:border-opacity-100'
+                          ? 'bg-[#141110] text-[#faf3e4] border-[#141110] shadow-lg scale-[1.02]'
+                          : 'bg-white hover:bg-[#faf3e4]/50 border-[#141110]/10 text-[#141110]'
                       }`}
                     >
-                      <div className="flex items-center justify-between mb-1">
-                        <h4 className="font-serif text-base font-bold text-[#292820]">
+                      <div className="flex items-center justify-between">
+                        <span className={`text-xs font-archivo uppercase tracking-wider px-2.5 py-1 rounded-full font-bold ${
+                          isSelected ? 'bg-[#ffd46e] text-[#141110]' : 'bg-[#faf3e4] text-[#ef4a23]'
+                        }`}>
+                          {emo.tag}
+                        </span>
+                        {isSelected && <Check className="w-4 h-4 text-[#ffd46e]" />}
+                      </div>
+                      <div className="mt-4 space-y-1">
+                        <h4 className="font-archivo uppercase text-base font-bold tracking-tight">
                           {emo.title}
                         </h4>
-                        {isSelected && <Check className="w-4 h-4 text-[#D4A359]" />}
+                        <p className={`text-xs font-playfair italic leading-relaxed ${isSelected ? 'text-[#faf3e4]/80' : 'text-[#141110]/70'}`}>
+                          {emo.subtitle}
+                        </p>
                       </div>
-                      <p className="text-xs text-[#292820]/75 leading-relaxed">
-                        {emo.subtitle}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* STEP 5: BUDGET & BESPOKE DETAILS */}
+          {currentStep === 5 && (
+            <div className="space-y-8 animate-in fade-in duration-300">
+              <div>
+                <span className="text-xs font-mono uppercase tracking-widest text-[#ef4a23] font-bold">Step 05 / 05</span>
+                <h2 className="font-archivo uppercase text-2xl sm:text-3xl font-bold text-[#141110] mt-1">
+                  Budget tier & custom engraving nuances
+                </h2>
+                <p className="font-playfair text-sm sm:text-base text-[#141110]/70 mt-1 italic">
+                  Transparent atelier pricing with zero hidden retail surcharges.
+                </p>
+              </div>
+
+              {/* Budget Cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                {budgetTiers.map((tier) => {
+                  const isSelected = formData.budget.min === tier.min && formData.budget.max === tier.max;
+                  return (
+                    <button
+                      key={tier.label}
+                      type="button"
+                      onClick={() => setFormData({ ...formData, budget: { min: tier.min, max: tier.max, currency: 'INR' } })}
+                      className={`p-5 rounded-2xl border text-left transition-all duration-200 cursor-pointer flex flex-col justify-between ${
+                        isSelected
+                          ? 'bg-[#ef4a23] text-white border-[#ef4a23] shadow-md scale-[1.02]'
+                          : 'bg-white hover:bg-[#faf3e4]/50 border-[#141110]/10 text-[#141110]'
+                      }`}
+                    >
+                      <div>
+                        <span className={`text-[10px] font-archivo uppercase tracking-widest px-2 py-0.5 rounded-full font-bold ${
+                          isSelected ? 'bg-white/20 text-white' : 'bg-stone-100 text-[#141110]/60'
+                        }`}>
+                          Tier
+                        </span>
+                        <h4 className="font-archivo uppercase text-sm font-bold tracking-tight mt-2">
+                          {tier.label}
+                        </h4>
+                        <span className="text-base font-archivo font-bold block mt-1">
+                          {tier.range}
+                        </span>
+                      </div>
+                      <p className={`text-[11px] font-playfair mt-3 italic ${isSelected ? 'text-white/80' : 'text-[#141110]/60'}`}>
+                        {tier.desc}
                       </p>
                     </button>
                   );
                 })}
               </div>
-            </div>
-          )}
 
-          {/* STEP 5: BUDGET IN INR */}
-          {currentStep === 5 && (
-            <div className="space-y-6">
-              <div>
-                <span className="text-xs font-mono uppercase tracking-widest text-[#B69A78] font-bold">
-                  Stage 05 • Budget Boundary (INR ₹)
-                </span>
-                <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#292820] mt-1">
-                  What is your target investment?
-                </h2>
-                <p className="text-sm text-[#292820]/70 mt-1">
-                  All recommendations strictly adhere to verified pricing with zero hidden checkout markups.
-                </p>
-              </div>
-
-              {/* Quick Presets */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                {budgetPresets.map((b, i) => {
-                  const isMatch = formData.budget.min === b.min && formData.budget.max === b.max;
-                  return (
-                    <button
-                      key={i}
-                      onClick={() => setFormData({ ...formData, budget: { min: b.min, max: b.max, currency: 'INR' } })}
-                      className={`p-4 rounded-xl border text-left transition-all cursor-pointer ${
-                        isMatch
-                          ? 'border-[#151419] bg-[#151419] text-[#FAF9F6]'
-                          : 'border-[#292820]/15 hover:border-[#292820]/40 bg-[#FAF9F6] text-[#292820]'
-                      }`}
-                    >
-                      <span className="text-[10px] font-mono uppercase tracking-wider block opacity-75">
-                        {b.label}
-                      </span>
-                      <strong className="font-serif text-base block mt-1">
-                        {b.range}
-                      </strong>
-                    </button>
-                  );
-                })}
-              </div>
-
-              {/* Slider Adjustment */}
-              <div className="pt-4 border-t border-[#292820]/10 space-y-3">
-                <div className="flex items-center justify-between text-xs font-mono">
-                  <span className="text-stone-500 uppercase">Maximum Budget Ceiling</span>
-                  <span className="text-sm font-bold text-[#292820]">
-                    ₹{formData.budget.max.toLocaleString('en-IN')}
-                  </span>
-                </div>
-                <input
-                  type="range"
-                  min="5000"
-                  max="75000"
-                  step="2500"
-                  value={formData.budget.max}
-                  onChange={(e) => setFormData({
-                    ...formData,
-                    budget: { ...formData.budget, max: Number(e.target.value) }
-                  })}
-                  className="w-full accent-[#151419] cursor-pointer"
-                />
-              </div>
-            </div>
-          )}
-
-          {/* STEP 6: PREFERENCES & EXCLUSIONS */}
-          {currentStep === 6 && (
-            <div className="space-y-6">
-              <div>
-                <span className="text-xs font-mono uppercase tracking-widest text-[#B69A78] font-bold">
-                  Stage 06 • Personal Notes & Exclusions (Optional)
-                </span>
-                <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#292820] mt-1">
-                  Any specific preferences or exclusions?
-                </h2>
-                <p className="text-sm text-[#292820]/70 mt-1">
-                  Tag specific nuances or share a personal memory for the AI letterpress card writer to reference.
-                </p>
-              </div>
-
-              {/* Exclusion Tags */}
+              {/* Personal Notes / Engraving Intention */}
               <div className="space-y-2">
-                <label className="block text-[11px] font-mono uppercase tracking-wider text-[#292820]/70">
-                  Filter by Specific Boundaries
+                <label className="block text-xs font-archivo uppercase tracking-wider font-bold text-[#141110]/80">
+                  Special Dates, Locations or Meaningful Coordinates (Optional)
                 </label>
-                <div className="flex flex-wrap gap-2">
-                  {exclusionTags.map((tag) => {
-                    const isTagged = formData.exclusions.includes(tag);
-                    return (
-                      <button
-                        key={tag}
-                        onClick={() => handleExclusionToggle(tag)}
-                        className={`px-3 py-1.5 rounded-full text-xs font-mono transition-all cursor-pointer ${
-                          isTagged
-                            ? 'bg-stone-800 text-white'
-                            : 'bg-[#EDE5DA]/50 text-stone-700 hover:bg-[#EDE5DA]'
-                        }`}
-                      >
-                        {tag} {isTagged && '✓'}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <div className="space-y-2 pt-2">
-                <label className="block text-[11px] font-mono uppercase tracking-wider text-[#292820]/70">
-                  Shared Memory or Personal Quirk (Optional)
-                </label>
-                <textarea
-                  rows={3}
-                  value={formData.notes}
+                <input
+                  type="text"
+                  placeholder="e.g. Wedding date 14.02.2021, Paris coordinates, initials 'E & J'"
+                  value={formData.notes || ''}
                   onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                  placeholder="e.g. Loves minimalist titanium aesthetics, travels frequently for work, appreciates quiet design."
-                  className="w-full p-4 rounded-lg bg-[#FAF9F6] border border-[#292820]/15 text-xs sm:text-sm text-[#292820] focus:outline-none focus:border-[#B69A78] resize-none"
+                  className="w-full px-5 py-3.5 bg-[#faf3e4]/40 rounded-xl border border-[#141110]/15 text-sm font-sans focus:outline-none focus:border-[#ef4a23] focus:bg-white transition-all shadow-xs"
                 />
-              </div>
-
-              {/* Member Session Sync Notice */}
-              <div className="p-3.5 bg-[#EDE5DA]/40 rounded-xl flex items-center justify-between text-xs text-[#292820]">
-                <div className="flex items-center gap-2">
-                  <Shield className="w-4 h-4 text-[#B69A78] shrink-0" />
-                  <span>
-                    {isAuthenticated
-                      ? 'Session automatically synced to your Member Sanctuary.'
-                      : 'Consultation will run in private mode. Sign in anytime to preserve history.'}
-                  </span>
-                </div>
               </div>
             </div>
           )}
 
-          {/* Navigation Controls */}
-          <div className="mt-10 pt-6 border-t border-[#292820]/10 flex items-center justify-between gap-4">
-            <div>
-              {currentStep > 1 && (
-                <button
-                  onClick={handleBack}
-                  className="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-stone-500 hover:text-[#292820] font-bold cursor-pointer"
-                >
-                  <ArrowLeft className="w-3.5 h-3.5" />
-                  <span>Previous</span>
-                </button>
-              )}
-            </div>
+          {/* NAVIGATION ACTION BAR */}
+          <div className="pt-8 border-t border-[#141110]/10 flex items-center justify-between gap-4">
+            {currentStep > 1 ? (
+              <button
+                type="button"
+                onClick={handleBack}
+                className="px-6 py-3 rounded-full border border-[#141110]/20 hover:bg-[#141110]/5 text-[#141110] font-archivo uppercase text-xs tracking-widest font-bold flex items-center gap-2 transition-colors cursor-pointer"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>Back</span>
+              </button>
+            ) : <div />}
 
             <button
+              type="button"
               onClick={handleNext}
-              className="inline-flex items-center gap-2 px-7 py-3 rounded-md bg-[#151419] text-[#FAF9F6] text-xs font-bold uppercase tracking-wider shadow-brutal hover:bg-[#292820] transition-all cursor-pointer"
+              disabled={currentStep === 1 && (!formData.recipientName || !formData.recipientName.trim())}
+              className="px-8 py-3.5 rounded-full bg-[#ef4a23] hover:bg-[#141110] disabled:opacity-40 disabled:cursor-not-allowed text-white font-archivo uppercase text-xs tracking-widest font-bold flex items-center gap-2 transition-all shadow-md cursor-pointer"
             >
-              <span>{currentStep === totalSteps ? 'Synthesize Recommendations' : 'Continue'}</span>
-              <ArrowRight className="w-3.5 h-3.5 text-[#D4A359]" />
+              <span>{currentStep === totalSteps ? 'Calibrate & Reveal Curations' : 'Continue'}</span>
+              <ArrowRight className="w-4 h-4" />
             </button>
           </div>
-
         </div>
+
+        {/* LOADING / CALIBRATION OVERLAY */}
+        {isCalibrating && (
+          <div className="fixed inset-0 z-[300] bg-[#141110]/95 backdrop-blur-md flex flex-col items-center justify-center p-6 text-[#faf3e4] text-center space-y-6 animate-in fade-in duration-300">
+            <div className="relative w-20 h-20 flex items-center justify-center">
+              <div className="absolute inset-0 rounded-full border-4 border-white/10 border-t-[#ef4a23] animate-spin" />
+              <Sparkles className="w-8 h-8 text-[#ffd46e] animate-pulse" />
+            </div>
+
+            <div className="space-y-2 max-w-md">
+              <h3 className="font-archivo uppercase text-2xl sm:text-3xl font-bold tracking-tight">
+                Calibrating Sentiment Index
+              </h3>
+              <p className="font-playfair text-base sm:text-lg text-[#faf3e4]/70 italic">
+                Cross-referencing {formData.recipientName || 'your recipient'}'s emotional profile with 100+ master atelier keepsakes...
+              </p>
+            </div>
+
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 font-mono text-xs text-[#ffd46e]">
+              <Shield className="w-3.5 h-3.5" />
+              <span>Zero mass-retail items • 100% Provenance Guaranteed</span>
+            </div>
+          </div>
+        )}
 
       </div>
     </div>
   );
 };
+
+export default Consultation;

@@ -1,346 +1,479 @@
-import React, { useState } from 'react';
-import { CARD_TEMPLATES } from '../data/mockData';
-import type { GiftCardState, CardTemplate } from '../types';
-import { Sparkles, Download, Copy, Check, RefreshCw } from 'lucide-react';
+import React, { useState, useMemo } from 'react';
+import { Sparkles, Search, SlidersHorizontal, ShoppingBag, Check, Heart, ExternalLink, PenTool } from 'lucide-react';
+import { ALL_100_CURATED_GIFTS, type CuratedGiftItem } from '../data/curatedGifts100';
+import { useBag } from '../context/BagContext';
+import { useWishlist } from '../context/WishlistContext';
 
 export const GiftStudio: React.FC = () => {
-  const [selectedTemplate, setSelectedTemplate] = useState<CardTemplate>(CARD_TEMPLATES[0]);
-  const [cardState, setCardState] = useState<GiftCardState>({
-    recipientName: 'Eleanor',
-    senderName: 'Julian',
-    occasion: 'Birthday',
-    templateId: CARD_TEMPLATES[0].id,
-    tone: 'heartfelt',
-    fontSize: 'md',
-    alignment: 'center',
-    message: 'For the quiet mornings, the honest laughter, and every thoughtful moment you bring into my world. May this year hold as much grace as you give away.'
-  });
+  const { addToBag, setIsBagOpen } = useBag();
+  const { toggleWishlist, isWishlisted } = useWishlist();
 
-  const [copied, setCopied] = useState(false);
-  const [isGenerating, setIsGenerating] = useState(false);
+  const [activeTab, setActiveTab] = useState<'collection' | 'card-writer'>('collection');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [priceSort, setPriceSort] = useState<'default' | 'low-high' | 'high-low'>('default');
+  const [selectedGiftDetail, setSelectedGiftDetail] = useState<CuratedGiftItem | null>(null);
+  const [addedItemIds, setAddedItemIds] = useState<number[]>([]);
 
-  const sampleMessages: Record<string, string[]> = {
-    heartfelt: [
-      'For the quiet mornings, the honest laughter, and every thoughtful moment you bring into my world. May this year hold as much grace as you give away.',
-      'Some friendships feel like coming home after a long journey. Thank you for your unwavering grace and presence in my life.'
-    ],
-    playful: [
-      'Another year wiser, yet somehow still laughing at the exact same terrible jokes. Never change!',
-      'Proof that wonderful things happen when the world gives us another year of your chaotic, brilliant energy.'
-    ],
-    romantic: [
-      'Every day with you is my favourite gift. Thank you for filling ordinary hours with extraordinary love and tenderness.',
-      'In a crowded world, you are my sanctuary. Today and every day, I choose you.'
-    ],
-    poetic: [
-      'Like golden amber honey holding sunlight from spring to winter, may your days be sweet, slow, and luminous.',
-      'A quiet candle in the dusk, a warm conversation across the table — here is to the beauty of simple presence.'
-    ],
-    formal: [
-      'With sincere appreciation for your guidance, partnership, and steadfast dedication. Wishing you continuous joy and accomplishment.',
-      'Sending warmest regards and heartfelt congratulations on this remarkable milestone.'
-    ],
-    short: [
-      'With all my love, always and across every season.',
-      'Thinking of you warmly today. Enjoy every moment.'
-    ]
-  };
+  // AI Card writer state
+  const [cardTone, setCardTone] = useState<'heartfelt' | 'poetic' | 'playful' | 'deep'>('heartfelt');
+  const [recipientName, setRecipientName] = useState('Eleanor');
+  const [customMessage, setCustomMessage] = useState(
+    'For the quiet mornings, the honest laughter, and every thoughtful moment you bring into my world. May this year hold as much grace as you give away.'
+  );
 
-  const handleToneChange = (tone: any) => {
-    setCardState(prev => ({
-      ...prev,
-      tone,
-      message: sampleMessages[tone]?.[0] || prev.message
-    }));
-  };
+  const categories = useMemo(() => {
+    const cats = ['All', ...Array.from(new Set(ALL_100_CURATED_GIFTS.map(g => g.category)))];
+    return cats;
+  }, []);
 
-  const generateAIMessage = () => {
-    setIsGenerating(true);
+  const filteredGifts = useMemo(() => {
+    let result = [...ALL_100_CURATED_GIFTS];
+
+    if (selectedCategory !== 'All') {
+      result = result.filter(g => g.category === selectedCategory);
+    }
+
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      result = result.filter(
+        g =>
+          g.name.toLowerCase().includes(q) ||
+          g.description.toLowerCase().includes(q) ||
+          g.sentiment.toLowerCase().includes(q) ||
+          g.category.toLowerCase().includes(q) ||
+          g.tag.toLowerCase().includes(q)
+      );
+    }
+
+    if (priceSort === 'low-high') {
+      result.sort((a, b) => a.price - b.price);
+    } else if (priceSort === 'high-low') {
+      result.sort((a, b) => b.price - a.price);
+    }
+
+    return result;
+  }, [selectedCategory, searchQuery, priceSort]);
+
+  const handleAddToBag = (gift: CuratedGiftItem) => {
+    addToBag({
+      id: `gift-${gift.id}`,
+      name: gift.name,
+      slug: `gift-${gift.id}`,
+      tagline: gift.tag,
+      description: gift.description,
+      categoryId: gift.category.toLowerCase().replace(/\s+/g, '-'),
+      categoryName: gift.category,
+      price: gift.price,
+      originalPrice: gift.price,
+      currency: 'INR',
+      imageUrl: gift.image,
+      retailer: {
+        id: 'charis-atelier',
+        name: 'CHARIS Master Atelier',
+        website: 'https://charis.atelier',
+        verified: true
+      },
+      productUrl: '#',
+      tags: [gift.tag, gift.sentiment],
+      interests: [gift.category],
+      occasions: ['anniversary', 'birthday', 'just_because'],
+      relationships: ['partner', 'friend', 'family'],
+      personalities: ['refined', 'discerning'],
+      source: 'internal',
+      availability: 'in_stock',
+      lastVerifiedAt: '2026-11-12',
+      rating: gift.rating,
+      reviewCount: 48,
+      badge: gift.tag,
+      serialNumber: String(gift.id).padStart(2, '0')
+    });
+
+    setAddedItemIds(prev => [...prev, gift.id]);
     setTimeout(() => {
-      const options = sampleMessages[cardState.tone] || sampleMessages.heartfelt;
-      const nextMsg = options[Math.floor(Math.random() * options.length)];
-      setCardState(prev => ({ ...prev, message: nextMsg }));
-      setIsGenerating(false);
-    }, 600);
+      setAddedItemIds(prev => prev.filter(id => id !== gift.id));
+    }, 1800);
   };
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(cardState.message);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  const handlePrint = () => {
-    window.print();
+  const sampleCardMessages = {
+    heartfelt: 'For the quiet mornings, the honest laughter, and every thoughtful moment you bring into my world.',
+    poetic: 'Like golden amber holding sunlight from season to season, may your days be sweet, slow, and luminous.',
+    playful: 'Another year wiser, yet somehow still laughing at the exact same terrible inside jokes!',
+    deep: 'Some people make the world feel larger, warmer, and kinder simply by being in it. You are one of them.'
   };
 
   return (
-    <div className="bg-[#FAF9F6] py-12 md:py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Header */}
-        <div className="border-b border-[#292820]/10 pb-8 mb-10">
-          <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#B69A78] font-bold">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>CHARIS Create Studio</span>
+    <div className="w-full min-h-screen bg-[#faf3e4] text-[#141110] pt-[7rem] pb-[5rem] px-4 sm:px-8">
+      <div className="max-w-7xl mx-auto space-y-10">
+
+        {/* Studio Header (Continuous Landing Page Style) */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#141110]/10 pb-8">
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 text-xs font-archivo uppercase tracking-widest text-[#ef4a23] font-bold">
+              <Sparkles className="w-4 h-4" />
+              <span>CHARIS Studio Collective</span>
+            </div>
+            <h1
+              className="font-archivo uppercase text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-[#141110] leading-none select-none"
+              style={{ fontStretch: '72%' }}
+            >
+              100 CURATED <span className="font-playfair italic font-normal text-[#ef4a23] lowercase">sentiments.</span>
+            </h1>
+            <p className="font-playfair text-lg sm:text-xl text-[#141110]/75 max-w-2xl leading-relaxed italic">
+              From bespoke star maps and hand-engraved titanium to Tuscan leather and ambient heirlooms. Filtered for emotional resonance.
+            </p>
           </div>
-          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#292820] mt-1">
-            AI Gift Card Studio
-          </h1>
-          <p className="text-sm sm:text-base text-[#292820]/75 mt-2 max-w-2xl leading-relaxed">
-            Craft an authentic message in seconds, style your stationery, and preview the tactile card that accompanies your gift.
-          </p>
+
+          {/* Mode Switcher Pill */}
+          <div className="flex items-center gap-2 p-1.5 rounded-full bg-white border border-[#141110]/10 shadow-sm shrink-0">
+            <button
+              onClick={() => setActiveTab('collection')}
+              className={`px-5 py-2 rounded-full font-archivo uppercase text-xs tracking-wider font-bold transition-all ${
+                activeTab === 'collection'
+                  ? 'bg-[#141110] text-[#faf3e4]'
+                  : 'text-[#141110]/70 hover:text-[#141110]'
+              }`}
+            >
+              100 Gifts ({filteredGifts.length})
+            </button>
+            <button
+              onClick={() => setActiveTab('card-writer')}
+              className={`px-5 py-2 rounded-full font-archivo uppercase text-xs tracking-wider font-bold transition-all flex items-center gap-1.5 ${
+                activeTab === 'card-writer'
+                  ? 'bg-[#ef4a23] text-white'
+                  : 'text-[#141110]/70 hover:text-[#141110]'
+              }`}
+            >
+              <PenTool className="w-3.5 h-3.5" />
+              <span>Card Studio</span>
+            </button>
+          </div>
         </div>
 
-        {/* Studio Workspace: Split Controls & Live Canvas */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-          
-          {/* Left Column: Controls & AI Message Generator (5 cols) */}
-          <div className="lg:col-span-5 space-y-8 bg-white p-6 sm:p-8 rounded-xl border border-[#292820]/10 shadow-sm">
-            
-            {/* Step 1: Template Selection */}
-            <div>
-              <label className="block text-xs font-mono uppercase tracking-widest text-[#B69A78] font-bold mb-3">
-                1. Select Card Template
-              </label>
-              <div className="grid grid-cols-2 gap-3">
-                {CARD_TEMPLATES.map((tmpl) => (
+        {activeTab === 'collection' ? (
+          <>
+            {/* Search & Filter Toolbar */}
+            <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
+              {/* Search Bar */}
+              <div className="relative flex-1 max-w-md">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#141110]/50" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search by name, sentiment, material (e.g. leather, brass, star map)..."
+                  className="w-full pl-11 pr-4 py-3 bg-white rounded-full border border-[#141110]/15 text-sm font-sans placeholder:text-[#141110]/40 focus:outline-none focus:border-[#ef4a23] shadow-xs"
+                />
+              </div>
+
+              {/* Price Sort & Count */}
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 px-3 py-2 bg-white rounded-full border border-[#141110]/15 text-xs font-archivo uppercase tracking-wider font-bold text-[#141110]/80">
+                  <SlidersHorizontal className="w-3.5 h-3.5 text-[#ef4a23]" />
+                  <span>Sort:</span>
+                  <select
+                    value={priceSort}
+                    onChange={(e: any) => setPriceSort(e.target.value)}
+                    className="bg-transparent focus:outline-none text-[#141110] font-semibold cursor-pointer"
+                  >
+                    <option value="default">Featured Order</option>
+                    <option value="low-high">Price: Low to High</option>
+                    <option value="high-low">Price: High to Low</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            {/* Category Filter Pills */}
+            <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+              {categories.map((cat) => {
+                const isActive = selectedCategory === cat;
+                return (
                   <button
-                    key={tmpl.id}
-                    onClick={() => setSelectedTemplate(tmpl)}
-                    className={`p-3 text-left rounded-lg border transition-all cursor-pointer ${
-                      selectedTemplate.id === tmpl.id
-                        ? 'border-[#292820] bg-[#FAF9F6] ring-1 ring-[#292820]'
-                        : 'border-[#292820]/15 hover:border-[#292820]/40'
+                    key={cat}
+                    onClick={() => setSelectedCategory(cat)}
+                    className={`px-4 py-2 rounded-full whitespace-nowrap text-xs font-archivo uppercase tracking-wider font-bold transition-all cursor-pointer ${
+                      isActive
+                        ? 'bg-[#ef4a23] text-white shadow-sm'
+                        : 'bg-white/80 hover:bg-white text-[#141110]/80 border border-[#141110]/10'
                     }`}
                   >
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm">{tmpl.stampIcon}</span>
-                      {selectedTemplate.id === tmpl.id && (
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#D4A359]" />
-                      )}
-                    </div>
-                    <p className="font-serif text-xs font-bold text-[#292820] mt-1.5 line-clamp-1">
-                      {tmpl.name}
-                    </p>
+                    {cat}
                   </button>
-                ))}
+                );
+              })}
+            </div>
+
+            {/* Gifts Grid (Continuous High Aesthetic) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pt-4">
+              {filteredGifts.map((gift) => {
+                const isAdded = addedItemIds.includes(gift.id);
+                const wishlisted = isWishlisted(String(gift.id));
+
+                return (
+                  <div
+                    key={gift.id}
+                    className="group bg-white rounded-2xl border border-[#141110]/10 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                  >
+                    {/* Image Area */}
+                    <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#e9dcc6]">
+                      <img
+                        src={gift.image}
+                        alt={gift.name}
+                        loading="lazy"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                      />
+
+                      {/* Tag Badge */}
+                      <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-[#141110]/80 backdrop-blur-xs text-[#faf3e4] text-[10px] font-archivo uppercase tracking-wider font-bold">
+                        {gift.tag}
+                      </span>
+
+                      {/* Wishlist Button */}
+                      <button
+                        onClick={() => toggleWishlist(String(gift.id))}
+                        className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 text-[#141110] flex items-center justify-center hover:bg-[#ef4a23] hover:text-white transition-colors cursor-pointer shadow-xs"
+                      >
+                        <Heart className={`w-4 h-4 ${wishlisted ? 'fill-[#ef4a23] text-[#ef4a23]' : ''}`} />
+                      </button>
+
+                      {/* Sentiment Overlay Ribbon */}
+                      <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-[#141110]/70 to-transparent p-3 pt-6 flex items-end justify-between">
+                        <span className="text-[11px] font-playfair italic text-[#faf3e4]">
+                          "{gift.sentiment}"
+                        </span>
+                        <span className="text-[11px] font-mono text-[#ffd46e] font-bold">
+                          ★ {gift.rating}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Card Details */}
+                    <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+                      <div className="space-y-1.5">
+                        <div className="flex items-center justify-between text-[11px] font-mono text-[#141110]/60 uppercase tracking-widest">
+                          <span>#{String(gift.id).padStart(3, '0')}</span>
+                          <span>{gift.category}</span>
+                        </div>
+                        <h3 className="font-archivo uppercase text-base font-bold text-[#141110] leading-snug tracking-tight group-hover:text-[#ef4a23] transition-colors">
+                          {gift.name}
+                        </h3>
+                        <p className="text-xs font-playfair text-[#141110]/75 line-clamp-2 leading-relaxed">
+                          {gift.description}
+                        </p>
+                      </div>
+
+                      {/* Price & Action Row */}
+                      <div className="pt-3 border-t border-[#141110]/10 flex items-center justify-between gap-2">
+                        <div>
+                          <span className="text-xs text-[#141110]/50 block leading-none">Curated Price</span>
+                          <span className="font-archivo text-lg font-bold text-[#141110]">
+                            ₹{gift.price.toLocaleString('en-IN')}
+                          </span>
+                        </div>
+
+                        <div className="flex items-center gap-1.5">
+                          <button
+                            onClick={() => setSelectedGiftDetail(gift)}
+                            className="p-2 rounded-full border border-[#141110]/15 hover:bg-[#141110]/5 text-[#141110] transition-colors cursor-pointer"
+                            title="View Full Provenance"
+                          >
+                            <ExternalLink className="w-4 h-4" />
+                          </button>
+
+                          <button
+                            onClick={() => handleAddToBag(gift)}
+                            className={`px-3.5 py-2 rounded-full font-archivo uppercase text-[11px] tracking-wider font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
+                              isAdded
+                                ? 'bg-emerald-600 text-white'
+                                : 'bg-[#141110] hover:bg-[#ef4a23] text-[#faf3e4]'
+                            }`}
+                          >
+                            {isAdded ? (
+                              <>
+                                <Check className="w-3.5 h-3.5" />
+                                <span>In Bag</span>
+                              </>
+                            ) : (
+                              <>
+                                <ShoppingBag className="w-3.5 h-3.5" />
+                                <span>Bag</span>
+                              </>
+                            )}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </>
+        ) : (
+          /* CARD WRITER ATELIER TAB */
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div className="lg:col-span-5 bg-white p-6 sm:p-8 rounded-2xl border border-[#141110]/10 shadow-sm space-y-6">
+              <div>
+                <h3 className="font-archivo uppercase text-xl font-bold tracking-tight text-[#141110]">
+                  Handwritten Card Studio
+                </h3>
+                <p className="font-playfair text-sm text-[#141110]/70 mt-1">
+                  Craft an authentic note to be calligraphed and wax-sealed inside your gift presentation.
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-xs font-archivo uppercase tracking-wider font-bold text-[#141110]/80 mb-1">
+                    Recipient Name
+                  </label>
+                  <input
+                    type="text"
+                    value={recipientName}
+                    onChange={(e) => setRecipientName(e.target.value)}
+                    className="w-full px-4 py-2.5 rounded-xl border border-[#141110]/15 text-sm font-sans focus:outline-none focus:border-[#ef4a23]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-archivo uppercase tracking-wider font-bold text-[#141110]/80 mb-1">
+                    Sentiment Tone
+                  </label>
+                  <div className="grid grid-cols-2 gap-2">
+                    {(['heartfelt', 'poetic', 'playful', 'deep'] as const).map((tone) => (
+                      <button
+                        key={tone}
+                        onClick={() => {
+                          setCardTone(tone);
+                          setCustomMessage(sampleCardMessages[tone]);
+                        }}
+                        className={`py-2 px-3 rounded-lg text-xs font-archivo uppercase font-bold tracking-wider transition-colors cursor-pointer ${
+                          cardTone === tone
+                            ? 'bg-[#ef4a23] text-white'
+                            : 'bg-stone-100 hover:bg-stone-200 text-[#141110]'
+                        }`}
+                      >
+                        {tone}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-archivo uppercase tracking-wider font-bold text-[#141110]/80 mb-1">
+                    Your Personal Message
+                  </label>
+                  <textarea
+                    rows={5}
+                    value={customMessage}
+                    onChange={(e) => setCustomMessage(e.target.value)}
+                    className="w-full p-4 rounded-xl border border-[#141110]/15 text-sm font-playfair focus:outline-none focus:border-[#ef4a23]"
+                  />
+                </div>
               </div>
             </div>
 
-            {/* Step 2: Names & Occasion */}
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-[11px] font-mono uppercase tracking-wider text-[#292820]/70 mb-1">
-                  Recipient Name
-                </label>
-                <input
-                  type="text"
-                  value={cardState.recipientName}
-                  onChange={(e) => setCardState(prev => ({ ...prev, recipientName: e.target.value }))}
-                  className="w-full px-3 py-2 rounded-md bg-[#FAF9F6] border border-[#292820]/15 text-xs text-[#292820] focus:outline-none focus:border-[#B69A78]"
-                  placeholder="Eleanor"
-                />
-              </div>
-              <div>
-                <label className="block text-[11px] font-mono uppercase tracking-wider text-[#292820]/70 mb-1">
-                  Sender Signature
-                </label>
-                <input
-                  type="text"
-                  value={cardState.senderName}
-                  onChange={(e) => setCardState(prev => ({ ...prev, senderName: e.target.value }))}
-                  className="w-full px-3 py-2 rounded-md bg-[#FAF9F6] border border-[#292820]/15 text-xs text-[#292820] focus:outline-none focus:border-[#B69A78]"
-                  placeholder="Julian"
-                />
+            {/* Live Stationery Preview */}
+            <div className="lg:col-span-7 flex flex-col items-center">
+              <div className="w-full max-w-lg aspect-[1.4] bg-[#faf6ed] rounded-xl p-8 sm:p-12 shadow-xl border-4 border-[#e5d8be] relative flex flex-col justify-between">
+                <div className="flex justify-between items-start border-b border-[#141110]/10 pb-4">
+                  <span className="font-yellowtail text-2xl text-[#ef4a23]">charis.</span>
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-[#141110]/40">
+                    Hand-Pressed Archival Cotton
+                  </span>
+                </div>
+
+                <div className="space-y-3 py-4 text-center">
+                  <h4 className="font-playfair text-xl italic text-[#141110]/90">
+                    Dearest {recipientName},
+                  </h4>
+                  <p className="font-playfair text-base sm:text-lg text-[#141110] leading-relaxed max-w-md mx-auto italic">
+                    "{customMessage}"
+                  </p>
+                </div>
+
+                <div className="flex justify-between items-end border-t border-[#141110]/10 pt-4 text-xs font-mono text-[#141110]/50">
+                  <span>With deep devotion,</span>
+                  <div className="w-8 h-8 rounded-full bg-[#ef4a23] text-white flex items-center justify-center font-bold text-[10px] shadow-sm">
+                    SEAL
+                  </div>
+                </div>
               </div>
             </div>
+          </div>
+        )}
 
-            {/* Step 3: Emotional Tone Presets */}
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <label className="text-xs font-mono uppercase tracking-widest text-[#B69A78] font-bold">
-                  2. Dial Emotional Tone
-                </label>
+        {/* Quick Details Modal for Gift */}
+        {selectedGiftDetail && (
+          <div
+            className="fixed inset-0 z-[250] flex items-center justify-center p-4 bg-[#141110]/80 backdrop-blur-sm"
+            onClick={() => setSelectedGiftDetail(null)}
+          >
+            <div
+              className="relative w-full max-w-2xl bg-[#faf3e4] rounded-2xl p-6 sm:p-8 border border-[#ef4a23]/30 shadow-2xl space-y-6 animate-in zoom-in-95 duration-200"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-start justify-between">
+                <div>
+                  <span className="text-xs font-mono uppercase text-[#ef4a23] font-bold">
+                    #{String(selectedGiftDetail.id).padStart(3, '0')} • {selectedGiftDetail.category}
+                  </span>
+                  <h2 className="font-archivo uppercase text-2xl sm:text-3xl font-bold text-[#141110] mt-1">
+                    {selectedGiftDetail.name}
+                  </h2>
+                </div>
                 <button
-                  onClick={generateAIMessage}
-                  disabled={isGenerating}
-                  className="inline-flex items-center gap-1 text-[11px] font-mono uppercase tracking-wider text-[#D4A359] hover:text-[#292820] font-bold cursor-pointer"
+                  onClick={() => setSelectedGiftDetail(null)}
+                  className="w-8 h-8 rounded-full bg-stone-200 text-[#141110] flex items-center justify-center font-bold"
                 >
-                  <RefreshCw className={`w-3 h-3 ${isGenerating ? 'animate-spin' : ''}`} />
-                  <span>AI Regenerate</span>
+                  ✕
                 </button>
               </div>
 
-              <div className="flex flex-wrap gap-2">
-                {(['heartfelt', 'playful', 'romantic', 'poetic', 'formal', 'short'] as const).map((t) => (
-                  <button
-                    key={t}
-                    onClick={() => handleToneChange(t)}
-                    className={`px-3 py-1.5 rounded-full text-xs font-mono capitalize transition-all cursor-pointer ${
-                      cardState.tone === t
-                        ? 'bg-[#151419] text-[#FAF9F6]'
-                        : 'bg-[#EDE5DA]/50 text-[#292820]/75 hover:bg-[#EDE5DA]'
-                    }`}
-                  >
-                    {t}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Step 4: Editable Message Field */}
-            <div>
-              <div className="flex items-center justify-between mb-1.5">
-                <label className="text-[11px] font-mono uppercase tracking-wider text-[#292820]/70">
-                  Card Message (Editable)
-                </label>
-                <span className="text-[10px] text-stone-400 font-mono">
-                  {cardState.message.length} characters
-                </span>
-              </div>
-              <textarea
-                rows={4}
-                value={cardState.message}
-                onChange={(e) => setCardState(prev => ({ ...prev, message: e.target.value }))}
-                className="w-full p-3 rounded-md bg-[#FAF9F6] border border-[#292820]/15 text-xs text-[#292820] focus:outline-none focus:border-[#B69A78] leading-relaxed resize-none"
-              />
-            </div>
-
-            {/* Typography & Alignment Controls */}
-            <div className="pt-2 border-t border-[#292820]/10 flex items-center justify-between text-xs">
-              <div className="flex items-center gap-2">
-                <span className="font-mono text-stone-500 text-[11px]">Align:</span>
-                {(['left', 'center', 'right'] as const).map(align => (
-                  <button
-                    key={align}
-                    onClick={() => setCardState(prev => ({ ...prev, alignment: align }))}
-                    className={`px-2 py-1 rounded-sm text-xs font-mono uppercase ${
-                      cardState.alignment === align
-                        ? 'bg-[#151419] text-white'
-                        : 'bg-[#EDE5DA]/50 text-stone-700'
-                    }`}
-                  >
-                    {align[0]}
-                  </button>
-                ))}
+              <div className="aspect-video w-full rounded-xl overflow-hidden bg-black/5">
+                <img
+                  src={selectedGiftDetail.image}
+                  alt={selectedGiftDetail.name}
+                  className="w-full h-full object-cover"
+                />
               </div>
 
-              <div className="flex items-center gap-2">
-                <span className="font-mono text-stone-500 text-[11px]">Size:</span>
-                {(['sm', 'md', 'lg'] as const).map(sz => (
-                  <button
-                    key={sz}
-                    onClick={() => setCardState(prev => ({ ...prev, fontSize: sz }))}
-                    className={`px-2 py-1 rounded-sm text-xs font-mono uppercase ${
-                      cardState.fontSize === sz
-                        ? 'bg-[#151419] text-white'
-                        : 'bg-[#EDE5DA]/50 text-stone-700'
-                    }`}
-                  >
-                    {sz}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-          </div>
-
-          {/* Right Column: Live Card Canvas Preview (7 cols) */}
-          <div className="lg:col-span-7 flex flex-col items-center">
-            
-            {/* Live Card Surface */}
-            <div
-              id="gift-card-canvas"
-              className={`w-full max-w-xl aspect-[1.4/1] rounded-2xl p-8 sm:p-12 shadow-2xl relative flex flex-col justify-between transition-all duration-300 border-2 ${selectedTemplate.bgClass}`}
-              style={{
-                borderColor: selectedTemplate.borderColor
-              }}
-            >
-              {/* Corner Stamp Accents */}
-              <div className="flex items-center justify-between border-b border-current/15 pb-4">
-                <span className="text-xs font-mono uppercase tracking-[0.2em] font-semibold opacity-75">
-                  CHARIS Bespoke Letterpress
-                </span>
-                <span className="text-xl">{selectedTemplate.stampIcon}</span>
-              </div>
-
-              {/* Message Body */}
-              <div
-                className={`my-auto py-6 ${
-                  cardState.alignment === 'center'
-                    ? 'text-center'
-                    : cardState.alignment === 'right'
-                    ? 'text-right'
-                    : 'text-left'
-                }`}
-              >
-                {cardState.recipientName && (
-                  <p className="font-serif text-sm tracking-wider uppercase opacity-70 mb-3">
-                    Dear {cardState.recipientName},
-                  </p>
-                )}
-
-                <p
-                  className={`leading-relaxed ${
-                    selectedTemplate.fontFamily === 'serif'
-                      ? 'font-serif'
-                      : selectedTemplate.fontFamily === 'handwriting'
-                      ? 'font-handwriting text-2xl sm:text-3xl font-bold'
-                      : 'font-sans'
-                  } ${
-                    cardState.fontSize === 'sm'
-                      ? 'text-sm'
-                      : cardState.fontSize === 'lg'
-                      ? 'text-lg sm:text-xl'
-                      : 'text-base sm:text-lg'
-                  }`}
-                >
-                  "{cardState.message}"
+              <div className="space-y-3">
+                <h4 className="font-archivo uppercase text-xs tracking-wider text-[#141110]/70 font-bold">
+                  Curator's Intent & Provenance:
+                </h4>
+                <p className="font-playfair text-base sm:text-lg text-[#141110] leading-relaxed">
+                  {selectedGiftDetail.description}
                 </p>
-
-                {cardState.senderName && (
-                  <p className="font-handwriting text-2xl sm:text-3xl font-bold mt-4 opacity-90">
-                    With love, {cardState.senderName}
-                  </p>
-                )}
+                <div className="flex items-center gap-4 text-xs font-mono text-[#141110]/60 pt-2 border-t border-[#141110]/10">
+                  <span>Sentiment: <strong className="text-[#ef4a23]">{selectedGiftDetail.sentiment}</strong></span>
+                  <span>Artisan Seal: <strong>{selectedGiftDetail.tag}</strong></span>
+                </div>
               </div>
 
-              {/* Card Footer Stamp */}
-              <div className="pt-4 border-t border-current/15 flex items-center justify-between text-[10px] font-mono uppercase tracking-widest opacity-60">
-                <span>Hand-Lettered by CHARIS</span>
-                <span>Bengaluru Studio • Edition 2026</span>
+              <div className="flex items-center justify-between pt-4 border-t border-[#141110]/10">
+                <div className="font-archivo text-2xl font-bold text-[#141110]">
+                  ₹{selectedGiftDetail.price.toLocaleString('en-IN')}
+                </div>
+                <button
+                  onClick={() => {
+                    handleAddToBag(selectedGiftDetail);
+                    setSelectedGiftDetail(null);
+                    setIsBagOpen(true);
+                  }}
+                  className="px-6 py-3 rounded-full bg-[#ef4a23] hover:bg-[#141110] text-white font-archivo uppercase text-xs tracking-widest font-bold flex items-center gap-2 transition-colors cursor-pointer"
+                >
+                  <ShoppingBag className="w-4 h-4" />
+                  <span>Add to Bag & View</span>
+                </button>
               </div>
             </div>
-
-            {/* Canvas Actions Bar */}
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-              <button
-                onClick={handlePrint}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-[#151419] text-[#FAF9F6] text-xs font-bold uppercase tracking-wider shadow-brutal hover:bg-[#292820] transition-all cursor-pointer"
-              >
-                <Download className="w-4 h-4 text-[#D4A359]" />
-                <span>Export High-Res Card</span>
-              </button>
-
-              <button
-                onClick={handleCopy}
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-md bg-white border border-[#292820]/15 text-[#292820] text-xs font-mono uppercase tracking-wider hover:bg-[#EDE5DA] transition-all cursor-pointer"
-              >
-                {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
-                <span>{copied ? 'Copied to Clipboard' : 'Copy Message'}</span>
-              </button>
-            </div>
-
-            <p className="text-[11px] font-mono text-[#292820]/60 mt-4 text-center">
-              Your customized card will be printed on 300gsm textured cotton cardstock and placed inside the gift box.
-            </p>
-
           </div>
-
-        </div>
+        )}
 
       </div>
     </div>
   );
 };
+
+export default GiftStudio;
