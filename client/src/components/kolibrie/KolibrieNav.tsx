@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useBag } from '../../context/BagContext';
+import { useAuth } from '../../context/AuthContext';
 
 export const KolibrieNav: React.FC = () => {
   const { totalCount, setIsBagOpen } = useBag();
+  const { user } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const isHome = location.pathname === '/';
@@ -103,11 +105,43 @@ export const KolibrieNav: React.FC = () => {
         )}
       </div>
 
-      {/* Right Studio & Bag Pill */}
-      <div className="pointer-events-auto flex items-center gap-[0.75rem]">
+      {/* Right Actions: Login/Sign Up, Consult & Bag */}
+      <div className="pointer-events-auto flex items-center gap-[0.5rem] sm:gap-[0.75rem]">
+        {/* Login / Sign Up options near header */}
+        {user ? (
+          <Link
+            to="/dashboard"
+            className="h-[3rem] max-[600px]:h-[2.4rem] px-[0.9rem] max-[600px]:px-[0.7rem] bg-white rounded-full shadow-[0_4px_20px_rgba(20,17,16,0.06)] flex items-center gap-[0.45rem] font-archivo uppercase text-[0.95rem] max-[600px]:text-[0.8rem] text-[#141110] hover:text-[#ef4a23] transition-colors"
+            style={{ fontWeight: 700, fontStretch: '72%' }}
+            title="My Account & Saved Sessions"
+          >
+            <span className="w-5 h-5 rounded-full bg-[#ef4a23] text-white flex items-center justify-center text-[10px] font-bold">
+              {user.name.charAt(0)}
+            </span>
+            <span className="hidden sm:inline">{user.name.split(' ')[0]}</span>
+          </Link>
+        ) : (
+          <div className="flex items-center bg-white rounded-full shadow-[0_4px_20px_rgba(20,17,16,0.06)] h-[3rem] max-[600px]:h-[2.4rem] p-1 gap-1">
+            <Link
+              to="/login?mode=login"
+              className="h-full px-[0.85rem] max-[600px]:px-[0.6rem] rounded-full flex items-center font-archivo uppercase text-[0.95rem] max-[600px]:text-[0.8rem] text-[#141110] hover:text-[#ef4a23] hover:bg-[#faf3e4] transition-colors"
+              style={{ fontWeight: 700, fontStretch: '72%' }}
+            >
+              Login
+            </Link>
+            <Link
+              to="/login?mode=signup"
+              className="h-full px-[0.85rem] max-[600px]:px-[0.6rem] rounded-full bg-[#ef4a23] hover:bg-[#141110] text-white flex items-center font-archivo uppercase text-[0.95rem] max-[600px]:text-[0.8rem] transition-colors shadow-xs"
+              style={{ fontWeight: 700, fontStretch: '72%' }}
+            >
+              Sign Up
+            </Link>
+          </div>
+        )}
+
         <Link
           to="/consultation"
-          className="h-[3rem] max-[600px]:h-[2.5rem] px-[1.25rem] max-[600px]:px-[0.9rem] bg-white rounded-full shadow-[0_4px_20px_rgba(20,17,16,0.06)] flex items-center gap-[0.5rem] font-archivo uppercase text-[1.05rem] max-[600px]:text-[0.95rem] tracking-[-0.01em] text-[#141110] hover:text-[#ef4a23] transition-colors"
+          className="hidden md:flex h-[3rem] max-[600px]:h-[2.4rem] px-[1.25rem] max-[600px]:px-[0.85rem] bg-white rounded-full shadow-[0_4px_20px_rgba(20,17,16,0.06)] items-center gap-[0.5rem] font-archivo uppercase text-[1.05rem] max-[600px]:text-[0.85rem] tracking-[-0.01em] text-[#141110] hover:text-[#ef4a23] transition-colors"
           style={{ fontWeight: 700, fontStretch: '72%' }}
         >
           <span className="w-[0.45rem] h-[0.45rem] rounded-full bg-[#ef4a23] shrink-0" />
@@ -116,7 +150,7 @@ export const KolibrieNav: React.FC = () => {
 
         <button
           onClick={() => setIsBagOpen(true)}
-          className="h-[3rem] max-[600px]:h-[2.5rem] px-[1rem] max-[600px]:px-[0.75rem] bg-white rounded-full shadow-[0_4px_20px_rgba(20,17,16,0.06)] flex items-center gap-[0.4rem] font-archivo uppercase text-[1.05rem] max-[600px]:text-[0.95rem] text-[#141110] cursor-pointer hover:bg-[#ffd46e] transition-colors"
+          className="h-[3rem] max-[600px]:h-[2.4rem] px-[1rem] max-[600px]:px-[0.75rem] bg-white rounded-full shadow-[0_4px_20px_rgba(20,17,16,0.06)] flex items-center gap-[0.4rem] font-archivo uppercase text-[1.05rem] max-[600px]:text-[0.85rem] text-[#141110] cursor-pointer hover:bg-[#ffd46e] transition-colors"
           style={{ fontWeight: 700, fontStretch: '72%' }}
           aria-label="View shopping bag"
         >
@@ -176,6 +210,16 @@ export const KolibrieNav: React.FC = () => {
         >
           <span className="text-base leading-none">✨</span>
           <span>Consult</span>
+        </Link>
+
+        <Link
+          to={user ? "/dashboard" : "/login"}
+          className={`flex flex-col items-center gap-0.5 text-[0.7rem] font-archivo uppercase font-bold tracking-wider ${
+            location.pathname === '/login' || location.pathname === '/dashboard' ? 'text-[#ef4a23]' : 'text-[#141110]/70'
+          }`}
+        >
+          <span className="text-base leading-none">👤</span>
+          <span>{user ? 'Account' : 'Login'}</span>
         </Link>
 
         <button
