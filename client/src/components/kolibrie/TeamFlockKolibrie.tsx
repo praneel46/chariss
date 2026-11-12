@@ -133,7 +133,7 @@ export const TeamFlockKolibrie: React.FC = () => {
       });
     });
 
-    // --- 3. Momentum Hover / Swipe with InertiaPlugin ---
+    // --- 3. Momentum Hover / Swipe with InertiaPlugin (Desktop & Touch) ---
     let lastX = 0;
     let lastY = 0;
     let vx = 0;
@@ -146,17 +146,39 @@ export const TeamFlockKolibrie: React.FC = () => {
       lastY = e.clientY;
     };
 
+    const onTouchMove = (e: TouchEvent) => {
+      if (e.touches && e.touches[0]) {
+        const clientX = e.touches[0].clientX;
+        const clientY = e.touches[0].clientY;
+        vx = clientX - lastX;
+        vy = clientY - lastY;
+        lastX = clientX;
+        lastY = clientY;
+      }
+    };
+
+    const onTouchStart = (e: TouchEvent) => {
+      if (e.touches && e.touches[0]) {
+        lastX = e.touches[0].clientX;
+        lastY = e.touches[0].clientY;
+        vx = 0;
+        vy = 0;
+      }
+    };
+
     window.addEventListener('pointermove', onPointerMove, { passive: true });
+    window.addEventListener('touchmove', onTouchMove, { passive: true });
+    window.addEventListener('touchstart', onTouchStart, { passive: true });
 
     const interactives = [...Array.from(photoCards), stampRef.current].filter(Boolean) as HTMLElement[];
 
     interactives.forEach((target) => {
-      target.addEventListener('pointerenter', (e: PointerEvent) => {
+      const triggerInertia = (clientX: number, clientY: number) => {
         const rect = target.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
-        const F = e.clientX - centerX;
-        const R = e.clientY - centerY;
+        const F = clientX - centerX;
+        const R = clientY - centerY;
         const dist = Math.hypot(F, R) || 1;
         const torque = (F * vy - R * vx) / dist;
 
@@ -172,6 +194,17 @@ export const TeamFlockKolibrie: React.FC = () => {
             }
           });
         }
+      };
+
+      target.addEventListener('pointerenter', (e: PointerEvent) => {
+        triggerInertia(e.clientX, e.clientY);
+      });
+
+      target.addEventListener('touchend', (e: TouchEvent) => {
+        const touch = e.changedTouches ? e.changedTouches[0] : null;
+        if (touch) {
+          triggerInertia(touch.clientX, touch.clientY);
+        }
       });
     });
 
@@ -179,6 +212,8 @@ export const TeamFlockKolibrie: React.FC = () => {
       themeST.kill();
       mm.revert();
       window.removeEventListener('pointermove', onPointerMove);
+      window.removeEventListener('touchmove', onTouchMove);
+      window.removeEventListener('touchstart', onTouchStart);
       document.documentElement.removeAttribute('data-theme');
     };
   }, []);
@@ -192,12 +227,12 @@ export const TeamFlockKolibrie: React.FC = () => {
     >
       {/* Sticky Centred Title (z-index 1, behind passing photos) */}
       <div className="sticky top-0 left-0 w-full h-screen z-[1] flex items-center justify-center pointer-events-none px-[1.5rem]">
-        <div className="flex flex-col items-center text-center gap-[1.4rem] max-w-[36rem] relative">
+        <div className="flex flex-col items-center text-center gap-[1.4rem] max-[600px]:gap-[0.8rem] max-w-[36rem] max-[600px]:max-w-[85vw] relative">
           
           {/* Yellowtail Stamp Sticker */}
           <div
             ref={stampRef}
-            className="absolute -top-[8rem] -left-[3rem] max-[600px]:-top-[5rem] max-[600px]:left-0 w-[10rem] max-[600px]:w-[6rem] pointer-events-auto cursor-grab active:cursor-grabbing select-none"
+            className="absolute -top-[8rem] -left-[3rem] max-[600px]:-top-[3.2rem] max-[600px]:-left-[0.8rem] w-[10rem] max-[600px]:w-[5rem] pointer-events-auto cursor-grab active:cursor-grabbing select-none"
             style={{
               transform: 'rotate(-10deg)',
               willChange: 'transform'
@@ -230,7 +265,7 @@ export const TeamFlockKolibrie: React.FC = () => {
           {/* Eyebrow M */}
           <p
             data-scroll-reveal="lines"
-            className="font-playfair text-[2.5rem] max-[600px]:text-[1.75rem] leading-none tracking-[-0.03em] text-[#faf3e4]/80 transition-colors duration-700"
+            className="font-playfair text-[2.5rem] max-[991px]:text-[1.6rem] max-[600px]:text-[1.15rem] leading-none tracking-[-0.03em] text-[#faf3e4]/80 transition-colors duration-700"
             style={{
               fontVariationSettings: "'wght' 500, 'wdth' 87.5, 'opsz' 40"
             }}
@@ -238,14 +273,14 @@ export const TeamFlockKolibrie: React.FC = () => {
             The curators behind the feelings
           </p>
 
-          {/* Headline 7rem: Serif 'Meet', heavy 'the', serif 'curators' */}
+          {/* Headline: Serif 'Meet', heavy 'the', serif 'curators' */}
           <h2
             data-scroll-reveal="chars"
             data-font-weight-hover
             data-wght-rest="700"
             data-wght-near="200"
             data-wght-radius="400"
-            className="font-archivo uppercase text-[7rem] max-[600px]:text-[4.2rem] leading-[0.8em] tracking-[-0.02em] text-[#faf3e4] transition-colors duration-700 select-none"
+            className="font-archivo uppercase text-[7rem] max-[991px]:text-[4.2rem] max-[600px]:text-[2.5rem] leading-[0.82em] tracking-[-0.02em] text-[#faf3e4] transition-colors duration-700 select-none"
             style={{ fontWeight: 700, fontStretch: '72%' }}
           >
             <span
@@ -278,7 +313,7 @@ export const TeamFlockKolibrie: React.FC = () => {
           {/* Paragraph */}
           <p
             data-scroll-reveal="lines"
-            className="font-playfair text-[1.25rem] leading-[1.35] tracking-[-0.01em] text-[#faf3e4]/70 max-w-[26rem] transition-colors duration-700"
+            className="font-playfair text-[1.25rem] max-[991px]:text-[1rem] max-[600px]:text-[0.85rem] leading-[1.35] tracking-[-0.01em] text-[#faf3e4]/70 max-w-[26rem] max-[600px]:max-w-[78vw] transition-colors duration-700"
             style={{
               fontVariationSettings: "'wght' 400, 'wdth' 100, 'opsz' 20"
             }}
@@ -294,8 +329,8 @@ export const TeamFlockKolibrie: React.FC = () => {
           <div
             key={index}
             data-speed={photo.speed}
-            className={`team-photo-card absolute pointer-events-auto rounded-[0.5rem] shadow-[0_20px_45px_rgba(0,0,0,0.35)] cursor-grab active:cursor-grabbing select-none
-              ${photo.side === 'left' ? 'left-[var(--left-off)]' : 'right-[var(--right-off)]'}
+            className={`team-photo-card absolute pointer-events-auto rounded-[0.5rem] shadow-[0_20px_45px_rgba(0,0,0,0.35)] cursor-grab active:cursor-grabbing select-none max-[600px]:!w-[clamp(6rem,24vw,8rem)]
+              ${photo.side === 'left' ? 'left-[var(--left-off)] max-[600px]:!left-[2vw]' : 'right-[var(--right-off)] max-[600px]:!right-[2vw]'}
             `}
             style={{
               top: photo.top,

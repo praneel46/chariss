@@ -54,10 +54,13 @@ export const DropsStackKolibrie: React.FC = () => {
     const badgeSvg = badgeSvgRef.current;
     if (!section || !pin || !stackRoot || !gsap) return;
 
-    const isDesktop = window.innerWidth >= 992;
     const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!ScrollTrigger) return;
 
-    if (!isDesktop || !ScrollTrigger) return;
+    const isDesktop = window.innerWidth >= 992;
+    const dropDist = isDesktop ? window.innerHeight * 0.9 : window.innerHeight * 0.7;
+    const zStep = isDesktop ? 120 : 65;
+    const yStep = isDesktop ? 40 : 22;
 
     const slideEls = stackRoot.querySelectorAll<HTMLElement>('.slide-card');
     const count = slideEls.length;
@@ -66,8 +69,8 @@ export const DropsStackKolibrie: React.FC = () => {
     // Set initial 3D positions
     slideEls.forEach((slide, b) => {
       gsap.set(slide, {
-        z: -b * 120,
-        y: -b * 40,
+        z: -b * zStep,
+        y: -b * yStep,
         zIndex: count - b,
         autoAlpha: 1
       });
@@ -83,7 +86,7 @@ export const DropsStackKolibrie: React.FC = () => {
       tl.to(
         currentSlide,
         {
-          y: () => `+=${window.innerHeight * 0.9}`,
+          y: () => `+=${dropDist}`,
           duration: 1,
           ease: 'power2.in'
         },
@@ -106,8 +109,8 @@ export const DropsStackKolibrie: React.FC = () => {
         tl.to(
           nextSlide,
           {
-            z: -newIndex * 120,
-            y: -newIndex * 40,
+            z: -newIndex * zStep,
+            y: -newIndex * yStep,
             duration: 1,
             ease: 'none'
           },
@@ -129,11 +132,11 @@ export const DropsStackKolibrie: React.FC = () => {
       );
     }
 
-    // Pinned ScrollTrigger for 4.8 screen heights (innerHeight * 1.2 * (count - 1))
+    // Pinned ScrollTrigger for entire peel sequence on both desktop & mobile
     const st = ScrollTrigger.create({
       trigger: section,
       start: 'top top',
-      end: () => `+=${window.innerHeight * 1.2 * (count - 1)}`,
+      end: () => `+=${window.innerHeight * (isDesktop ? 1.2 : 0.95) * (count - 1)}`,
       pin: pin,
       pinSpacing: true,
       scrub: 0.3,
@@ -144,7 +147,7 @@ export const DropsStackKolibrie: React.FC = () => {
       }
     });
 
-    // Mouse tilt on stage root
+    // Mouse & Touch tilt on stage root
     let quickTiltX: any = null;
     let quickTiltY: any = null;
     if (!isReducedMotion) {
@@ -159,6 +162,16 @@ export const DropsStackKolibrie: React.FC = () => {
         quickTiltY(normX * 10);
       };
 
+      const onTouchMove = (e: TouchEvent) => {
+        if (e.touches && e.touches[0]) {
+          const rect = pin.getBoundingClientRect();
+          const normY = (e.touches[0].clientY - rect.top) / rect.height - 0.5;
+          const normX = (e.touches[0].clientX - rect.left) / rect.width - 0.5;
+          quickTiltX(-normY * 4);
+          quickTiltY(normX * 8);
+        }
+      };
+
       const onMouseLeave = () => {
         quickTiltX(0);
         quickTiltY(0);
@@ -166,12 +179,16 @@ export const DropsStackKolibrie: React.FC = () => {
 
       pin.addEventListener('mousemove', onMouseMove);
       pin.addEventListener('mouseleave', onMouseLeave);
+      pin.addEventListener('touchmove', onTouchMove, { passive: true });
+      pin.addEventListener('touchend', onMouseLeave);
 
       return () => {
         st.kill();
         tl.kill();
         pin.removeEventListener('mousemove', onMouseMove);
         pin.removeEventListener('mouseleave', onMouseLeave);
+        pin.removeEventListener('touchmove', onTouchMove);
+        pin.removeEventListener('touchend', onMouseLeave);
       };
     }
 
@@ -190,13 +207,13 @@ export const DropsStackKolibrie: React.FC = () => {
     >
       <div
         ref={pinRef}
-        className="w-full h-screen max-[991px]:h-auto grid grid-cols-[38fr_62fr] max-[991px]:grid-cols-1 gap-[2rem] px-[5rem] pr-[3rem] max-[991px]:px-[1.5rem] max-[991px]:py-[6rem] items-center overflow-hidden"
+        className="w-full h-screen max-h-[100dvh] grid grid-cols-[38fr_62fr] max-[991px]:flex max-[991px]:flex-col max-[991px]:justify-between gap-[2rem] max-[991px]:gap-[0.5rem] px-[5rem] pr-[3rem] max-[991px]:px-[1.25rem] max-[991px]:pt-[5.5rem] max-[991px]:pb-[2rem] items-center overflow-hidden relative"
       >
-        {/* Left Column (Copy) */}
-        <div className="flex flex-col gap-[1.5rem] justify-center z-10 max-w-[28rem]">
+        {/* Left Column / Top Section on Mobile (Copy) */}
+        <div className="flex flex-col gap-[1.5rem] max-[991px]:gap-[0.4rem] justify-center z-10 max-w-[28rem] max-[991px]:max-w-full max-[991px]:text-center">
           <p
             data-scroll-reveal="lines"
-            className="font-playfair text-[2rem] max-[600px]:text-[1.5rem] leading-tight tracking-[-0.03em] text-[#141110]/80"
+            className="font-playfair text-[2rem] max-[991px]:text-[1.15rem] max-[600px]:text-[0.95rem] leading-tight tracking-[-0.03em] text-[#141110]/80"
             style={{
               fontVariationSettings: "'wght' 500, 'wdth' 87.5, 'opsz' 40"
             }}
@@ -210,12 +227,12 @@ export const DropsStackKolibrie: React.FC = () => {
             data-wght-rest="700"
             data-wght-near="200"
             data-wght-radius="400"
-            className="font-archivo uppercase text-[8rem] max-[991px]:text-[6rem] max-[600px]:text-[4.2rem] leading-[0.8em] tracking-[-0.02em] text-[#141110] select-none"
+            className="font-archivo uppercase text-[8rem] max-[991px]:text-[3.8rem] max-[600px]:text-[2.8rem] leading-[0.8em] tracking-[-0.02em] text-[#141110] select-none"
             style={{ fontWeight: 700, fontStretch: '72%' }}
           >
-            <span className="block">LATEST</span>
+            <span className="inline max-[991px]:inline-block mr-[0.2em] max-[991px]:mr-[0.3em]">LATEST</span>
             <span
-              className="font-playfair italic font-normal tracking-[-0.035em] text-[#ef4a23] block mt-[0.05em]"
+              className="font-playfair italic font-normal tracking-[-0.035em] text-[#ef4a23] inline max-[991px]:inline-block mt-[0.05em]"
               data-font-weight-hover
               data-wght-rest="300"
               data-wght-near="800"
@@ -229,14 +246,14 @@ export const DropsStackKolibrie: React.FC = () => {
           </h2>
         </div>
 
-        {/* Right Column (Stage with 3D Card Stack) */}
+        {/* Right Column / Stage Area with 3D Card Stack (Preserved on both Mobile & Desktop) */}
         <div
-          className="relative h-full max-[991px]:h-auto w-full flex items-center justify-center"
+          className="relative h-full max-[991px]:flex-1 w-full flex items-center justify-center max-[991px]:min-h-[280px]"
           style={{ perspective: '1400px' }}
         >
           <div
             ref={stackRootRef}
-            className="relative w-full h-full max-[991px]:flex max-[991px]:flex-col max-[991px]:gap-[1.5rem]"
+            className="relative w-full h-full flex items-center justify-center"
             style={{
               transformStyle: 'preserve-3d',
               willChange: 'transform'
@@ -247,7 +264,7 @@ export const DropsStackKolibrie: React.FC = () => {
                 key={slide.id}
                 to="/consultation"
                 data-cursor-marquee-text="View gift →"
-                className="slide-card absolute max-[991px]:relative aspect-[1.75] w-[min(80vh,52vw)] max-[991px]:w-full left-1/2 max-[991px]:left-0 top-[calc(50%-5vh)] max-[991px]:top-0 -translate-x-1/2 max-[991px]:translate-x-0 -translate-y-1/2 max-[991px]:translate-y-0 rounded-[0.5rem] shadow-[0_20px_50px_rgba(20,17,16,0.15)] overflow-hidden cursor-pointer block select-none group"
+                className="slide-card absolute aspect-[1.75] max-[991px]:aspect-[1.48] w-[min(80vh,52vw)] max-[991px]:w-[min(90vw,360px)] left-1/2 top-[calc(50%-5vh)] max-[991px]:top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-[0.5rem] shadow-[0_20px_50px_rgba(20,17,16,0.15)] overflow-hidden cursor-pointer block select-none group"
                 style={{
                   backgroundColor: slide.frameColor,
                   padding: '1.75vh'
@@ -278,9 +295,9 @@ export const DropsStackKolibrie: React.FC = () => {
                 />
 
                 {/* Slide Title & Subtitle */}
-                <div className="absolute inset-0 flex flex-col items-center justify-end pointer-events-none pb-[2.4em] max-[991px]:pb-[1.6em] gap-1">
+                <div className="absolute inset-0 flex flex-col items-center justify-end pointer-events-none pb-[2.4em] max-[991px]:pb-[1.2em] gap-1">
                   <span
-                    className="font-archivo uppercase text-[7.5vh] max-[991px]:text-[3.4rem] max-[600px]:text-[2rem] leading-[0.8] tracking-[-0.02em] text-[#faf3e4] text-center px-4"
+                    className="font-archivo uppercase text-[7.5vh] max-[991px]:text-[2.2rem] max-[600px]:text-[1.8rem] leading-[0.85] tracking-[-0.02em] text-[#faf3e4] text-center px-4"
                     style={{
                       fontWeight: 800,
                       fontStretch: '72%',
@@ -289,7 +306,7 @@ export const DropsStackKolibrie: React.FC = () => {
                   >
                     {slide.title}
                   </span>
-                  <span className="font-playfair text-[#faf3e4]/80 text-[1.4rem] max-[600px]:text-[0.95rem] tracking-wide italic">
+                  <span className="font-playfair text-[#faf3e4]/80 text-[1.4rem] max-[991px]:text-[1.05rem] max-[600px]:text-[0.9rem] tracking-wide italic">
                     {slide.subtitle}
                   </span>
                 </div>
@@ -297,8 +314,8 @@ export const DropsStackKolibrie: React.FC = () => {
             ))}
           </div>
 
-          {/* Badge (Desktop only, spinning 180° with sun) */}
-          <div className="hidden lg:block absolute bottom-[1rem] right-[1rem] w-[9rem] h-[9rem] z-[5] pointer-events-none">
+          {/* Badge (Spinning 180° with sun on both Desktop & Mobile) */}
+          <div className="absolute bottom-[1rem] right-[1rem] max-[991px]:bottom-[0.5rem] max-[991px]:right-[0.5rem] w-[9rem] h-[9rem] max-[991px]:w-[4.2rem] max-[991px]:h-[4.2rem] z-[5] pointer-events-none">
             <svg
               ref={badgeSvgRef}
               viewBox="0 0 200 200"

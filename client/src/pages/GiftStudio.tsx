@@ -410,7 +410,7 @@ export const GiftStudio: React.FC = () => {
             onClick={() => setSelectedGiftDetail(null)}
           >
             <div
-              className="relative w-full max-w-2xl bg-[#faf3e4] rounded-2xl p-6 sm:p-8 border border-[#ef4a23]/30 shadow-2xl space-y-6 animate-in zoom-in-95 duration-200"
+              className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-[#faf3e4] rounded-2xl p-5 sm:p-8 border border-[#ef4a23]/30 shadow-2xl space-y-6 animate-in zoom-in-95 duration-200"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-start justify-between">

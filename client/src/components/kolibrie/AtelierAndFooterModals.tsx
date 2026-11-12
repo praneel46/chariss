@@ -20,7 +20,7 @@ export const AtelierAndFooterModals: React.FC<AtelierAndFooterModalsProps> = ({ 
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-3xl bg-[#faf3e4] text-[#141110] rounded-2xl shadow-2xl border border-[#ef4a23]/20 overflow-hidden my-8 animate-in fade-in zoom-in-95 duration-200"
+        className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-[#faf3e4] text-[#141110] rounded-2xl shadow-2xl border border-[#ef4a23]/20 my-8 animate-in fade-in zoom-in-95 duration-200"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top Accent Bar */}
@@ -37,7 +37,7 @@ export const AtelierAndFooterModals: React.FC<AtelierAndFooterModalsProps> = ({ 
 
         {/* MODAL 1: WHAT ARE ATELIERS */}
         {activeModal === 'ateliers' && (
-          <div className="p-8 sm:p-12 space-y-6">
+          <div className="p-6 sm:p-12 max-[480px]:p-5 space-y-6">
             <div className="flex items-center gap-2 text-xs font-archivo uppercase tracking-widest text-[#ef4a23] font-bold">
               <Sparkles className="w-4 h-4" />
               <span>Independent Craftsmanship</span>
@@ -113,7 +113,7 @@ export const AtelierAndFooterModals: React.FC<AtelierAndFooterModalsProps> = ({ 
 
         {/* MODAL 2: HOW CHARIS WORKS */}
         {activeModal === 'how-it-works' && (
-          <div className="p-8 sm:p-12 space-y-6">
+          <div className="p-6 sm:p-12 max-[480px]:p-5 space-y-6">
             <div className="flex items-center gap-2 text-xs font-archivo uppercase tracking-widest text-[#ef4a23] font-bold">
               <Layers className="w-4 h-4" />
               <span>Curation Engine</span>
@@ -187,7 +187,7 @@ export const AtelierAndFooterModals: React.FC<AtelierAndFooterModalsProps> = ({ 
 
         {/* MODAL 3: VERIFIED PRICING & TRUST */}
         {activeModal === 'pricing-trust' && (
-          <div className="p-8 sm:p-12 space-y-6">
+          <div className="p-6 sm:p-12 max-[480px]:p-5 space-y-6">
             <div className="flex items-center gap-2 text-xs font-archivo uppercase tracking-widest text-[#ef4a23] font-bold">
               <ShieldCheck className="w-4 h-4" />
               <span>Zero Dark Patterns</span>
@@ -247,7 +247,7 @@ export const AtelierAndFooterModals: React.FC<AtelierAndFooterModalsProps> = ({ 
 
         {/* MODAL 4: FREQUENT QUESTIONS */}
         {activeModal === 'faq' && (
-          <div className="p-8 sm:p-12 space-y-6">
+          <div className="p-6 sm:p-12 max-[480px]:p-5 space-y-6">
             <div className="flex items-center gap-2 text-xs font-archivo uppercase tracking-widest text-[#ef4a23] font-bold">
               <HelpCircle className="w-4 h-4" />
               <span>Concierge Answers</span>
@@ -310,7 +310,7 @@ export const AtelierAndFooterModals: React.FC<AtelierAndFooterModalsProps> = ({ 
 
         {/* MODAL 5: PRIVACY SAFEGUARDS */}
         {activeModal === 'privacy' && (
-          <div className="p-8 sm:p-12 space-y-6">
+          <div className="p-6 sm:p-12 max-[480px]:p-5 space-y-6">
             <div className="flex items-center gap-2 text-xs font-archivo uppercase tracking-widest text-[#ef4a23] font-bold">
               <HeartHandshake className="w-4 h-4" />
               <span>Discretion & Security</span>

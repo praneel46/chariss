@@ -14,9 +14,8 @@ export function initFontWeightHover() {
   const gsap = window.gsap;
   if (!gsap) return () => {};
 
-  // Check prefers-reduced-motion or touch devices
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
-      window.matchMedia('(hover: none), (pointer: coarse)').matches) {
+  // Check prefers-reduced-motion
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     return () => {};
   }
 
@@ -99,6 +98,18 @@ export function initFontWeightHover() {
     mouseY = e.pageY;
   };
 
+  const onTouchMove = (e: TouchEvent) => {
+    if (e.touches && e.touches[0]) {
+      mouseX = e.touches[0].pageX;
+      mouseY = e.touches[0].pageY;
+    }
+  };
+
+  const onTouchEnd = () => {
+    mouseX = -9999;
+    mouseY = -9999;
+  };
+
   const onScroll = () => {
     const deltaY = window.scrollY - lastScrollY;
     lastScrollY = window.scrollY;
@@ -111,6 +122,9 @@ export function initFontWeightHover() {
   };
 
   window.addEventListener('mousemove', onMouseMove, { passive: true });
+  window.addEventListener('touchmove', onTouchMove, { passive: true });
+  window.addEventListener('touchstart', onTouchMove, { passive: true });
+  window.addEventListener('touchend', onTouchEnd, { passive: true });
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onResize, { passive: true });
 
@@ -146,6 +160,9 @@ export function initFontWeightHover() {
 
   return () => {
     window.removeEventListener('mousemove', onMouseMove);
+    window.removeEventListener('touchmove', onTouchMove);
+    window.removeEventListener('touchstart', onTouchMove);
+    window.removeEventListener('touchend', onTouchEnd);
     window.removeEventListener('scroll', onScroll);
     window.removeEventListener('resize', onResize);
     gsap.ticker.remove(tickerCallback);

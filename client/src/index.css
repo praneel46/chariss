@@ -26,19 +26,21 @@
 }
 
 html {
-  font-size: calc(100vw / 90);
+  font-size: clamp(15px, calc(100vw / 90), 20px);
   box-sizing: border-box;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 @media (max-width: 991px) {
   html {
-    font-size: calc(100vw / 60);
+    font-size: clamp(14px, calc(100vw / 60), 18px);
   }
 }
 
 @media (max-width: 600px) {
   html {
-    font-size: calc(100vw / 24.375);
+    font-size: clamp(13px, calc(100vw / 25), 16.5px);
   }
 }
 

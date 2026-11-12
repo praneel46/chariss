@@ -152,6 +152,60 @@ export const KolibrieNav: React.FC<KolibrieNavProps> = ({ onOpenAteliers }) => {
           </span>
         </button>
       </div>
+
+      {/* Mobile Floating Bottom Navigation Dock (≤1023px) */}
+      <div className="lg:hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-50 pointer-events-auto w-[min(94vw,420px)] bg-[#faf3e4]/95 backdrop-blur-md border border-[#141110]/15 shadow-[0_8px_30px_rgba(20,17,16,0.15)] rounded-full px-3 py-2 flex items-center justify-around">
+        <Link
+          to="/"
+          className={`flex flex-col items-center gap-0.5 text-[0.7rem] font-archivo uppercase font-bold tracking-wider ${
+            location.pathname === '/' ? 'text-[#ef4a23]' : 'text-[#141110]/70'
+          }`}
+        >
+          <span className="text-base leading-none">🕊️</span>
+          <span>Home</span>
+        </Link>
+
+        <Link
+          to="/gift-studio"
+          className={`flex flex-col items-center gap-0.5 text-[0.7rem] font-archivo uppercase font-bold tracking-wider ${
+            location.pathname === '/gift-studio' ? 'text-[#ef4a23]' : 'text-[#141110]/70'
+          }`}
+        >
+          <span className="text-base leading-none">🎁</span>
+          <span>Studio</span>
+        </Link>
+
+        <button
+          onClick={handleAteliersClick}
+          className="flex flex-col items-center gap-0.5 text-[0.7rem] font-archivo uppercase font-bold tracking-wider text-[#141110]/70 hover:text-[#ef4a23] cursor-pointer"
+        >
+          <span className="text-base leading-none">🏛️</span>
+          <span>Ateliers</span>
+        </button>
+
+        <Link
+          to="/consultation"
+          className={`flex flex-col items-center gap-0.5 text-[0.7rem] font-archivo uppercase font-bold tracking-wider ${
+            location.pathname === '/consultation' ? 'text-[#ef4a23]' : 'text-[#141110]/70'
+          }`}
+        >
+          <span className="text-base leading-none">✨</span>
+          <span>Consult</span>
+        </Link>
+
+        <button
+          onClick={() => setIsBagOpen(true)}
+          className="flex flex-col items-center gap-0.5 text-[0.7rem] font-archivo uppercase font-bold tracking-wider text-[#141110]/70 relative cursor-pointer"
+        >
+          <span className="text-base leading-none">🛍️</span>
+          <span>Bag</span>
+          {totalCount > 0 && (
+            <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#ef4a23] text-white text-[9px] flex items-center justify-center font-bold">
+              {totalCount}
+            </span>
+          )}
+        </button>
+      </div>
     </nav>
   );
 };

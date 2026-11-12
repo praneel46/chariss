@@ -57,11 +57,11 @@ export const HeroKolibrie: React.FC = () => {
       }
     }
 
-    // --- 2. Interactive Cursor Follower Card (Desktop ≥992px) ---
-    if (card && media && window.innerWidth >= 992 && !isReducedMotion) {
-      const quickX = gsap.quickTo(card, 'x', { duration: 1, ease: 'power4.out' });
-      const quickY = gsap.quickTo(card, 'y', { duration: 1, ease: 'power4.out' });
-      const quickRot = gsap.quickTo(card, 'rotation', { duration: 1, ease: 'power4.out' });
+    // --- 2. Interactive Follower Card (Desktop Mouse & Mobile Touch) ---
+    if (card && media && !isReducedMotion) {
+      const quickX = gsap.quickTo(card, 'x', { duration: 0.8, ease: 'power4.out' });
+      const quickY = gsap.quickTo(card, 'y', { duration: 0.8, ease: 'power4.out' });
+      const quickRot = gsap.quickTo(card, 'rotation', { duration: 0.8, ease: 'power4.out' });
       const quickDriftX = gsap.quickTo(media, 'xPercent', { duration: 0.6, ease: 'power2.out' });
       const quickDriftY = gsap.quickTo(media, 'yPercent', { duration: 0.7, ease: 'power2.out' });
 
@@ -78,24 +78,25 @@ export const HeroKolibrie: React.FC = () => {
         photoCrops[0].classList.add('on');
       }
 
-      gsap.set(card, { autoAlpha: 0 });
+      // Initial state: subtle presentation
+      gsap.set(card, { autoAlpha: window.innerWidth < 992 ? 0.85 : 0 });
 
-      const onMouseMove = (e: MouseEvent) => {
+      const handlePointerCoord = (clientX: number, clientY: number) => {
         const heroRect = hero.getBoundingClientRect();
         if (
-          e.clientX < heroRect.left ||
-          e.clientX > heroRect.right ||
-          e.clientY < heroRect.top ||
-          e.clientY > heroRect.bottom
+          clientX < heroRect.left ||
+          clientX > heroRect.right ||
+          clientY < heroRect.top ||
+          clientY > heroRect.bottom
         ) {
-          if (isVisible) {
+          if (isVisible && window.innerWidth >= 992) {
             gsap.to(card, { autoAlpha: 0, duration: 0.3 });
             isVisible = false;
           }
           return;
         }
 
-        const target = document.elementFromPoint(e.clientX, e.clientY);
+        const target = document.elementFromPoint(clientX, clientY);
         const isOverInteractive = target?.closest('a, button, input, textarea');
 
         if (isOverInteractive) {
@@ -111,8 +112,8 @@ export const HeroKolibrie: React.FC = () => {
           isVisible = true;
         }
 
-        const currentX = e.clientX - window.innerWidth / 2;
-        const currentY = e.clientY - window.innerHeight / 2 - heroRect.top;
+        const currentX = clientX - window.innerWidth / 2;
+        const currentY = clientY - window.innerHeight / 2 - heroRect.top;
 
         if (isFirstMove) {
           gsap.set(card, { x: currentX, y: currentY });
@@ -136,7 +137,7 @@ export const HeroKolibrie: React.FC = () => {
         quickDriftY(-clampY);
 
         travelCounter += Math.abs(dx) + Math.abs(dy);
-        if (travelCounter >= 300) {
+        if (travelCounter >= 250) {
           travelCounter = 0;
           if (photoCrops.length > 0) {
             photoCrops[currentPhotoIdx].classList.remove('on');
@@ -156,26 +157,42 @@ export const HeroKolibrie: React.FC = () => {
         }, 66);
       };
 
+      const onMouseMove = (e: MouseEvent) => {
+        handlePointerCoord(e.clientX, e.clientY);
+      };
+
+      const onTouchMove = (e: TouchEvent) => {
+        if (e.touches && e.touches[0]) {
+          handlePointerCoord(e.touches[0].clientX, e.touches[0].clientY);
+        }
+      };
+
       const onMouseLeave = () => {
-        gsap.to(card, {
-          autoAlpha: 0,
-          duration: 0.3,
-          onComplete: () => {
-            quickRot(0);
-            quickDriftX(0);
-            quickDriftY(0);
-            isFirstMove = true;
-            isVisible = false;
-          }
-        });
+        if (window.innerWidth >= 992) {
+          gsap.to(card, {
+            autoAlpha: 0,
+            duration: 0.3,
+            onComplete: () => {
+              quickRot(0);
+              quickDriftX(0);
+              quickDriftY(0);
+              isFirstMove = true;
+              isVisible = false;
+            }
+          });
+        }
       };
 
       hero.addEventListener('mousemove', onMouseMove);
       hero.addEventListener('mouseleave', onMouseLeave);
+      hero.addEventListener('touchstart', onTouchMove, { passive: true });
+      hero.addEventListener('touchmove', onTouchMove, { passive: true });
 
       return () => {
         hero.removeEventListener('mousemove', onMouseMove);
         hero.removeEventListener('mouseleave', onMouseLeave);
+        hero.removeEventListener('touchstart', onTouchMove);
+        hero.removeEventListener('touchmove', onTouchMove);
         if (settleTimer) clearTimeout(settleTimer);
       };
     }
@@ -254,7 +271,7 @@ export const HeroKolibrie: React.FC = () => {
       <div
         ref={cardRef}
         id="hero-cursor-card"
-        className="absolute top-1/2 left-1/2 z-[1] pointer-events-none -translate-x-1/2 -translate-y-1/2 w-[16rem] h-[16rem] overflow-hidden rounded-[0.5rem] shadow-[0_24px_48px_rgba(20,17,16,0.18)] max-[600px]:w-[7.5rem] max-[600px]:h-[7.5rem] max-[600px]:!top-[13%] max-[600px]:!left-1/2 max-[600px]:!rotate-[-5deg] max-[600px]:!opacity-100 max-[600px]:!visible max-[600px]:block"
+        className="absolute top-1/2 left-1/2 z-[1] pointer-events-none -translate-x-1/2 -translate-y-1/2 w-[16rem] h-[16rem] max-[600px]:w-[9.5rem] max-[600px]:h-[9.5rem] overflow-hidden rounded-[0.5rem] shadow-[0_24px_48px_rgba(20,17,16,0.18)]"
         style={{ willChange: 'transform, opacity' }}
       >
         <div
@@ -275,7 +292,7 @@ export const HeroKolibrie: React.FC = () => {
       </div>
 
       {/* Hero Content (z-index 2) */}
-      <div className="relative z-[2] flex flex-col items-center text-center gap-[2rem] -mt-[3rem] max-[600px]:gap-[1.4rem] max-[600px]:mt-[5rem] px-[1rem] max-w-[90vw]">
+      <div className="relative z-[2] flex flex-col items-center text-center gap-[2rem] -mt-[3rem] max-[600px]:gap-[1.2rem] max-[600px]:mt-[2rem] px-[1rem] max-w-[96vw]">
         {/* Headline */}
         <h1
           ref={h1Ref}
@@ -284,7 +301,7 @@ export const HeroKolibrie: React.FC = () => {
           data-wght-rest="700"
           data-wght-near="200"
           data-wght-radius="400"
-          className="font-archivo uppercase text-[9rem] max-[991px]:text-[6.4rem] max-[600px]:text-[4rem] tracking-[-0.02em] leading-[0.8em] text-[#141110] select-none"
+          className="font-archivo uppercase text-[clamp(2.4rem,8.5vw,9rem)] max-[600px]:text-[2.6rem] max-[600px]:leading-[0.88em] tracking-[-0.02em] leading-[0.8em] text-[#141110] select-none"
           style={{ fontWeight: 700, fontStretch: '72%' }}
         >
           <span className="block">FEELINGS THAT</span>
@@ -308,7 +325,7 @@ export const HeroKolibrie: React.FC = () => {
         {/* Hero CTA Link with Always-on Drawn Underline & Sliding Arrow */}
         <Link
           to="/consultation"
-          className="group relative inline-flex items-center gap-[0.375em] font-playfair text-[2.1rem] max-[600px]:text-[1.6rem] tracking-[-0.03em] leading-none text-[#141110] mt-[0.5rem] hover:text-[#ef4a23] transition-colors"
+          className="group relative inline-flex items-center gap-[0.375em] font-playfair text-[clamp(1.3rem,4.5vw,2.1rem)] tracking-[-0.03em] leading-none text-[#141110] mt-[0.5rem] hover:text-[#ef4a23] transition-colors"
           style={{
             fontVariationSettings: "'wght' 500, 'wdth' 87.5, 'opsz' 40"
           }}
