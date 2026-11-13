@@ -4,63 +4,10 @@ import { Link } from 'react-router-dom';
 const HERO_VIDEO = 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261110_231342_88260d66-aa30-4612-9157-d7f1b5a66d8c.mp4';
 const HERO_POSTER = 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261110_224241_f6feccd5-1c45-4d22-b369-f927916f9973.png&w=2048&q=85';
 
-// Curated luxury gift keepsakes that cycle behind the cursor as the mouse moves
-const HERO_GIFTS = [
-  {
-    title: 'Keepsake Gift Parcel',
-    category: 'Silk Satin Ribbon & Wax Seal',
-    image: 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=1000&q=85',
-    tag: '🎁 Curated Parcel'
-  },
-  {
-    title: 'Swiss Chrono Horology',
-    category: 'Mechanical Automatic Timepiece',
-    image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1000&q=85',
-    tag: '⌚ Master Horology'
-  },
-  {
-    title: 'Amber & Iris Extrait',
-    category: 'Niche French Perfume',
-    image: 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=1000&q=85',
-    tag: '🌹 Niche Perfume'
-  },
-  {
-    title: 'Bespoke Star Map Frame',
-    category: 'Astronomical Coordinates Art',
-    image: 'https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=1000&q=85',
-    tag: '✨ Celestial Map'
-  },
-  {
-    title: 'Titanium Biometric Ring',
-    category: 'Smart Recovery Horizon',
-    image: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1000&q=85',
-    tag: '💍 Smart Jewelry'
-  },
-  {
-    title: 'Tuscan Full-Grain Leather',
-    category: 'Handcrafted Florence Tote',
-    image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=1000&q=85',
-    tag: '👜 Heirloom Leather'
-  },
-  {
-    title: 'Solar Aviator Eyewear',
-    category: 'Japanese Titanium Sunglasses',
-    image: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=85',
-    tag: '🕶️ Titanium Frames'
-  },
-  {
-    title: 'Synchronized Touch Lamps',
-    category: 'Long-Distance Connection',
-    image: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=1000&q=85',
-    tag: '🕯️ Ambient Living'
-  }
-];
-
 export const HeroKolibrie: React.FC = () => {
   const heroRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
-  const mediaRef = useRef<HTMLDivElement>(null);
   const h1Ref = useRef<HTMLHeadingElement>(null);
   const marqueeWrapperRef = useRef<HTMLDivElement>(null);
   const marqueeTrackRef = useRef<HTMLDivElement>(null);
@@ -70,7 +17,6 @@ export const HeroKolibrie: React.FC = () => {
     const hero = heroRef.current;
     const video = videoRef.current;
     const card = cardRef.current;
-    const media = mediaRef.current;
     const h1 = h1Ref.current;
     if (!hero || !gsap) return;
 
@@ -109,29 +55,17 @@ export const HeroKolibrie: React.FC = () => {
       }
     }
 
-    // --- 2. Interactive Follower Card (Desktop Mouse & Mobile Touch) ---
-    if (card && media && !isReducedMotion) {
-      const quickX = gsap.quickTo(card, 'x', { duration: 0.8, ease: 'power4.out' });
-      const quickY = gsap.quickTo(card, 'y', { duration: 0.8, ease: 'power4.out' });
-      const quickRot = gsap.quickTo(card, 'rotation', { duration: 0.8, ease: 'power4.out' });
-      const quickDriftX = gsap.quickTo(media, 'xPercent', { duration: 0.6, ease: 'power2.out' });
-      const quickDriftY = gsap.quickTo(media, 'yPercent', { duration: 0.7, ease: 'power2.out' });
+    // --- 2. Simple Glowing Ambient Mouse Pointer (Desktop & Touch) ---
+    if (card && !isReducedMotion) {
+      const quickX = gsap.quickTo(card, 'x', { duration: 0.65, ease: 'power3.out' });
+      const quickY = gsap.quickTo(card, 'y', { duration: 0.65, ease: 'power3.out' });
+      const quickScale = gsap.quickTo(card, 'scale', { duration: 0.4, ease: 'power2.out' });
 
       let isFirstMove = true;
-      let lastX = 0;
-      let lastY = 0;
-      let travelCounter = 0;
-      let currentPhotoIdx = 0;
-      let settleTimer: any = null;
       let isVisible = false;
 
-      const photoCrops = media.querySelectorAll<HTMLElement>('.hero-gift-slide, .crop');
-      if (photoCrops.length > 0) {
-        photoCrops[0].classList.add('on');
-      }
-
       // Initial state: subtle presentation
-      gsap.set(card, { autoAlpha: window.innerWidth < 992 ? 0.85 : 0 });
+      gsap.set(card, { autoAlpha: window.innerWidth < 992 ? 0.75 : 0 });
 
       const handlePointerCoord = (clientX: number, clientY: number) => {
         const heroRect = hero.getBoundingClientRect();
@@ -152,11 +86,9 @@ export const HeroKolibrie: React.FC = () => {
         const isOverInteractive = target?.closest('a, button, input, textarea');
 
         if (isOverInteractive) {
-          if (isVisible) {
-            gsap.to(card, { autoAlpha: 0, duration: 0.25, ease: 'power2.out' });
-            isVisible = false;
-          }
-          return;
+          quickScale(1.35);
+        } else {
+          quickScale(1);
         }
 
         if (!isVisible) {
@@ -169,44 +101,12 @@ export const HeroKolibrie: React.FC = () => {
 
         if (isFirstMove) {
           gsap.set(card, { x: currentX, y: currentY });
-          lastX = currentX;
-          lastY = currentY;
           isFirstMove = false;
           return;
         }
 
-        const dx = (currentX - lastX) / 2;
-        const dy = (currentY - lastY) / 2;
-        const rot = (currentX - lastX) / 4;
-
         quickX(currentX);
         quickY(currentY);
-        quickRot(rot);
-
-        const clampX = Math.max(-8, Math.min(8, dx));
-        const clampY = Math.max(-8, Math.min(8, dy));
-        quickDriftX(-clampX);
-        quickDriftY(-clampY);
-
-        travelCounter += Math.abs(dx) + Math.abs(dy);
-        if (travelCounter >= 250) {
-          travelCounter = 0;
-          if (photoCrops.length > 0) {
-            photoCrops[currentPhotoIdx].classList.remove('on');
-            currentPhotoIdx = (currentPhotoIdx + 1) % photoCrops.length;
-            photoCrops[currentPhotoIdx].classList.add('on');
-          }
-        }
-
-        lastX = currentX;
-        lastY = currentY;
-
-        if (settleTimer) clearTimeout(settleTimer);
-        settleTimer = setTimeout(() => {
-          quickRot(0);
-          quickDriftX(0);
-          quickDriftY(0);
-        }, 66);
       };
 
       const onMouseMove = (e: MouseEvent) => {
@@ -225,9 +125,6 @@ export const HeroKolibrie: React.FC = () => {
             autoAlpha: 0,
             duration: 0.3,
             onComplete: () => {
-              quickRot(0);
-              quickDriftX(0);
-              quickDriftY(0);
               isFirstMove = true;
               isVisible = false;
             }
@@ -245,7 +142,6 @@ export const HeroKolibrie: React.FC = () => {
         hero.removeEventListener('mouseleave', onMouseLeave);
         hero.removeEventListener('touchstart', onTouchMove);
         hero.removeEventListener('touchmove', onTouchMove);
-        if (settleTimer) clearTimeout(settleTimer);
       };
     }
 
@@ -319,55 +215,31 @@ export const HeroKolibrie: React.FC = () => {
         <div className="absolute inset-0 bg-[#faf3e4]/15" />
       </div>
 
-      {/* Hero Cursor Follower Card (Behind text, z-index 1 - Luxury Gift Keepsakes) */}
+      {/* Hero Glowing Mouse Pointer Ambient Aura (Behind text, z-index 1 - No photos, clean radiant beacon) */}
       <div
         ref={cardRef}
-        id="hero-cursor-card"
-        className="absolute top-1/2 left-1/2 z-[1] pointer-events-none -translate-x-1/2 -translate-y-1/2 w-[17rem] h-[17rem] max-[600px]:w-[10.5rem] max-[600px]:h-[10.5rem] overflow-hidden rounded-2xl shadow-[0_24px_50px_rgba(20,17,16,0.22)] border-2 border-white/80 bg-[#faf3e4]"
+        id="hero-glowing-pointer"
+        className="absolute top-1/2 left-1/2 z-[1] pointer-events-none -translate-x-1/2 -translate-y-1/2 flex items-center justify-center w-[18rem] h-[18rem] max-[600px]:w-[12rem] max-[600px]:h-[12rem]"
         style={{ willChange: 'transform, opacity' }}
       >
+        {/* Ambient Soft Outer Glow Light (Warm Tomato & Candlelight Amber) */}
         <div
-          ref={mediaRef}
-          className="w-full h-full relative scale-[1.08] origin-center"
-          style={{ willChange: 'transform' }}
-        >
-          {/* 8 Curated Luxury Gift Keepsake Slides */}
-          {HERO_GIFTS.map((gift, idx) => (
-            <div
-              key={idx}
-              className="hero-gift-slide absolute inset-0 opacity-0 [&.on]:opacity-100 transition-opacity duration-300 overflow-hidden"
-            >
-              <img
-                src={gift.image}
-                alt={gift.title}
-                className="w-full h-full object-cover"
-                loading="eager"
-              />
-              {/* Subtle Ambient Vignette */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#141110]/85 via-transparent to-black/30 pointer-events-none" />
-
-              {/* Gift Badge Pill */}
-              <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-[#141110]/80 backdrop-blur-xs border border-white/20 text-[#faf3e4] text-[10px] max-[600px]:text-[8px] font-archivo uppercase tracking-wider font-bold shadow-xs">
-                {gift.tag}
-              </div>
-
-              {/* Monogram Seal in corner */}
-              <div className="absolute top-3 right-3 w-6 h-6 rounded-full bg-[#ef4a23] text-white flex items-center justify-center font-yellowtail text-[11px] shadow-sm">
-                c.
-              </div>
-
-              {/* Bottom Gift Title & Description */}
-              <div className="absolute bottom-3 inset-x-3 text-center pointer-events-none">
-                <span className="font-archivo uppercase text-xs max-[600px]:text-[10px] font-bold text-[#faf3e4] tracking-tight block drop-shadow-sm">
-                  {gift.title}
-                </span>
-                <span className="font-playfair text-[11px] max-[600px]:text-[9px] text-[#ffd46e] italic block mt-0.5">
-                  {gift.category}
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
+          className="absolute inset-0 rounded-full blur-[48px] max-[600px]:blur-[30px] opacity-80"
+          style={{
+            background:
+              'radial-gradient(circle, rgba(239, 74, 35, 0.42) 0%, rgba(255, 212, 110, 0.35) 45%, rgba(250, 243, 228, 0) 72%)'
+          }}
+        />
+        {/* Medium Concentrated Luminous Core */}
+        <div
+          className="absolute w-[7.5rem] h-[7.5rem] max-[600px]:w-[5rem] max-[600px]:h-[5rem] rounded-full blur-[18px] opacity-85"
+          style={{
+            background:
+              'radial-gradient(circle, rgba(255, 212, 110, 0.85) 0%, rgba(239, 74, 35, 0.45) 55%, transparent 100%)'
+          }}
+        />
+        {/* Precision Glowing Beacon Orb */}
+        <div className="relative w-3.5 h-3.5 rounded-full bg-[#ef4a23] shadow-[0_0_22px_6px_rgba(239,74,35,0.75),0_0_10px_3px_rgba(255,212,110,0.95)] border-2 border-white/90" />
       </div>
 
       {/* Hero Content (z-index 2) */}
