@@ -4,6 +4,58 @@ import { Link } from 'react-router-dom';
 const HERO_VIDEO = 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261110_231342_88260d66-aa30-4612-9157-d7f1b5a66d8c.mp4';
 const HERO_POSTER = 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261110_224241_f6feccd5-1c45-4d22-b369-f927916f9973.png&w=2048&q=85';
 
+// Curated luxury gift keepsakes that cycle behind the cursor as the mouse moves
+const HERO_GIFTS = [
+  {
+    title: 'Keepsake Gift Parcel',
+    category: 'Silk Satin Ribbon & Wax Seal',
+    image: 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=1000&q=85',
+    tag: '🎁 Curated Parcel'
+  },
+  {
+    title: 'Swiss Chrono Horology',
+    category: 'Mechanical Automatic Timepiece',
+    image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1000&q=85',
+    tag: '⌚ Master Horology'
+  },
+  {
+    title: 'Amber & Iris Extrait',
+    category: 'Niche French Perfume',
+    image: 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=1000&q=85',
+    tag: '🌹 Niche Perfume'
+  },
+  {
+    title: 'Bespoke Star Map Frame',
+    category: 'Astronomical Coordinates Art',
+    image: 'https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=1000&q=85',
+    tag: '✨ Celestial Map'
+  },
+  {
+    title: 'Titanium Biometric Ring',
+    category: 'Smart Recovery Horizon',
+    image: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1000&q=85',
+    tag: '💍 Smart Jewelry'
+  },
+  {
+    title: 'Tuscan Full-Grain Leather',
+    category: 'Handcrafted Florence Tote',
+    image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=1000&q=85',
+    tag: '👜 Heirloom Leather'
+  },
+  {
+    title: 'Solar Aviator Eyewear',
+    category: 'Japanese Titanium Sunglasses',
+    image: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1000&q=85',
+    tag: '🕶️ Titanium Frames'
+  },
+  {
+    title: 'Synchronized Touch Lamps',
+    category: 'Long-Distance Connection',
+    image: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=1000&q=85',
+    tag: '🕯️ Ambient Living'
+  }
+];
+
 export const HeroKolibrie: React.FC = () => {
   const heroRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -73,7 +125,7 @@ export const HeroKolibrie: React.FC = () => {
       let settleTimer: any = null;
       let isVisible = false;
 
-      const photoCrops = media.querySelectorAll<HTMLElement>('.crop');
+      const photoCrops = media.querySelectorAll<HTMLElement>('.hero-gift-slide, .crop');
       if (photoCrops.length > 0) {
         photoCrops[0].classList.add('on');
       }
@@ -267,27 +319,54 @@ export const HeroKolibrie: React.FC = () => {
         <div className="absolute inset-0 bg-[#faf3e4]/15" />
       </div>
 
-      {/* Hero Cursor Card (Behind text, z-index 1) */}
+      {/* Hero Cursor Follower Card (Behind text, z-index 1 - Luxury Gift Keepsakes) */}
       <div
         ref={cardRef}
         id="hero-cursor-card"
-        className="absolute top-1/2 left-1/2 z-[1] pointer-events-none -translate-x-1/2 -translate-y-1/2 w-[16rem] h-[16rem] max-[600px]:w-[9.5rem] max-[600px]:h-[9.5rem] overflow-hidden rounded-[0.5rem] shadow-[0_24px_48px_rgba(20,17,16,0.18)]"
+        className="absolute top-1/2 left-1/2 z-[1] pointer-events-none -translate-x-1/2 -translate-y-1/2 w-[17rem] h-[17rem] max-[600px]:w-[10.5rem] max-[600px]:h-[10.5rem] overflow-hidden rounded-2xl shadow-[0_24px_50px_rgba(20,17,16,0.22)] border-2 border-white/80 bg-[#faf3e4]"
         style={{ willChange: 'transform, opacity' }}
       >
         <div
           ref={mediaRef}
-          className="w-full h-full relative scale-[1.2] origin-center"
+          className="w-full h-full relative scale-[1.08] origin-center"
           style={{ willChange: 'transform' }}
         >
-          {/* 8 Curated Luxury Gift / Editorial Photos from sheets */}
-          <div className="crop absolute inset-0 opacity-0 [&.on]:opacity-100 transition-opacity duration-300" data-crop="work2:1" />
-          <div className="crop absolute inset-0 opacity-0 [&.on]:opacity-100 transition-opacity duration-300" data-crop="work1:0" />
-          <div className="crop absolute inset-0 opacity-0 [&.on]:opacity-100 transition-opacity duration-300" data-crop="work2:3" />
-          <div className="crop absolute inset-0 opacity-0 [&.on]:opacity-100 transition-opacity duration-300" data-crop="work1:1" />
-          <div className="crop absolute inset-0 opacity-0 [&.on]:opacity-100 transition-opacity duration-300" data-crop="work2:2" />
-          <div className="crop absolute inset-0 opacity-0 [&.on]:opacity-100 transition-opacity duration-300" data-crop="work1:2" />
-          <div className="crop absolute inset-0 opacity-0 [&.on]:opacity-100 transition-opacity duration-300" data-crop="work2:0" />
-          <div className="crop absolute inset-0 opacity-0 [&.on]:opacity-100 transition-opacity duration-300" data-crop="work1:3" />
+          {/* 8 Curated Luxury Gift Keepsake Slides */}
+          {HERO_GIFTS.map((gift, idx) => (
+            <div
+              key={idx}
+              className="hero-gift-slide absolute inset-0 opacity-0 [&.on]:opacity-100 transition-opacity duration-300 overflow-hidden"
+            >
+              <img
+                src={gift.image}
+                alt={gift.title}
+                className="w-full h-full object-cover"
+                loading="eager"
+              />
+              {/* Subtle Ambient Vignette */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#141110]/85 via-transparent to-black/30 pointer-events-none" />
+
+              {/* Gift Badge Pill */}
+              <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-[#141110]/80 backdrop-blur-xs border border-white/20 text-[#faf3e4] text-[10px] max-[600px]:text-[8px] font-archivo uppercase tracking-wider font-bold shadow-xs">
+                {gift.tag}
+              </div>
+
+              {/* Monogram Seal in corner */}
+              <div className="absolute top-3 right-3 w-6 h-6 rounded-full bg-[#ef4a23] text-white flex items-center justify-center font-yellowtail text-[11px] shadow-sm">
+                c.
+              </div>
+
+              {/* Bottom Gift Title & Description */}
+              <div className="absolute bottom-3 inset-x-3 text-center pointer-events-none">
+                <span className="font-archivo uppercase text-xs max-[600px]:text-[10px] font-bold text-[#faf3e4] tracking-tight block drop-shadow-sm">
+                  {gift.title}
+                </span>
+                <span className="font-playfair text-[11px] max-[600px]:text-[9px] text-[#ffd46e] italic block mt-0.5">
+                  {gift.category}
+                </span>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
