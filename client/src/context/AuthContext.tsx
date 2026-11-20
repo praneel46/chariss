@@ -1,11 +1,13 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import authService from '../services/authService';
 
 export interface User {
   id: string;
   name: string;
   email: string;
-  avatarUrl?: string;
+  avatarUrl?: string | null;
   role: 'user' | 'admin';
+  createdAt?: string;
 }
 
 export interface SavedConsultationSession {
@@ -21,12 +23,14 @@ export interface SavedConsultationSession {
   chosenGiftName?: string;
 }
 
-interface AuthContextType {
+export interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
+  isLoading: boolean;
   login: (email: string, password?: string) => Promise<boolean>;
   register: (name: string, email: string, password?: string) => Promise<boolean>;
-  logout: () => void;
+  logout: () => Promise<void>;
+  refreshSession: () => Promise<boolean>;
   savedSessions: SavedConsultationSession[];
   saveSession: (session: Omit<SavedConsultationSession, 'id' | 'date'>) => void;
 }
@@ -34,115 +38,147 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(() => {
-    try {
-      const saved = localStorage.getItem('charis_user');
-      return saved ? JSON.parse(saved) : {
-        id: 'usr-default-01',
-        name: 'Praneel Kulkarni',
-        email: 'praneel@example.com',
-        role: 'user',
-        avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80'
-      };
-    } catch {
-      return null;
-    }
-  });
+  const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [savedSessions, setSavedSessions] = useState<SavedConsultationSession[]>([]);
 
-  const [savedSessions, setSavedSessions] = useState<SavedConsultationSession[]>(() => {
-    try {
-      const saved = localStorage.getItem('charis_saved_sessions');
-      return saved ? JSON.parse(saved) : [
-        {
-          id: 'sess-01',
-          date: '2026-11-10',
-          recipientName: 'Eleanor',
-          relationship: 'Partner',
-          occasion: 'Anniversary',
-          desiredEmotion: 'Tender Romance',
-          budgetFormatted: '₹25,000 – ₹50,000',
-          interests: ['Design', 'Smart Living', 'Biohacking'],
-          chosenGiftName: 'Oura Ring 4 Biometric Horizon'
-        },
-        {
-          id: 'sess-02',
-          date: '2026-11-08',
-          recipientName: 'Dev',
-          relationship: 'Best Friend',
-          occasion: 'Milestone Birthday',
-          desiredEmotion: 'Joyous Breakthrough',
-          budgetFormatted: '₹15,000 – ₹35,000',
-          interests: ['Photography', 'Music', 'Tech'],
-          chosenGiftName: 'Ray-Ban Meta Smart Glasses (Gen 2)'
-        }
-      ];
-    } catch {
-      return [];
-    }
-  });
-
+  // 1. Session Restoration on Application Startup (GET /api/v1/auth/me)
   useEffect(() => {
-    if (user) {
-      localStorage.setItem('charis_user', JSON.stringify(user));
-      // Load user-specific saved sessions
-      const userKey = `charis_saved_sessions_${user.email.toLowerCase()}`;
-      const userSaved = localStorage.getItem(userKey);
-      if (userSaved) {
-        try {
-          setSavedSessions(JSON.parse(userSaved));
-        } catch {
-          // ignore
+    let isMounted = true;
+
+    const restoreSession = async () => {
+      try {
+        const currentUser = await authService.getCurrentUser();
+        if (isMounted) {
+          setUser(currentUser);
+        }
+      } catch {
+        if (isMounted) {
+          setUser(null);
+        }
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
         }
       }
-    } else {
-      localStorage.removeItem('charis_user');
-    }
-  }, [user]);
+    };
 
+    restoreSession();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  // 2. Load and persist user-specific saved consultation sessions
   useEffect(() => {
     if (user?.email) {
+      try {
+        const userKey = `charis_saved_sessions_${user.email.toLowerCase()}`;
+        const saved = localStorage.getItem(userKey);
+        if (saved) {
+          setSavedSessions(JSON.parse(saved));
+        } else {
+          setSavedSessions([]);
+        }
+      } catch {
+        setSavedSessions([]);
+      }
+    } else {
+      setSavedSessions([]);
+    }
+  }, [user?.email]);
+
+  useEffect(() => {
+    if (user?.email && savedSessions.length > 0) {
       const userKey = `charis_saved_sessions_${user.email.toLowerCase()}`;
       localStorage.setItem(userKey, JSON.stringify(savedSessions));
     }
-    localStorage.setItem('charis_saved_sessions', JSON.stringify(savedSessions));
   }, [savedSessions, user?.email]);
 
-  const login = async (email: string, _password = ''): Promise<boolean> => {
-    // Demo authentication saves user profile to local state and persists across page reloads
-    const newUser: User = {
-      id: 'usr-' + Date.now(),
-      name: email.split('@')[0].replace('.', ' ').toUpperCase(),
-      email,
-      role: 'user',
-      avatarUrl: `https://api.dicebear.com/7.x/initials/svg?seed=${email}`
-    };
-    setUser(newUser);
-    return true;
+  // 3. Authentication Operations
+  const login = async (email: string, password: string = ''): Promise<boolean> => {
+    try {
+      const authenticatedUser = await authService.login(email, password);
+      setUser(authenticatedUser);
+      return true;
+    } catch (error: any) {
+      const message =
+        error.response?.data?.message ||
+        (error.response?.data?.errors ? Object.values(error.response.data.errors).flat().join(', ') : null) ||
+        error.message ||
+        'Login failed';
+      throw new Error(message);
+    }
   };
 
-  const register = async (name: string, email: string, _password = ''): Promise<boolean> => {
-    const newUser: User = {
-      id: 'usr-' + Date.now(),
-      name,
-      email,
-      role: 'user',
-      avatarUrl: `https://api.dicebear.com/7.x/initials/svg?seed=${name}`
-    };
-    setUser(newUser);
-    return true;
+  const register = async (name: string, email: string, password: string = ''): Promise<boolean> => {
+    try {
+      const newUser = await authService.register(name, email, password);
+      setUser(newUser);
+      return true;
+    } catch (error: any) {
+      const message =
+        error.response?.data?.message ||
+        (error.response?.data?.errors ? Object.values(error.response.data.errors).flat().join(', ') : null) ||
+        error.message ||
+        'Registration failed';
+      throw new Error(message);
+    }
   };
 
-  const logout = () => {
-    setUser(null);
+  const logout = async (): Promise<void> => {
+    try {
+      await authService.logout();
+    } catch (error) {
+      console.warn('[CHARIS Auth] Logout request error:', error);
+    } finally {
+      setUser(null);
+      try {
+        localStorage.removeItem('charis_active_consultation');
+        localStorage.removeItem('charis_active_consultation_id');
+        localStorage.removeItem('charis_wishlist');
+        localStorage.removeItem('charis_wishlist_global');
+        localStorage.removeItem('charis_bag');
+        localStorage.removeItem('charis_bag_global');
+        const keysToRemove: string[] = [];
+        for (let i = 0; i < localStorage.length; i++) {
+          const key = localStorage.key(i);
+          if (
+            key &&
+            (key.startsWith('charis_wishlist') ||
+              key.startsWith('charis_bag') ||
+              key.startsWith('charis_active'))
+          ) {
+            keysToRemove.push(key);
+          }
+        }
+        keysToRemove.forEach((k) => localStorage.removeItem(k));
+      } catch {
+        // Safe fallback if localStorage is unavailable
+      }
+    }
+  };
+
+  const refreshSession = async (): Promise<boolean> => {
+    try {
+      await authService.refreshSession();
+      const currentUser = await authService.getCurrentUser();
+      setUser(currentUser);
+      return true;
+    } catch {
+      setUser(null);
+      return false;
+    }
   };
 
   const saveSession = (session: Omit<SavedConsultationSession, 'id' | 'date'>) => {
     const newSession: SavedConsultationSession = {
       ...session,
       id: 'sess-' + Date.now(),
-      date: new Date().toISOString().slice(0, 10)
+      date: new Date().toISOString().slice(0, 10),
     };
-    setSavedSessions(prev => [newSession, ...prev]);
+    setSavedSessions((prev) => [newSession, ...prev]);
   };
 
   return (
@@ -150,11 +186,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       value={{
         user,
         isAuthenticated: !!user,
+        isLoading,
         login,
         register,
         logout,
+        refreshSession,
         savedSessions,
-        saveSession
+        saveSession,
       }}
     >
       {children}

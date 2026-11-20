@@ -814,7 +814,7 @@ export const CURATED_PRODUCTS: Product[] = [
     categoryName: 'Smart Wearables & Eyewear',
     price: 3600,
     currency: 'INR',
-    imageUrl: 'https://images.unsplash.com/photo-1547996160-71dfabb1a7b1?auto=format&fit=crop&w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=800&q=80',
     retailer: {
       id: 'ret-omega',
       name: 'Omega Boutiques',
@@ -1093,7 +1093,7 @@ export const CURATED_PRODUCTS: Product[] = [
     categoryName: 'Intelligent Home & Lifestyle',
     price: 3090,
     currency: 'INR',
-    imageUrl: 'https://images.unsplash.com/photo-1540518614846-7ede433c4ef9?auto=format&fit=crop&w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=800&q=80',
     retailer: {
       id: 'ret-eightsleep',
       name: 'Eight Sleep Flagship',
@@ -1186,7 +1186,7 @@ export const CURATED_PRODUCTS: Product[] = [
     categoryName: 'Content Creation & Digital Tech',
     price: 1850,
     currency: 'INR',
-    imageUrl: 'https://images.unsplash.com/photo-1631553127988-3486ecba7c0e?auto=format&fit=crop&w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80',
     retailer: {
       id: 'ret-anker',
       name: 'Anker Innovation Direct',
@@ -1372,7 +1372,7 @@ export const CURATED_PRODUCTS: Product[] = [
     categoryName: 'AI Wellness & Health Tech',
     price: 1570,
     currency: 'INR',
-    imageUrl: 'https://images.unsplash.com/photo-1559591937-e105e463519c?auto=format&fit=crop&w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=800&q=80',
     retailer: {
       id: 'ret-oralb',
       name: 'Oral-B Dental Studio',

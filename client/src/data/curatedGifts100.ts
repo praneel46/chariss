@@ -29,7 +29,7 @@ export const ALL_100_CURATED_GIFTS: CuratedGiftItem[] = [
     price: 2599,
     rating: 4.8,
     sentiment: "Deep Bond",
-    image: "https://images.unsplash.com/photo-1611591475104-63309a909677?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=800&q=80",
     description: "Surgical-grade brushed titanium bar bracelet laser-etched with the exact GPS coordinates of where you met.",
     tag: "Artisan Metal"
   },
@@ -62,7 +62,7 @@ export const ALL_100_CURATED_GIFTS: CuratedGiftItem[] = [
     price: 3299,
     rating: 4.8,
     sentiment: "Lasting Memory",
-    image: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=800&q=80",
     description: "Acoustic waveform of your voice recording or wedding song screen-printed on heavy cotton archival paper.",
     tag: "Acoustic Art"
   },
@@ -392,7 +392,7 @@ export const ALL_100_CURATED_GIFTS: CuratedGiftItem[] = [
     price: 3800,
     rating: 4.9,
     sentiment: "Quiet Pampering",
-    image: "https://images.unsplash.com/photo-1608248597359-561b369f4e24?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&q=80",
     description: "Shea butter and sweet almond hand balms scented with Grasse vetiver, bergamot, and cedar in aluminum tubes.",
     tag: "French Apothecary"
   },
@@ -458,7 +458,7 @@ export const ALL_100_CURATED_GIFTS: CuratedGiftItem[] = [
     price: 1099,
     rating: 4.8,
     sentiment: "Restorative Calm",
-    image: "https://images.unsplash.com/photo-1608248597359-561b369f4e24?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&q=80",
     description: "Matte porcelain stone ultrasonic aromatherapy diffuser with subtle warm ambient LED ring and timer.",
     tag: "Aroma Tech"
   },
@@ -513,7 +513,7 @@ export const ALL_100_CURATED_GIFTS: CuratedGiftItem[] = [
     price: 2600,
     rating: 4.8,
     sentiment: "Nourishing Soak",
-    image: "https://images.unsplash.com/photo-1608248597359-561b369f4e24?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&q=80",
     description: "Eight large effervescent bath spheres formulated with Epsom salts, organic shea butter, and essential oils.",
     tag: "Botanical Bath"
   },
@@ -898,7 +898,7 @@ export const ALL_100_CURATED_GIFTS: CuratedGiftItem[] = [
     price: 2599,
     rating: 4.9,
     sentiment: "Peak Achievement",
-    image: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=800&q=80",
     description: "Faceted optical crystal trophy with precision sub-surface laser engraving of their personal milestone.",
     tag: "Honor Trophy"
   },
@@ -953,7 +953,7 @@ export const ALL_100_CURATED_GIFTS: CuratedGiftItem[] = [
     price: 2400,
     rating: 4.8,
     sentiment: "Unshakable Pride",
-    image: "https://images.unsplash.com/photo-1611591475104-63309a909677?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=800&q=80",
     description: "Solid brass 45mm commemorative medallion custom struck with achievement year, motto, and reeded edge.",
     tag: "Challenge Coin"
   },
@@ -1019,7 +1019,7 @@ export const ALL_100_CURATED_GIFTS: CuratedGiftItem[] = [
     price: 1800,
     rating: 4.8,
     sentiment: "Unbreakable Connection",
-    image: "https://images.unsplash.com/photo-1611591475104-63309a909677?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=800&q=80",
     description: "Duo of waterproof hand-braided nautical cord bracelets with magnetic interlocking sterling silver charms.",
     tag: "Woven Metal"
   },
@@ -1030,7 +1030,7 @@ export const ALL_100_CURATED_GIFTS: CuratedGiftItem[] = [
     price: 1200,
     rating: 4.9,
     sentiment: "Pocket Solace",
-    image: "https://images.unsplash.com/photo-1611591475104-63309a909677?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=800&q=80",
     description: "Heavy brushed stainless steel coin designed to stay in their pocket as a tactile reminder of your presence.",
     tag: "Pocket Token"
   },
@@ -1085,7 +1085,7 @@ export const ALL_100_CURATED_GIFTS: CuratedGiftItem[] = [
     price: 1600,
     rating: 4.8,
     sentiment: "Better Together",
-    image: "https://images.unsplash.com/photo-1611591475104-63309a909677?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=800&q=80",
     description: "Set of two polished stainless steel keyrings cut from a single puzzle piece with engraved personal initials.",
     tag: "Pocket Keepsake"
   },
