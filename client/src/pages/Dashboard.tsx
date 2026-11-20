@@ -1,14 +1,88 @@
-import React from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useWishlist } from '../context/WishlistContext';
-import { CURATED_PRODUCTS } from '../data/mockData';
-import { Sparkles, Calendar, ArrowUpRight, LogOut, PenTool, Plus } from 'lucide-react';
+import { productService } from '../services/productService';
+import { consultationService, type ConsultationRecord } from '../services/consultationService';
+import type { Product } from '../types';
+import { Calendar, ArrowUpRight, LogOut, PenTool, Plus, AlertCircle, RotateCcw } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
 export const Dashboard: React.FC = () => {
-  const { user, logout, savedSessions } = useAuth();
-  const { wishlist } = useWishlist();
+  const { user, isLoading, logout } = useAuth();
+  const { wishlist, refreshWishlist } = useWishlist();
   const navigate = useNavigate();
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
+  const [consultations, setConsultations] = useState<ConsultationRecord[]>([]);
+  const [isConsultationsLoading, setIsConsultationsLoading] = useState<boolean>(true);
+  const [consultationsError, setConsultationsError] = useState<string | null>(null);
+
+  useEffect(() => {
+    refreshWishlist();
+  }, [refreshWishlist]);
+
+  useEffect(() => {
+    productService.getProducts().then(setAllProducts).catch(() => setAllProducts([]));
+  }, []);
+
+  const fetchConsultations = useCallback(async () => {
+    setIsConsultationsLoading(true);
+    setConsultationsError(null);
+    try {
+      const data = await consultationService.getConsultations();
+      setConsultations(data);
+    } catch (err: any) {
+      setConsultationsError(
+        err.response?.data?.message || err.message || 'Unable to retrieve your consultations from the sanctuary.'
+      );
+      setConsultations([]);
+    } finally {
+      setIsConsultationsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchConsultations();
+  }, [fetchConsultations]);
+
+  // Multi-identifier wishlist matching with deduplication and safe fallback
+  const wishlistedProducts = useMemo(() => {
+    if (!wishlist || wishlist.length === 0 || !allProducts || allProducts.length === 0) {
+      return [];
+    }
+
+    const wishlistSet = new Set(wishlist);
+    const seenProductKeys = new Set<string>();
+
+    return allProducts.filter((product) => {
+      if (!product) return false;
+
+      // 1. Support MongoDB _id, normalized id, and product slug
+      const matchesId = Boolean(product.id && wishlistSet.has(product.id));
+      const matchesMongoId = Boolean(product._id && wishlistSet.has(product._id));
+      const matchesSlug = Boolean(product.slug && wishlistSet.has(product.slug));
+
+      const isMatch = matchesId || matchesMongoId || matchesSlug;
+      if (!isMatch) return false;
+
+      // 2. Prevent duplicate product cards if multiple identifiers refer to the same product
+      const uniqueKey = product.id || product._id || product.slug;
+      if (!uniqueKey || seenProductKeys.has(uniqueKey)) {
+        return false;
+      }
+
+      seenProductKeys.add(uniqueKey);
+      return true;
+    });
+  }, [allProducts, wishlist]);
+
+  if (isLoading) {
+    return (
+      <div className="w-full min-h-screen bg-[#faf3e4] text-[#141110] pt-[8rem] pb-[6rem] px-4 text-center flex flex-col items-center justify-center space-y-4">
+        <div className="w-8 h-8 border-2 border-[#ef4a23] border-t-transparent rounded-full animate-spin" />
+        <p className="font-archivo text-xs uppercase tracking-widest text-[#141110]/60">Loading Session...</p>
+      </div>
+    );
+  }
 
   if (!user) {
     return (
@@ -25,10 +99,8 @@ export const Dashboard: React.FC = () => {
     );
   }
 
-  const wishlistedProducts = CURATED_PRODUCTS.filter(p => wishlist.includes(p.id));
-
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
     navigate('/');
   };
 
@@ -43,10 +115,6 @@ export const Dashboard: React.FC = () => {
               {user.name.slice(0, 2).toUpperCase()}
             </div>
             <div className="space-y-1">
-              <div className="flex items-center gap-2 text-xs font-archivo uppercase tracking-widest text-[#ef4a23] font-bold">
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>Verified Member Session</span>
-              </div>
               <h1
                 className="font-archivo uppercase text-2xl sm:text-4xl font-bold tracking-tight text-[#141110] leading-none"
                 style={{ fontStretch: '72%' }}
@@ -54,7 +122,7 @@ export const Dashboard: React.FC = () => {
                 {user.name}
               </h1>
               <p className="text-xs text-[#141110]/60 font-mono">
-                {user.email} • {savedSessions.length} Active Consultations
+                {user.email} • {consultations.length} Active Consultations
               </p>
             </div>
           </div>
@@ -82,7 +150,7 @@ export const Dashboard: React.FC = () => {
         <div className="space-y-6">
           <div className="flex items-center justify-between border-b border-[#141110]/10 pb-3">
             <h2 className="font-archivo uppercase text-2xl font-bold text-[#141110]">
-              Saved Consultations & Profiles ({savedSessions.length})
+              Saved Consultations & Profiles ({consultations.length})
             </h2>
             <Link
               to="/consultation"
@@ -92,7 +160,45 @@ export const Dashboard: React.FC = () => {
             </Link>
           </div>
 
-          {savedSessions.length === 0 ? (
+          {isConsultationsLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[1, 2, 3].map((n) => (
+                <div
+                  key={n}
+                  className="bg-white rounded-2xl p-6 border border-[#141110]/10 shadow-xs space-y-4 animate-pulse"
+                >
+                  <div className="flex justify-between items-center">
+                    <div className="h-3 bg-[#faf3e4] rounded w-20" />
+                    <div className="h-3 bg-[#faf3e4] rounded w-24" />
+                  </div>
+                  <div className="h-6 bg-[#faf3e4] rounded w-3/4" />
+                  <div className="h-4 bg-[#faf3e4] rounded w-full" />
+                  <div className="h-3 bg-[#faf3e4] rounded w-1/2 pt-2" />
+                </div>
+              ))}
+            </div>
+          ) : consultationsError ? (
+            <div className="p-8 rounded-2xl bg-white border border-rose-200 text-center space-y-4 max-w-xl mx-auto">
+              <div className="w-12 h-12 rounded-full bg-rose-50 text-rose-600 mx-auto flex items-center justify-center">
+                <AlertCircle className="w-6 h-6" />
+              </div>
+              <div>
+                <h3 className="font-archivo text-lg font-bold text-[#141110]">
+                  Unable to Load Consultations
+                </h3>
+                <p className="text-xs text-[#141110]/70 mt-1 leading-relaxed">
+                  {consultationsError}
+                </p>
+              </div>
+              <button
+                onClick={fetchConsultations}
+                className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#ef4a23] hover:bg-[#141110] text-white text-xs font-archivo uppercase tracking-wider font-bold transition-colors cursor-pointer shadow-xs"
+              >
+                <RotateCcw className="w-3.5 h-3.5" />
+                <span>Retry Connection</span>
+              </button>
+            </div>
+          ) : consultations.length === 0 ? (
             <div className="p-10 rounded-2xl bg-white border border-[#141110]/10 text-center space-y-3">
               <p className="font-playfair text-lg text-[#141110]/70 italic">No consultations saved yet.</p>
               <Link
@@ -104,7 +210,7 @@ export const Dashboard: React.FC = () => {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {savedSessions.map((session) => (
+              {consultations.map((session) => (
                 <div
                   key={session.id}
                   className="bg-white rounded-2xl p-6 border border-[#141110]/10 shadow-xs hover:shadow-lg transition-all space-y-4 flex flex-col justify-between"
@@ -134,6 +240,7 @@ export const Dashboard: React.FC = () => {
                   <div className="flex items-center justify-between pt-2">
                     <Link
                       to="/recommendations"
+                      state={{ consultationId: session.id, profile: session }}
                       className="inline-flex items-center gap-1 text-xs font-archivo uppercase tracking-wider font-bold text-[#ef4a23] hover:underline"
                     >
                       <span>View Curations</span>
@@ -172,7 +279,7 @@ export const Dashboard: React.FC = () => {
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {wishlistedProducts.map((prod) => (
-                <div key={prod.id} className="bg-white rounded-2xl border border-[#141110]/10 overflow-hidden shadow-xs flex flex-col justify-between">
+                <div key={prod.id || prod._id || prod.slug} className="bg-white rounded-2xl border border-[#141110]/10 overflow-hidden shadow-xs flex flex-col justify-between">
                   <div className="aspect-[4/3] bg-stone-100 overflow-hidden">
                     <img src={prod.imageUrl} alt={prod.name} className="w-full h-full object-cover" />
                   </div>
