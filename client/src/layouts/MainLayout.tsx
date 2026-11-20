@@ -5,6 +5,7 @@ import { KolibrieFooter } from '../components/kolibrie/KolibrieFooter';
 import { AtelierAndFooterModals, type ModalType } from '../components/kolibrie/AtelierAndFooterModals';
 import { BagDrawer } from '../components/common/BagDrawer';
 import { CursorMarquee } from '../components/kolibrie/CursorMarquee';
+import { CinematicOpening } from '../components/home/CinematicOpening';
 
 export const MainLayout: React.FC = () => {
   const [activeModal, setActiveModal] = useState<ModalType>(null);
@@ -36,6 +37,9 @@ export const MainLayout: React.FC = () => {
 
       {/* Interactive Modal Drawers */}
       <AtelierAndFooterModals activeModal={activeModal} onClose={() => setActiveModal(null)} />
+
+      {/* Gift opening introduction */}
+      <CinematicOpening />
     </div>
   );
 };
