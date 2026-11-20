@@ -45,6 +45,7 @@ body.locked {
   font-family: 'Playfair', Georgia, serif;
   font-size: 1.25rem;
   letter-spacing: 0.4em;
+  pointer-events: none;
 }
 
 #opening .spot {

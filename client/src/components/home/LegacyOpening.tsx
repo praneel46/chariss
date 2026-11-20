@@ -7,8 +7,20 @@ export interface CinematicOpeningProps {
 }
 
 export const LegacyOpening: React.FC<CinematicOpeningProps> = ({ onOpeningComplete }) => {
-  const [hidden, setHidden] = useState(false);
-  const [showReplay, setShowReplay] = useState(false);
+  const initiallyHidden = () => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('intro') === 'true' || params.get('replay') === 'true') return false;
+      return (
+        sessionStorage.getItem('charis-opened') === '1' ||
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      );
+    } catch {
+      return false;
+    }
+  };
+  const [hidden, setHidden] = useState(initiallyHidden);
+  const [showReplay, setShowReplay] = useState(initiallyHidden);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const giftMountRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<gsap.core.Timeline | null>(null);
