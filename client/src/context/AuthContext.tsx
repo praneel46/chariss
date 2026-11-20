@@ -135,6 +135,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } finally {
       setUser(null);
       try {
+        document.cookie = 'charis_access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        document.cookie = 'charis_refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        document.cookie = 'charis_refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/api/v1/auth;';
+        document.cookie = 'charis_guest_session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+      } catch {
+        // Safe fallback
+      }
+      try {
         localStorage.removeItem('charis_active_consultation');
         localStorage.removeItem('charis_active_consultation_id');
         localStorage.removeItem('charis_wishlist');

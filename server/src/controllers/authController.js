@@ -479,7 +479,10 @@ async function logout(req, res, next) {
     }
 
     res.clearCookie('charis_access_token', clearAccessCookieOptions());
+    res.clearCookie('charis_access_token', { ...clearAccessCookieOptions(), path: '/api/v1' });
     res.clearCookie('charis_refresh_token', clearRefreshCookieOptions());
+    res.clearCookie('charis_refresh_token', { ...clearRefreshCookieOptions(), path: '/' });
+    res.clearCookie('charis_refresh_token', { ...clearRefreshCookieOptions(), path: '/api/v1' });
     clearGuestSessionCookie(res);
 
     return res.status(200).json({
