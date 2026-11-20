@@ -18,6 +18,12 @@ const productSchema = new mongoose.Schema(
       name: { type: String, required: true },
       website: { type: String, required: true },
       verified: { type: Boolean, default: true },
+      sourceType: {
+        type: String,
+        enum: ['official_manufacturer', 'authorized_retailer', 'unverified'],
+        default: 'official_manufacturer',
+      },
+      verificationNote: { type: String },
     },
     productUrl: { type: String, required: true },
     tags: [{ type: String }],
@@ -28,11 +34,11 @@ const productSchema = new mongoose.Schema(
     source: { type: String, enum: ['internal', 'affiliate'], default: 'internal' },
     availability: {
       type: String,
-      enum: ['in_stock', 'low_stock', 'made_to_order'],
-      default: 'in_stock',
+      enum: ['in_stock', 'low_stock', 'made_to_order', 'unknown'],
+      default: 'unknown',
     },
     lastVerifiedAt: { type: String, default: () => new Date().toISOString().slice(0, 10) },
-    rating: { type: Number, default: 5.0, min: 0, max: 5 },
+    rating: { type: Number, min: 0, max: 5 },
     reviewCount: { type: Number, default: 0 },
     badge: { type: String },
     serialNumber: { type: String, default: '01' },
@@ -40,5 +46,8 @@ const productSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+productSchema.index({ active: 1, price: 1 });
+productSchema.index({ active: 1, categoryId: 1 });
 
 module.exports = mongoose.model('Product', productSchema);

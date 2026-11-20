@@ -3,8 +3,11 @@ node_modules/
 .pnp
 .pnp.js
 
-# Testing & Coverage
-coverage/
+# Temporary & Scratch Files
+scratch/
+.system_generated/
+*.tmp
+
 
 # Production Builds
 dist/
@@ -14,6 +17,8 @@ out/
 
 # Environment Files
 .env
+.env.*
+!.env.example
 .env.local
 .env.development.local
 .env.test.local

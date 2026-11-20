@@ -1,42 +1,39 @@
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
+const cookieParser = require('cookie-parser');
+const config = require('./config/env');
+const { csrfProtection, isAllowedOrigin } = require('./middleware/csrf');
 
+const authRoutes = require('./routes/authRoutes');
 const productRoutes = require('./routes/productRoutes');
 const consultationRoutes = require('./routes/consultationRoutes');
 const giftCardRoutes = require('./routes/giftCardRoutes');
+const healthRoutes = require('./routes/healthRoutes');
 
 const app = express();
 
 // Security middleware
 app.use(helmet());
 
-// Dynamic CORS configuration allowing localhost, Vercel deployments, and CLIENT_ORIGIN
-const allowedOrigins = [
-  'http://localhost:5173',
-  'http://localhost:3000',
-  process.env.CLIENT_ORIGIN,
-].filter(Boolean);
-
+// CORS configuration: only reflect trusted origins with credentials
 app.use(
   cors({
     origin: (origin, callback) => {
       // Allow requests with no origin (like mobile apps, curl, server-to-server)
       if (!origin) return callback(null, true);
-      if (
-        allowedOrigins.includes(origin) ||
-        origin.endsWith('.vercel.app') ||
-        origin.includes('localhost')
-      ) {
+      if (isAllowedOrigin(origin)) {
         return callback(null, true);
       }
-      callback(null, true); // Permissive in dev/MVP to avoid blocking deployments
+      return callback(null, false);
     },
     credentials: true,
   })
 );
 
 app.use(express.json());
+app.use(cookieParser());
+app.use(csrfProtection);
 
 // Health Check Endpoint (Vital for Render zero-downtime health probes)
 app.get('/health', (req, res) => {
@@ -58,6 +55,8 @@ app.get('/', (req, res) => {
 });
 
 // REST API Contract v1
+app.use('/api/v1/health', healthRoutes);
+app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/products', productRoutes);
 app.use('/api/v1/consultations', consultationRoutes);
 app.use('/api/v1/gift-cards', giftCardRoutes);

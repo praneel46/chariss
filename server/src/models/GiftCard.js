@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const giftCardSchema = new mongoose.Schema(
   {
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
+    guestSessionHash: { type: String, default: null },
+    guestSessionExpiresAt: { type: Date, default: null },
     recipientName: { type: String, trim: true },
     senderName: { type: String, trim: true },
     occasion: { type: String, default: 'General' },
@@ -20,5 +22,8 @@ const giftCardSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+giftCardSchema.index({ userId: 1, createdAt: -1 });
+giftCardSchema.index({ guestSessionHash: 1, createdAt: -1 }, { sparse: true });
 
 module.exports = mongoose.model('GiftCard', giftCardSchema);
