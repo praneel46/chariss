@@ -115,10 +115,10 @@ export const KolibrieNav: React.FC = () => {
             style={{ fontWeight: 700, fontStretch: '72%' }}
             title="My Account & Saved Sessions"
           >
-            <span className="w-5 h-5 rounded-full bg-[#ef4a23] text-white flex items-center justify-center text-[10px] font-bold">
+            <span className="w-5 h-5 rounded-full bg-[#ef4a23] text-white flex items-center justify-center text-[10px] font-bold shrink-0">
               {user.name.charAt(0)}
             </span>
-            <span className="hidden sm:inline">{user.name.split(' ')[0]}</span>
+            <span>{user.name.split(' ')[0]}</span>
           </Link>
         ) : (
           <div className="flex items-center bg-white rounded-full shadow-[0_4px_20px_rgba(20,17,16,0.06)] h-[3rem] max-[600px]:h-[2.4rem] p-1 gap-1">
@@ -148,17 +148,20 @@ export const KolibrieNav: React.FC = () => {
           <span>Consult</span>
         </Link>
 
-        <button
-          onClick={() => setIsBagOpen(true)}
-          className="h-[3rem] max-[600px]:h-[2.4rem] px-[1rem] max-[600px]:px-[0.75rem] bg-white rounded-full shadow-[0_4px_20px_rgba(20,17,16,0.06)] flex items-center gap-[0.4rem] font-archivo uppercase text-[1.05rem] max-[600px]:text-[0.85rem] text-[#141110] cursor-pointer hover:bg-[#ffd46e] transition-colors"
-          style={{ fontWeight: 700, fontStretch: '72%' }}
-          aria-label="View shopping bag"
-        >
-          <span>Bag</span>
-          <span className="w-[1.25rem] h-[1.25rem] rounded-full bg-[#ef4a23] text-white text-[0.8rem] flex items-center justify-center font-bold">
-            {totalCount}
-          </span>
-        </button>
+        {/* Gift Bag Drawer Button - Hidden on main homepage navigation per UX requirements */}
+        {!isHome && (
+          <button
+            onClick={() => setIsBagOpen(true)}
+            className="h-[3rem] max-[600px]:h-[2.4rem] px-[1rem] max-[600px]:px-[0.75rem] bg-white rounded-full shadow-[0_4px_20px_rgba(20,17,16,0.06)] flex items-center gap-[0.4rem] font-archivo uppercase text-[1.05rem] max-[600px]:text-[0.85rem] text-[#141110] cursor-pointer hover:bg-[#ffd46e] transition-colors"
+            style={{ fontWeight: 700, fontStretch: '72%' }}
+            aria-label="View shopping bag"
+          >
+            <span>Bag</span>
+            <span className="w-[1.25rem] h-[1.25rem] rounded-full bg-[#ef4a23] text-white text-[0.8rem] flex items-center justify-center font-bold">
+              {totalCount}
+            </span>
+          </button>
+        )}
       </div>
 
       {/* Mobile Floating Bottom Navigation Dock (≤1023px) */}
@@ -222,18 +225,20 @@ export const KolibrieNav: React.FC = () => {
           <span>{user ? 'Account' : 'Login'}</span>
         </Link>
 
-        <button
-          onClick={() => setIsBagOpen(true)}
-          className="flex flex-col items-center gap-0.5 text-[0.7rem] font-archivo uppercase font-bold tracking-wider text-[#141110]/70 relative cursor-pointer"
-        >
-          <span className="text-base leading-none">🛍️</span>
-          <span>Bag</span>
-          {totalCount > 0 && (
-            <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#ef4a23] text-white text-[9px] flex items-center justify-center font-bold">
-              {totalCount}
-            </span>
-          )}
-        </button>
+        {!isHome && (
+          <button
+            onClick={() => setIsBagOpen(true)}
+            className="flex flex-col items-center gap-0.5 text-[0.7rem] font-archivo uppercase font-bold tracking-wider text-[#141110]/70 relative cursor-pointer"
+          >
+            <span className="text-base leading-none">🛍️</span>
+            <span>Bag</span>
+            {totalCount > 0 && (
+              <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#ef4a23] text-white text-[9px] flex items-center justify-center font-bold">
+                {totalCount}
+              </span>
+            )}
+          </button>
+        )}
       </div>
     </nav>
   );

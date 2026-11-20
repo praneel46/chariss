@@ -30,6 +30,8 @@ html {
   box-sizing: border-box;
   overflow-x: hidden;
   max-width: 100vw;
+  /* Prevents scrollbar-removal layout shift when modals/drawers open */
+  scrollbar-gutter: stable;
 }
 
 @media (max-width: 991px) {
@@ -192,4 +194,289 @@ html:not([data-page-ready]) main {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #ef4a23;
+}
+
+/* Ambient Music Waveform Equalizer Keyframes */
+@keyframes equalizer-1 {
+  0%, 100% { height: 4px; }
+  50% { height: 22px; }
+}
+@keyframes equalizer-2 {
+  0%, 100% { height: 18px; }
+  50% { height: 6px; }
+}
+@keyframes equalizer-3 {
+  0%, 100% { height: 8px; }
+  50% { height: 24px; }
+}
+@keyframes equalizer-4 {
+  0%, 100% { height: 20px; }
+  50% { height: 10px; }
+}
+
+.animate-equalizer-1 {
+  animation: equalizer-1 0.75s ease-in-out infinite;
+}
+.animate-equalizer-2 {
+  animation: equalizer-2 0.65s ease-in-out infinite 0.1s;
+}
+.animate-equalizer-3 {
+  animation: equalizer-3 0.85s ease-in-out infinite 0.2s;
+}
+.animate-equalizer-4 {
+  animation: equalizer-4 0.7s ease-in-out infinite 0.15s;
+}
+
+/* ============================================================
+   OCCASION ACCORDION & PARTICLE ANIMATIONS (LANDING PAGE)
+   ============================================================ */
+
+.occ-container {
+  display: flex;
+  gap: 0.75rem;
+  height: min(75vh, 600px);
+  width: 100%;
+}
+
+.occ-panel {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  cursor: pointer;
+  transition: flex 0.7s cubic-bezier(0.6, 0.05, 0.2, 1), transform 0.4s ease;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 0;
+  text-align: left;
+  color: #faf3e4;
+  background: var(--c1);
+}
+
+.occ-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 20%, var(--c2), transparent 65%), linear-gradient(to top, rgba(20, 17, 16, 0.92) 0%, rgba(20, 17, 16, 0.45) 60%, transparent 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.occ-panel.active {
+  flex: 3.4;
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+}
+
+.occ-panel .occ-fx {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  transition: opacity 0.6s ease;
+  overflow: hidden;
+  z-index: 3;
+}
+
+.occ-panel.active .occ-fx {
+  opacity: 1;
+}
+
+.occ-fx i {
+  position: absolute;
+  display: block;
+  will-change: transform;
+}
+
+.occ-panel .occ-body {
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: 2rem;
+  position: absolute;
+  z-index: 4;
+}
+
+.occ-panel h3.occ-title {
+  font-family: 'Playfair', Georgia, serif;
+  font-size: clamp(1.6rem, 2.4vw, 2.2rem);
+  font-weight: 700;
+  color: #faf3e4;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  position: static;
+  align-self: flex-start;
+  transition: all 0.5s cubic-bezier(0.6, 0.05, 0.2, 1);
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+}
+
+.occ-panel.active h3.occ-title {
+  writing-mode: horizontal-tb;
+  transform: none;
+  position: static;
+  font-size: clamp(2rem, 3.2vw, 2.8rem);
+  color: #ffd46e;
+}
+
+.occ-panel .occ-more {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.6s cubic-bezier(0.6, 0.05, 0.2, 1), opacity 0.5s 0.15s ease;
+}
+
+.occ-panel.active .occ-more {
+  max-height: 220px;
+  opacity: 1;
+}
+
+/* Keyframes for Occasion FX */
+@keyframes rise {
+  from {
+    transform: translateY(0) rotate(-6deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.9;
+  }
+  to {
+    transform: translateY(-120vh) rotate(8deg);
+    opacity: 0;
+  }
+}
+
+@keyframes fall {
+  from {
+    transform: translateY(-10%) rotate(0);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.9;
+  }
+  to {
+    transform: translateY(700px) rotate(300deg);
+    opacity: 0;
+  }
+}
+
+@keyframes drift {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(28px, -35px) rotate(8deg);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.5);
+  }
+}
+
+@media (max-width: 767px) {
+  .occ-container {
+    flex-direction: column;
+    height: auto;
+    gap: 0.6rem;
+  }
+
+  .occ-panel {
+    flex: none;
+    height: 82px;
+    transition: height 0.6s cubic-bezier(0.6, 0.05, 0.2, 1);
+    border-radius: 1.25rem;
+  }
+
+  .occ-panel.active {
+    height: 380px;
+    flex: none;
+  }
+
+  .occ-panel .occ-body {
+    padding: 1.25rem;
+  }
+
+  .occ-panel:not(.active) .occ-body {
+    justify-content: center;
+  }
+
+  .occ-panel h3.occ-title,
+  .occ-panel.active h3.occ-title {
+    writing-mode: horizontal-tb;
+    transform: none;
+    position: static;
+    font-size: 1.6rem;
+  }
+}
+
+/* ============================================================
+   GIANT FLOATING, FLOWING, GLOWING CHARIS FOOTER
+   ============================================================ */
+
+.giant-footer-charis {
+  font-family: 'Archivo', sans-serif;
+  font-weight: 900;
+  font-size: clamp(3.8rem, 21vw, 20rem);
+  line-height: 0.82;
+  letter-spacing: -0.04em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+  width: 100%;
+  margin: 1.5rem 0 0;
+  position: relative;
+}
+
+.giant-footer-letter {
+  display: inline-block;
+  will-change: transform;
+  background: radial-gradient(
+    circle 260px at var(--gx, -600px) var(--gy, -600px),
+    #ffffff 0%,
+    #ffd46e 32%,
+    #ef4a23 68%,
+    rgba(250, 243, 228, 0.14) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  transition: filter 0.3s ease;
+  filter: drop-shadow(0 0 2px rgba(255, 212, 110, 0.2));
+  animation: charisBlowingWave 6s ease-in-out infinite;
+}
+
+.giant-footer-letter:nth-child(1) { animation-delay: 0s; }
+.giant-footer-letter:nth-child(2) { animation-delay: 0.35s; }
+.giant-footer-letter:nth-child(3) { animation-delay: 0.7s; }
+.giant-footer-letter:nth-child(4) { animation-delay: 1.05s; }
+.giant-footer-letter:nth-child(5) { animation-delay: 1.4s; }
+.giant-footer-letter:nth-child(6) { animation-delay: 1.75s; }
+
+@keyframes charisBlowingWave {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  30% {
+    transform: translateY(-8px) rotate(-0.75deg);
+  }
+  70% {
+    transform: translateY(6px) rotate(0.75deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .giant-footer-letter {
+    animation: none !important;
+  }
+  .occ-fx i {
+    animation: none !important;
+  }
 }

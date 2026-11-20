@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import type { ModalType } from './AtelierAndFooterModals';
 
@@ -7,17 +7,80 @@ interface KolibrieFooterProps {
 }
 
 export const KolibrieFooter: React.FC<KolibrieFooterProps> = ({ onOpenModal }) => {
+  const giantRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const giant = giantRef.current;
+    if (!giant) return;
+
+    const fine = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!fine || reduced) return;
+
+    const spans = giant.querySelectorAll<HTMLSpanElement>('.giant-footer-letter');
+    const gsap = (window as any).gsap;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      spans.forEach((s) => {
+        const r = s.getBoundingClientRect();
+        const cxp = r.left + r.width / 2;
+        const cyp = r.top + r.height / 2;
+        const dx = e.clientX - cxp;
+        const dy = e.clientY - cyp;
+        const d = Math.hypot(dx, dy);
+        const k = Math.max(0, 1 - d / 420);
+
+        if (gsap) {
+          gsap.to(s, {
+            x: dx * 0.16 * k,
+            y: dy * 0.12 * k - 10 * k,
+            duration: 0.35,
+            overwrite: 'auto',
+          });
+        }
+        s.style.setProperty('--gx', `${e.clientX - r.left}px`);
+        s.style.setProperty('--gy', `${e.clientY - r.top}px`);
+      });
+    };
+
+    const handleMouseLeave = () => {
+      spans.forEach((s) => {
+        if (gsap) {
+          gsap.to(s, {
+            x: 0,
+            y: 0,
+            duration: 0.85,
+            ease: 'elastic.out(1, 0.45)',
+          });
+        }
+        s.style.removeProperty('--gx');
+        s.style.removeProperty('--gy');
+      });
+    };
+
+    giant.addEventListener('mousemove', handleMouseMove);
+    giant.addEventListener('mouseleave', handleMouseLeave);
+
+    return () => {
+      giant.removeEventListener('mousemove', handleMouseMove);
+      giant.removeEventListener('mouseleave', handleMouseLeave);
+      if (gsap) {
+        spans.forEach((s) => gsap.killTweensOf(s));
+      }
+    };
+  }, []);
+
   return (
-    <footer className="relative z-10 w-full pt-[5rem] pb-[3.5rem] px-[2rem] bg-[#141110] text-[#faf3e4] border-t border-[#faf3e4]/10 overflow-hidden">
+    <footer className="relative z-10 w-full pt-[5rem] pb-[3.5rem] px-4 sm:px-8 bg-[#141110] text-[#faf3e4] border-t border-[#faf3e4]/10 overflow-hidden">
       {/* Background Subtle Watermark */}
       <div
         aria-hidden="true"
-        className="absolute -bottom-8 left-1/2 -translate-x-1/2 select-none pointer-events-none font-yellowtail text-[18vw] text-white/[0.03] whitespace-nowrap leading-none z-0"
+        className="absolute -bottom-8 left-1/2 -translate-x-1/2 select-none pointer-events-none font-yellowtail text-[18vw] text-white/[0.02] whitespace-nowrap leading-none z-0"
       >
         charis.
       </div>
 
-      <div className="max-w-7xl mx-auto relative z-10 space-y-12">
+      <div className="max-w-7xl mx-auto relative z-10 space-y-12 sm:space-y-16">
         {/* Top Row: Brand & Tagline + 4 Interactive Highlights */}
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 pb-10 border-b border-[#faf3e4]/10">
           <div>
@@ -86,53 +149,36 @@ export const KolibrieFooter: React.FC<KolibrieFooterProps> = ({ onOpenModal }) =
           </div>
         </div>
 
-        {/* Member Access / Login & Sign Up Banner */}
-        <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/10 flex flex-col md:flex-row items-center justify-between gap-5">
-          <div className="space-y-1 text-center md:text-left">
-            <div className="flex items-center justify-center md:justify-start gap-2 text-xs font-archivo uppercase tracking-widest text-[#ffd46e] font-bold">
-              <span>Member Sanctuary</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#ef4a23]" />
-              <span>Saved Consultation Memory</span>
-            </div>
-            <p className="font-playfair text-sm text-[#faf3e4]/75 italic max-w-xl">
-              Save your calibrated emotional consultations, personalized framed gift cards, and chosen keepsakes securely across devices.
-            </p>
-          </div>
-
-          <div className="flex items-center gap-3 shrink-0">
-            <Link
-              to="/login?mode=login"
-              className="px-5 py-2.5 rounded-full bg-white/10 hover:bg-white hover:text-[#141110] text-xs font-archivo uppercase tracking-wider font-bold transition-all text-[#faf3e4]"
-            >
-              Sign In
-            </Link>
-            <Link
-              to="/login?mode=signup"
-              className="px-5 py-2.5 rounded-full bg-[#ef4a23] hover:bg-[#ffd46e] hover:text-[#141110] text-white text-xs font-archivo uppercase tracking-wider font-bold transition-all shadow-md"
-            >
-              Create Account (Sign Up)
-            </Link>
+        {/* Centerpiece: Floating, Flowing, Glowing CHARIS Signature with Cursor Magnetic Glow */}
+        <div className="py-2 sm:py-6 overflow-hidden">
+          <div
+            ref={giantRef}
+            className="giant-footer-charis select-none"
+            aria-label="CHARIS"
+          >
+            {'CHARIS'.split('').map((char, index) => (
+              <span
+                key={index}
+                className="giant-footer-letter cursor-default font-archivo tracking-tighter"
+              >
+                {char}
+              </span>
+            ))}
           </div>
         </div>
 
         {/* Bottom Row: Navigation Links & Copyright */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-4 text-xs">
-          <div className="flex flex-wrap items-center gap-6 font-archivo uppercase tracking-wider text-[#faf3e4]/80">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-4 text-xs border-t border-[#faf3e4]/10">
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-6 font-archivo uppercase tracking-wider text-[#faf3e4]/80">
             <Link to="/consultation" className="hover:text-[#ef4a23] transition-colors">
               Start Consultation
             </Link>
             <Link to="/gift-studio" className="hover:text-[#ef4a23] transition-colors">
               Gift Studio (100 Curated)
             </Link>
-            <a href="/#curators" className="hover:text-[#ef4a23] transition-colors">
-              Meet Curators
+            <a href="/#occasions" className="hover:text-[#ef4a23] transition-colors">
+              Occasions
             </a>
-            <Link to="/login?mode=login" className="hover:text-[#ef4a23] transition-colors">
-              Sign In
-            </Link>
-            <Link to="/login?mode=signup" className="hover:text-[#ffd46e] font-bold transition-colors">
-              Sign Up
-            </Link>
             <button
               onClick={() => onOpenModal('ateliers')}
               className="hover:text-[#ef4a23] transition-colors uppercase font-archivo cursor-pointer"
