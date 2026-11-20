@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { KolibrieNav } from '../components/kolibrie/KolibrieNav';
 import { KolibrieFooter } from '../components/kolibrie/KolibrieFooter';
 import { AtelierAndFooterModals, type ModalType } from '../components/kolibrie/AtelierAndFooterModals';
 import { BagDrawer } from '../components/common/BagDrawer';
 import { CursorMarquee } from '../components/kolibrie/CursorMarquee';
 import { AmbientMusicPlayer } from '../components/common/AmbientMusicPlayer';
+import { CinematicOpening } from '../components/home/CinematicOpening';
 import { useAuth } from '../context/AuthContext';
 
 export const MainLayout: React.FC = () => {
   const [activeModal, setActiveModal] = useState<ModalType>(null);
   const { isAuthenticated } = useAuth();
+  const location = useLocation();
+  const isHome = location.pathname === '/';
 
   useEffect(() => {
     const handleOpenAtelier = () => setActiveModal('ateliers');
@@ -44,6 +47,9 @@ export const MainLayout: React.FC = () => {
 
       {/* Interactive Modal Drawers */}
       <AtelierAndFooterModals activeModal={activeModal} onClose={() => setActiveModal(null)} />
+
+      {/* 3D Cinematic Gift Opening Introduction (Homepage) */}
+      {isHome && <CinematicOpening />}
     </div>
   );
 };
