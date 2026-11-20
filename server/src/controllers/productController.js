@@ -1,40 +1,23 @@
+const mongoose = require('mongoose');
 const Product = require('../models/Product');
-const { SEED_PRODUCTS } = require('../data/seedData');
 
 // GET /api/v1/products
 const getProducts = async (req, res) => {
   try {
     const { category, search, occasion } = req.query;
-    let products = [];
+    const query = { active: true };
 
-    // Try MongoDB first if connected
-    if (Product.db && Product.db.readyState === 1) {
-      const query = { active: true };
-      if (category && category !== 'all') query.categoryId = category;
-      if (occasion) query.occasions = occasion;
-      if (search) {
-        query.$or = [
-          { name: { $regex: search, $options: 'i' } },
-          { description: { $regex: search, $options: 'i' } },
-          { tags: { $in: [new RegExp(search, 'i')] } },
-        ];
-      }
-      products = await Product.find(query).sort({ serialNumber: 1 });
+    if (category && category !== 'all') query.categoryId = category;
+    if (occasion) query.occasions = occasion;
+    if (search) {
+      query.$or = [
+        { name: { $regex: search, $options: 'i' } },
+        { description: { $regex: search, $options: 'i' } },
+        { tags: { $in: [new RegExp(search, 'i')] } },
+      ];
     }
 
-    // Fallback to in-memory curated catalogue
-    if (!products || products.length === 0) {
-      products = SEED_PRODUCTS.filter((p) => {
-        const matchesCategory = !category || category === 'all' || p.categoryId === category;
-        const matchesOccasion = !occasion || p.occasions.includes(occasion);
-        const matchesSearch =
-          !search ||
-          p.name.toLowerCase().includes(search.toLowerCase()) ||
-          p.description.toLowerCase().includes(search.toLowerCase()) ||
-          p.tags.some((t) => t.toLowerCase().includes(search.toLowerCase()));
-        return matchesCategory && matchesOccasion && matchesSearch;
-      });
-    }
+    const products = await Product.find(query).sort({ serialNumber: 1 });
 
     res.json({
       success: true,
@@ -45,7 +28,7 @@ const getProducts = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: 'Failed to retrieve products',
+      message: 'Failed to retrieve products from database',
       error: { code: 'SERVER_ERROR', details: error.message },
     });
   }
@@ -54,13 +37,8 @@ const getProducts = async (req, res) => {
 // GET /api/v1/products/featured
 const getFeaturedProducts = async (req, res) => {
   try {
-    let products = [];
-    if (Product.db && Product.db.readyState === 1) {
-      products = await Product.find({ active: true }).limit(6).sort({ serialNumber: 1 });
-    }
-    if (!products || products.length === 0) {
-      products = SEED_PRODUCTS.slice(0, 6);
-    }
+    const products = await Product.find({ active: true }).limit(6).sort({ serialNumber: 1 });
+
     res.json({
       success: true,
       message: 'Featured products retrieved successfully',
@@ -70,7 +48,7 @@ const getFeaturedProducts = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: 'Failed to retrieve featured products',
+      message: 'Failed to retrieve featured products from database',
       error: { code: 'SERVER_ERROR', details: error.message },
     });
   }
@@ -80,15 +58,16 @@ const getFeaturedProducts = async (req, res) => {
 const getProductById = async (req, res) => {
   try {
     const { id } = req.params;
-    let product = null;
 
-    if (Product.db && Product.db.readyState === 1) {
-      product = await Product.findById(id).catch(() => null);
+    const queryConditions = [{ slug: id }, { serialNumber: id }];
+    if (mongoose.Types.ObjectId.isValid(id)) {
+      queryConditions.unshift({ _id: id });
     }
 
-    if (!product) {
-      product = SEED_PRODUCTS.find((p) => p.slug === id || p.serialNumber === id);
-    }
+    const product = await Product.findOne({
+      $or: queryConditions,
+      active: true,
+    });
 
     if (!product) {
       return res.status(404).json({
@@ -105,7 +84,7 @@ const getProductById = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: 'Failed to retrieve product',
+      message: 'Failed to retrieve product from database',
       error: { code: 'SERVER_ERROR', details: error.message },
     });
   }
