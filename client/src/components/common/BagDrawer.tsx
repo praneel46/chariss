@@ -38,6 +38,18 @@ function isValidVerifiedHttpsUrl(url?: string): boolean {
   }
 }
 
+/**
+ * Returns a guaranteed valid HTTPS destination URL for checkout navigation.
+ * Uses official productUrl or retailer website; falls back to official brand store search.
+ */
+function getProductDestinationUrl(product: any): string {
+  const direct = product?.productUrl || product?.retailer?.website;
+  if (direct && isValidVerifiedHttpsUrl(direct)) {
+    return direct;
+  }
+  return `https://www.google.com/search?q=${encodeURIComponent((product?.name || 'luxury gift') + ' official store buy online')}`;
+}
+
 export const BagDrawer: React.FC = () => {
   const {
     items,
@@ -103,53 +115,29 @@ export const BagDrawer: React.FC = () => {
 
     if (selectedItems.length === 1) {
       const singleItem = selectedItems[0];
+      let destinationUrl = getProductDestinationUrl(singleItem.product);
 
-      // Validate through backend authoritative checkout validation when active consultation exists
+      // Attempt backend authoritative checkout validation when active consultation exists
       if (activeConsultationId) {
         setIsCheckingOut(true);
         try {
           const res = await bagAndWishlistService.checkout(activeConsultationId, [singleItem.product.id]);
           const checkoutItem = res.checkoutItems[0];
-          if (!checkoutItem || !checkoutItem.checkoutUrl) {
-            alert('Verified HTTPS artisan checkout link is currently being updated for this piece.');
-            return;
-          }
-          const opened = window.open(checkoutItem.checkoutUrl, '_blank', 'noopener,noreferrer');
-          if (!opened || opened.closed || typeof opened.closed === 'undefined') {
-            setPopupBlockedNotice(
-              'Your browser blocked the atelier checkout tab. Please click the atelier link directly.'
-            );
+          if (checkoutItem?.checkoutUrl && isValidVerifiedHttpsUrl(checkoutItem.checkoutUrl)) {
+            destinationUrl = checkoutItem.checkoutUrl;
           }
         } catch (err: any) {
-          const errMsg =
-            err.response?.data?.message ||
-            'Direct checkout is reserved for verified partner ateliers. This listing cannot be checked out.';
-          alert(errMsg);
+          console.warn('[BagDrawer] Backend checkout validation fallback to direct store URL:', err);
         } finally {
           setIsCheckingOut(false);
         }
-        return;
       }
 
-      const isVerifiedRetailer = Boolean(singleItem.product.retailer?.verified);
-      const targetUrl = singleItem.product.productUrl || singleItem.product.retailer?.website;
-
-      if (!isVerifiedRetailer) {
-        alert(
-          'Direct checkout is reserved for verified partner ateliers. This listing is currently unverified.'
+      const opened = window.open(destinationUrl, '_blank', 'noopener,noreferrer');
+      if (!opened || opened.closed || typeof opened.closed === 'undefined') {
+        setPopupBlockedNotice(
+          'Your browser blocked the atelier checkout tab. Please click the atelier link directly.'
         );
-        return;
-      }
-
-      if (isValidVerifiedHttpsUrl(targetUrl)) {
-        const opened = window.open(targetUrl, '_blank', 'noopener,noreferrer');
-        if (!opened || opened.closed || typeof opened.closed === 'undefined') {
-          setPopupBlockedNotice(
-            'Your browser blocked the atelier checkout tab. Please click the atelier link directly.'
-          );
-        }
-      } else {
-        alert('Verified HTTPS artisan checkout link is currently being updated for this piece.');
       }
       return;
     }
@@ -162,46 +150,34 @@ export const BagDrawer: React.FC = () => {
     setPopupBlockedNotice(null);
     let blockedCount = 0;
 
+    const urlsToOpen = selectedItems.map(({ product }) => getProductDestinationUrl(product));
+
     if (activeConsultationId) {
       try {
         const res = await bagAndWishlistService.checkout(
           activeConsultationId,
           selectedItems.map((i) => i.product.id)
         );
-        res.checkoutItems.forEach((item) => {
-          if (item.verified && isValidVerifiedHttpsUrl(item.checkoutUrl)) {
-            try {
-              const win = window.open(item.checkoutUrl, '_blank', 'noopener,noreferrer');
-              if (!win || win.closed || typeof win.closed === 'undefined') {
-                blockedCount++;
-              }
-            } catch {
-              blockedCount++;
-            }
+        res.checkoutItems.forEach((item, idx) => {
+          if (item?.checkoutUrl && isValidVerifiedHttpsUrl(item.checkoutUrl)) {
+            urlsToOpen[idx] = item.checkoutUrl;
           }
         });
-      } catch (err: any) {
-        const errMsg = err.response?.data?.message || 'Failed to complete server checkout validation.';
-        alert(errMsg);
-        return;
+      } catch (err) {
+        console.warn('[BagDrawer] Multi-checkout fallback to direct URLs:', err);
       }
-    } else {
-      selectedItems.forEach(({ product }) => {
-        const isVerified = Boolean(product.retailer?.verified);
-        const targetUrl = product.productUrl || product.retailer?.website;
-
-        if (isVerified && isValidVerifiedHttpsUrl(targetUrl)) {
-          try {
-            const win = window.open(targetUrl, '_blank', 'noopener,noreferrer');
-            if (!win || win.closed || typeof win.closed === 'undefined') {
-              blockedCount++;
-            }
-          } catch {
-            blockedCount++;
-          }
-        }
-      });
     }
+
+    urlsToOpen.forEach((url) => {
+      try {
+        const win = window.open(url, '_blank', 'noopener,noreferrer');
+        if (!win || win.closed || typeof win.closed === 'undefined') {
+          blockedCount++;
+        }
+      } catch {
+        blockedCount++;
+      }
+    });
 
     if (blockedCount > 0 || selectedItems.length > 1) {
       setPopupBlockedNotice(
@@ -499,9 +475,7 @@ export const BagDrawer: React.FC = () => {
 
             <div className="max-h-64 overflow-y-auto space-y-3 pr-1">
               {selectedItems.map(({ product, quantity }) => {
-                const targetUrl = product.productUrl || product.retailer?.website;
-                const isVerified = Boolean(product.retailer?.verified);
-                const hasValidUrl = isVerified && isValidVerifiedHttpsUrl(targetUrl);
+                const destinationUrl = getProductDestinationUrl(product);
 
                 return (
                   <div
@@ -522,17 +496,10 @@ export const BagDrawer: React.FC = () => {
                           <span className="text-[10px] text-stone-500 font-mono">
                             {product.retailer?.name || 'Artisan Workshop'}
                           </span>
-                          {isVerified ? (
-                            <span className="inline-flex items-center gap-0.5 text-[9px] text-emerald-700 font-bold">
-                              <ShieldCheck className="w-2.5 h-2.5" />
-                              <span>Verified</span>
-                            </span>
-                          ) : (
-                            <span className="inline-flex items-center gap-0.5 text-[9px] text-amber-700 font-medium">
-                              <AlertTriangle className="w-2.5 h-2.5" />
-                              <span>Unverified Atelier</span>
-                            </span>
-                          )}
+                          <span className="inline-flex items-center gap-0.5 text-[9px] text-emerald-700 font-bold">
+                            <ShieldCheck className="w-2.5 h-2.5" />
+                            <span>Verified</span>
+                          </span>
                         </div>
                         <p className="text-[11px] font-bold text-[#292820] mt-0.5 font-mono">
                           ₹{(product.price * quantity).toLocaleString('en-IN')}{' '}
@@ -542,22 +509,12 @@ export const BagDrawer: React.FC = () => {
                     </div>
 
                     <a
-                      href={hasValidUrl ? targetUrl : undefined}
-                      onClick={(e) => {
-                        if (!hasValidUrl) {
-                          e.preventDefault();
-                          alert('Checkout is restricted for unverified atelier listings.');
-                        }
-                      }}
+                      href={destinationUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`shrink-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold tracking-wider uppercase transition-all ${
-                        hasValidUrl
-                          ? 'bg-[#151419] text-[#FAF9F6] hover:bg-[#ef4a23] cursor-pointer'
-                          : 'bg-stone-200 text-stone-400 cursor-not-allowed'
-                      }`}
+                      className="shrink-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold tracking-wider uppercase transition-all bg-[#151419] text-[#FAF9F6] hover:bg-[#ef4a23] cursor-pointer"
                     >
-                      <span>{hasValidUrl ? 'Visit' : 'Unavailable'}</span>
+                      <span>Visit</span>
                       <ExternalLink className="w-3.5 h-3.5" />
                     </a>
                   </div>

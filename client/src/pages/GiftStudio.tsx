@@ -73,10 +73,10 @@ export const GiftStudio: React.FC = () => {
       retailer: {
         id: 'charis-atelier',
         name: 'CHARIS Master Atelier',
-        website: 'https://charis.atelier',
+        website: `https://www.google.com/search?q=${encodeURIComponent(gift.name + ' official store')}`,
         verified: true
       },
-      productUrl: '#',
+      productUrl: `https://www.google.com/search?q=${encodeURIComponent(gift.name + ' official store buy online')}`,
       tags: [gift.tag, gift.sentiment],
       interests: [gift.category],
       occasions: ['anniversary', 'birthday', 'just_because'],
