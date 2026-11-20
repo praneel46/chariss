@@ -208,14 +208,6 @@ export const Recommendations: React.FC = () => {
             </button>
 
             <Link
-              to="/consultation"
-              className="px-4 py-2.5 rounded-full border border-[#141110]/15 hover:bg-[#141110]/5 text-xs font-archivo uppercase tracking-wider text-[#141110] font-bold transition-colors flex items-center gap-1.5"
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-              <span>Recalibrate</span>
-            </Link>
-
-            <Link
               to="/gift-studio"
               className="px-4 py-2.5 rounded-full bg-[#ef4a23] hover:bg-[#141110] text-white text-xs font-archivo uppercase tracking-wider font-bold transition-colors flex items-center gap-1.5 shadow-sm"
             >
@@ -325,13 +317,20 @@ export const Recommendations: React.FC = () => {
                 No active catalogue products currently matched the exact budget range, occasion, or exclusion parameters of your consultation.
               </p>
             </div>
-            <div className="pt-2">
+            <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link
                 to="/consultation"
-                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#141110] hover:bg-[#ef4a23] text-white text-xs font-archivo uppercase tracking-wider font-bold transition-colors cursor-pointer shadow-sm"
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#ef4a23] hover:bg-[#141110] text-white text-xs font-archivo uppercase tracking-wider font-bold transition-colors cursor-pointer shadow-sm"
               >
-                <RotateCcw className="w-3.5 h-3.5" />
-                <span>Adjust Parameters</span>
+                <Compass className="w-3.5 h-3.5" />
+                <span>Show Reconsult</span>
+              </Link>
+              <Link
+                to="/gift-studio"
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-[#141110]/20 hover:bg-[#141110]/5 text-xs font-archivo uppercase tracking-wider text-[#141110] font-bold transition-colors cursor-pointer"
+              >
+                <PenTool className="w-3.5 h-3.5" />
+                <span>Browse Gift Studio</span>
               </Link>
             </div>
           </div>
