@@ -4,6 +4,7 @@ import { BagProvider } from './context/BagContext';
 import { WishlistProvider } from './context/WishlistContext';
 import { AuthProvider } from './context/AuthContext';
 import { MainLayout } from './layouts/MainLayout';
+import { ProtectedRoute } from './components/common/ProtectedRoute';
 import { Home } from './pages/Home';
 import { Discover } from './pages/Discover';
 import { Occasions } from './pages/Occasions';
@@ -21,15 +22,29 @@ export const App: React.FC = () => {
           <WishlistProvider>
             <Routes>
               <Route element={<MainLayout />}>
+                {/* Public Browsing Routes */}
                 <Route path="/" element={<Home />} />
                 <Route path="/discover" element={<Discover />} />
                 <Route path="/occasions" element={<Occasions />} />
                 <Route path="/gift-studio" element={<GiftStudio />} />
                 <Route path="/consultation" element={<Consultation />} />
                 <Route path="/recommendations" element={<Recommendations />} />
+
+                {/* Authentication Routes */}
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Login />} />
-                <Route path="/dashboard" element={<Dashboard />} />
+
+                {/* Authenticated-Only Protected Routes */}
+                <Route
+                  path="/dashboard"
+                  element={
+                    <ProtectedRoute>
+                      <Dashboard />
+                    </ProtectedRoute>
+                  }
+                />
+
+                {/* Fallback */}
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Route>
             </Routes>

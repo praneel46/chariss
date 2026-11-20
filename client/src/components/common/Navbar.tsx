@@ -33,6 +33,8 @@ export const Navbar: React.FC = () => {
     { label: 'How It Works', path: '/#how-it-works' },
   ];
 
+  const isHome = location.pathname === '/';
+
   const isActive = (path: string) => {
     if (path.startsWith('/#')) return false;
     return location.pathname === path;
@@ -85,18 +87,20 @@ export const Navbar: React.FC = () => {
           {/* Right Action Icons & CTA */}
           <div className="flex items-center gap-3 sm:gap-4">
             
-            {/* Bag Button */}
-            <button
-              onClick={() => setIsBagOpen(true)}
-              aria-label="View shopping bag"
-              className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#EDE5DA]/60 hover:bg-[#EDE5DA] transition-all border border-[#292820]/10 text-xs font-medium cursor-pointer"
-            >
-              <ShoppingBag className="w-4 h-4 text-[#292820]" />
-              <span className="hidden sm:inline text-xs text-[#292820]">Bag</span>
-              <span className="w-5 h-5 rounded-full bg-[#D4A359] text-[#151419] font-bold text-[11px] flex items-center justify-center">
-                {totalCount}
-              </span>
-            </button>
+            {/* Bag Button (Hidden on Homepage) */}
+            {!isHome && (
+              <button
+                onClick={() => setIsBagOpen(true)}
+                aria-label="View shopping bag"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#EDE5DA]/60 hover:bg-[#EDE5DA] transition-all border border-[#292820]/10 text-xs font-medium cursor-pointer"
+              >
+                <ShoppingBag className="w-4 h-4 text-[#292820]" />
+                <span className="hidden sm:inline text-xs text-[#292820]">Bag</span>
+                <span className="w-5 h-5 rounded-full bg-[#D4A359] text-[#151419] font-bold text-[11px] flex items-center justify-center">
+                  {totalCount}
+                </span>
+              </button>
+            )}
 
             {/* User Session Dropdown or Login */}
             {isAuthenticated && user ? (
@@ -138,7 +142,10 @@ export const Navbar: React.FC = () => {
                     </Link>
 
                     <button
-                      onClick={logout}
+                      onClick={async () => {
+                        await logout();
+                        setIsUserMenuOpen(false);
+                      }}
                       className="w-full flex items-center gap-2.5 px-4 py-2 text-xs text-red-600 hover:bg-red-50 transition-colors border-t border-[#292820]/8 text-left cursor-pointer mt-1"
                     >
                       <LogOut className="w-4 h-4" />

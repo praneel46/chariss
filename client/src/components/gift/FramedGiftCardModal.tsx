@@ -36,7 +36,7 @@ export const FramedGiftCardModal: React.FC<FramedGiftCardModalProps> = ({
   const cardPreviewRef = useRef<HTMLDivElement>(null);
 
   const [recipient, setRecipient] = useState(initialRecipientName || 'Eleanor');
-  const [sender, setSender] = useState(user?.name || 'With all my heart, Dev');
+  const [sender, setSender] = useState(user?.name || '');
   const [selectedEmotion, setSelectedEmotion] = useState<string>(initialEmotion || 'romance');
   const [frameStyle, setFrameStyle] = useState<FrameStyle>('gold-foil');
   const [sealColor, setSealColor] = useState<SealColor>('tomato');
@@ -54,8 +54,9 @@ export const FramedGiftCardModal: React.FC<FramedGiftCardModalProps> = ({
     if (isOpen) {
       if (initialRecipientName) setRecipient(initialRecipientName);
       if (initialEmotion) setSelectedEmotion(initialEmotion);
+      if (user?.name) setSender(user.name);
     }
-  }, [isOpen, initialRecipientName, initialEmotion]);
+  }, [isOpen, initialRecipientName, initialEmotion, user?.name]);
 
   // AI-generated message database tailored to gift & emotion archetypes
   const emotionPresets: Record<string, string[]> = {

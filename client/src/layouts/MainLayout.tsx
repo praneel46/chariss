@@ -5,10 +5,12 @@ import { KolibrieFooter } from '../components/kolibrie/KolibrieFooter';
 import { AtelierAndFooterModals, type ModalType } from '../components/kolibrie/AtelierAndFooterModals';
 import { BagDrawer } from '../components/common/BagDrawer';
 import { CursorMarquee } from '../components/kolibrie/CursorMarquee';
-import { CinematicOpening } from '../components/home/CinematicOpening';
+import { AmbientMusicPlayer } from '../components/common/AmbientMusicPlayer';
+import { useAuth } from '../context/AuthContext';
 
 export const MainLayout: React.FC = () => {
   const [activeModal, setActiveModal] = useState<ModalType>(null);
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
     const handleOpenAtelier = () => setActiveModal('ateliers');
@@ -29,17 +31,19 @@ export const MainLayout: React.FC = () => {
         <Outlet />
       </div>
 
-      {/* Universal Interactive Kolibrie Footer with 4 Pillars & Ateliers */}
-      <KolibrieFooter onOpenModal={(type) => setActiveModal(type)} />
+      {/* Ambient Lo-Fi Beats Player (Floating) */}
+      <AmbientMusicPlayer />
+
+      {/* Universal Interactive Kolibrie Footer with 4 Pillars & Ateliers (Hidden for authenticated members) */}
+      {!isAuthenticated && (
+        <KolibrieFooter onOpenModal={(type) => setActiveModal(type)} />
+      )}
 
       {/* Shopping Bag Drawer */}
       <BagDrawer />
 
       {/* Interactive Modal Drawers */}
       <AtelierAndFooterModals activeModal={activeModal} onClose={() => setActiveModal(null)} />
-
-      {/* Gift opening introduction */}
-      <CinematicOpening />
     </div>
   );
 };
