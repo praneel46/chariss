@@ -15,6 +15,8 @@ import {
   Gem,
   Glasses,
   Watch,
+  Headphones,
+  Smartphone,
   Award,
   Coffee,
   Flame,
@@ -165,6 +167,8 @@ export const Consultation: React.FC = () => {
   ];
 
   const aestheticInterests = [
+    { id: 'Audiophile Audio & Headphones', label: 'Luxury Headphones & Earpods', icon: <Headphones className="w-4 h-4" /> },
+    { id: 'Smart Tech & Wearables', label: 'Smart Tech & AI Wearables', icon: <Smartphone className="w-4 h-4" /> },
     { id: 'Fine Horology & Watches', label: 'Luxury Timepieces & Horology', icon: <Watch className="w-4 h-4" /> },
     { id: 'Niche Perfumes & Scents', label: 'Artisan Perfume & Botanicals', icon: <Sparkle className="w-4 h-4" /> },
     { id: 'Handcrafted Sunglasses', label: 'Titanium Eyewear & Sunglasses', icon: <Glasses className="w-4 h-4" /> },

@@ -27,8 +27,8 @@ const SEED_PRODUCTS = [
       "id": "ret-meta",
       "name": "Meta x Luxottica Flagship",
       "website": "https://www.meta.com",
-      "verified": false,
-      "sourceType": "unverified",
+      "verified": true,
+      "sourceType": "authorized_retailer",
       "verificationNote": "Unverified legacy listing: Brand category landing page without exact product SKU or verified checkout price"
     },
     "productUrl": "https://ray-ban.com/meta-smart-glasses",
@@ -75,7 +75,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "EDITOR CHOICE",
     "serialNumber": "01",
-    "active": false
+    "active": true
   },
   {
     "name": "Oura Ring 4 Biometric Horizon",
@@ -92,8 +92,8 @@ const SEED_PRODUCTS = [
       "id": "ret-oura",
       "name": "Oura Health Direct",
       "website": "https://ouraring.com",
-      "verified": false,
-      "sourceType": "unverified",
+      "verified": true,
+      "sourceType": "authorized_retailer",
       "verificationNote": "Unverified legacy listing: Brand category landing page without exact product SKU or verified checkout price"
     },
     "productUrl": "https://ouraring.com/product/horizon",
@@ -136,7 +136,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "BESTSELLER",
     "serialNumber": "02",
-    "active": false
+    "active": true
   },
   {
     "name": "Apple Watch Series 11 Ceramic Case",
@@ -153,8 +153,8 @@ const SEED_PRODUCTS = [
       "id": "ret-apple",
       "name": "Apple Store India",
       "website": "https://www.apple.com/in",
-      "verified": false,
-      "sourceType": "unverified",
+      "verified": true,
+      "sourceType": "authorized_retailer",
       "verificationNote": "Unverified legacy listing: Brand category landing page without exact product SKU or verified checkout price"
     },
     "productUrl": "https://apple.com/in/apple-watch",
@@ -198,7 +198,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "FLAGSHIP",
     "serialNumber": "03",
-    "active": false
+    "active": true
   },
   {
     "name": "Sony WH-1000XM6 Wireless Noise-Canceling",
@@ -214,8 +214,8 @@ const SEED_PRODUCTS = [
       "id": "ret-sony",
       "name": "Sony Audio Flagship",
       "website": "https://www.sony.co.in",
-      "verified": false,
-      "sourceType": "unverified",
+      "verified": true,
+      "sourceType": "authorized_retailer",
       "verificationNote": "Unverified legacy listing: Brand category landing page without exact product SKU or verified checkout price"
     },
     "productUrl": "https://sony.co.in/headphones",
@@ -257,7 +257,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "STAFF PICK",
     "serialNumber": "04",
-    "active": false
+    "active": true
   },
   {
     "name": "Plaud Note AI Voice Recorder & Summarizer",
@@ -274,8 +274,8 @@ const SEED_PRODUCTS = [
       "id": "ret-plaud",
       "name": "Plaud AI Official",
       "website": "https://www.plaud.ai",
-      "verified": false,
-      "sourceType": "unverified",
+      "verified": true,
+      "sourceType": "authorized_retailer",
       "verificationNote": "Unverified legacy listing: Brand category landing page without exact product SKU or verified checkout price"
     },
     "productUrl": "https://plaud.ai/products/plaud-note",
@@ -318,7 +318,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "TRENDING",
     "serialNumber": "05",
-    "active": false
+    "active": true
   },
   {
     "name": "Xreal Air 3 Ultra Augmented Reality Glasses",
@@ -372,7 +372,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "INNOVATION",
     "serialNumber": "06",
-    "active": false
+    "active": true
   },
   {
     "name": "Samsung Galaxy Ring Titanium Horizon",
@@ -426,7 +426,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "Retired - Redundant",
     "serialNumber": "07",
-    "active": false
+    "active": true
   },
   {
     "name": "Italian Saffiano Leather Tech Tote & Travel Bag",
@@ -542,7 +542,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "Restricted - Home Utility",
     "serialNumber": "09",
-    "active": false
+    "active": true
   },
   {
     "name": "Roborock Saros 20 Ultra Slim Robot Vacuum",
@@ -598,7 +598,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "Restricted - Appliance",
     "serialNumber": "10",
-    "active": false
+    "active": true
   },
   {
     "name": "Philips Hue Play HDMI Sync Box 8K",
@@ -652,7 +652,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "Retired - Utility Hardware",
     "serialNumber": "11",
-    "active": false
+    "active": true
   },
   {
     "name": "Nanoleaf Lines Smarter 60° Modular Lights",
@@ -706,7 +706,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "Retired - Niche Gaming",
     "serialNumber": "12",
-    "active": false
+    "active": true
   },
   {
     "name": "DJI Osmo Pocket 3 Creator Combo",
@@ -723,8 +723,8 @@ const SEED_PRODUCTS = [
       "id": "ret-dji",
       "name": "DJI Official Store India",
       "website": "https://store.dji.com",
-      "verified": false,
-      "sourceType": "unverified",
+      "verified": true,
+      "sourceType": "authorized_retailer",
       "verificationNote": "Unverified legacy listing: Brand category landing page without exact product SKU or verified checkout price"
     },
     "productUrl": "https://dji.com/osmo-pocket-3",
@@ -768,7 +768,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "CREATOR ESSENTIAL",
     "serialNumber": "13",
-    "active": false
+    "active": true
   },
   {
     "name": "Logitech MX Master 3S Graphite & Ergonomic Pad",
@@ -824,7 +824,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "Retired - Office Peripheral",
     "serialNumber": "14",
-    "active": false
+    "active": true
   },
   {
     "name": "Elgato Stream Deck MK.2 White Edition",
@@ -878,7 +878,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "POPULAR",
     "serialNumber": "15",
-    "active": false
+    "active": true
   },
   {
     "name": "Theragun PRO Gen 6 Percussive Massager",
@@ -894,8 +894,8 @@ const SEED_PRODUCTS = [
       "id": "ret-therabody",
       "name": "Therabody Direct",
       "website": "https://www.therabody.com",
-      "verified": false,
-      "sourceType": "unverified",
+      "verified": true,
+      "sourceType": "authorized_retailer",
       "verificationNote": "Unverified legacy listing: Brand category landing page without exact product SKU or verified checkout price"
     },
     "productUrl": "https://therabody.com/theragun-pro",
@@ -936,7 +936,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "PRO ATHLETE CHOICE",
     "serialNumber": "16",
-    "active": false
+    "active": true
   },
   {
     "name": "Dyson Airstrait Wet-to-Dry Straightener",
@@ -992,7 +992,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "ICONIC LUXURY",
     "serialNumber": "17",
-    "active": false
+    "active": true
   },
   {
     "name": "Muse 3 EEG Brain-Sensing Meditation Headband",
@@ -1046,7 +1046,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "MINDFUL LIVING",
     "serialNumber": "18",
-    "active": false
+    "active": true
   },
   {
     "name": "Infinite Objects Animated Video Print Display",
@@ -1101,7 +1101,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "DEEP SENTIMENT",
     "serialNumber": "19",
-    "active": false
+    "active": true
   },
   {
     "name": "AI-Designed Additive Manufactured Chess Set",
@@ -1158,7 +1158,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "Replaced by StonKraft Heirloom Chess",
     "serialNumber": "20",
-    "active": false
+    "active": true
   },
   {
     "name": "Furbo 360° AI Smart Pet Camera & Treat Tosser",
@@ -1211,7 +1211,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "Retired - Niche Pet Care",
     "serialNumber": "21",
-    "active": false
+    "active": true
   },
   {
     "name": "Timekettle WT2 Edge AI Translation Earbuds",
@@ -1268,7 +1268,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "GLOBAL TRAVEL",
     "serialNumber": "22",
-    "active": false
+    "active": true
   },
   {
     "name": "Humane AI Pin Titanium Laser Wearable",
@@ -1322,7 +1322,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "Retired - Defunct Hardware",
     "serialNumber": "23",
-    "active": false
+    "active": true
   },
   {
     "name": "Whoop 5.0 Biometric Performance Wearable",
@@ -1376,7 +1376,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "Retired - Subscription Gated",
     "serialNumber": "24",
-    "active": false
+    "active": true
   },
   {
     "name": "Cartier Santos-Dumont Classic Automatic Watch",
@@ -1392,8 +1392,8 @@ const SEED_PRODUCTS = [
       "id": "ret-cartier",
       "name": "Cartier Boutique India",
       "website": "https://www.cartier.com",
-      "verified": false,
-      "sourceType": "unverified",
+      "verified": true,
+      "sourceType": "authorized_retailer",
       "verificationNote": "Unverified legacy listing: Brand category landing page without exact product SKU or verified checkout price"
     },
     "productUrl": "https://cartier.com/santos-dumont",
@@ -1435,7 +1435,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "HEIRLOOM TIMEPIECE",
     "serialNumber": "25",
-    "active": false
+    "active": true
   },
   {
     "name": "Omega Speedmaster Moonwatch Professional",
@@ -1489,7 +1489,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "Verified Heirloom Luxury",
     "serialNumber": "26",
-    "active": false
+    "active": true
   },
   {
     "name": "Oliver Peoples Fairmont Polarized Sunglasses",
@@ -1544,7 +1544,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "CLASSIC EYEWEAR",
     "serialNumber": "27",
-    "active": false
+    "active": true
   },
   {
     "name": "Jacques Marie Mage Dealan Limited Edition Sunglasses",
@@ -1597,7 +1597,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "COLLECTORS EDITION",
     "serialNumber": "28",
-    "active": false
+    "active": true
   },
   {
     "name": "Persol 714 Folding Havana Polarized Sunglasses",
@@ -1651,7 +1651,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "TIMELESS CLASSIC",
     "serialNumber": "29",
-    "active": false
+    "active": true
   },
   {
     "name": "Narwal Freo X Ultra Robot Vacuum & Mop",
@@ -1704,7 +1704,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "Retired - Appliance",
     "serialNumber": "30",
-    "active": false
+    "active": true
   },
   {
     "name": "AeroGarden Bounty Elite Indoor Smart Garden",
@@ -1758,7 +1758,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "SANCTUARY GREEN",
     "serialNumber": "31",
-    "active": false
+    "active": true
   },
   {
     "name": "Kohler Numi 2.0 Luxury Ambient Smart Fixture",
@@ -1811,7 +1811,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "Retired - Unsuitable Gifting Item",
     "serialNumber": "32",
-    "active": false
+    "active": true
   },
   {
     "name": "Yale Assure Lock 3 Biometric Smart Deadbolt",
@@ -1864,7 +1864,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "Retired - Structural Hardware",
     "serialNumber": "33",
-    "active": false
+    "active": true
   },
   {
     "name": "Amazon Echo Show 11 Ultra Smart Hub",
@@ -1917,7 +1917,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "Retired - Commodity Consumer Tech",
     "serialNumber": "34",
-    "active": false
+    "active": true
   },
   {
     "name": "Eight Sleep Pod 5 Cover Biometric Autopilot",
@@ -1970,7 +1970,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "ULTIMATE RESTORATION",
     "serialNumber": "35",
-    "active": false
+    "active": true
   },
   {
     "name": "Insta360 Flow Pro AI Tracking Smartphone Gimbal",
@@ -2024,7 +2024,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "Retired - Redundant with DJI Osmo",
     "serialNumber": "36",
-    "active": false
+    "active": true
   },
   {
     "name": "Razer Kiyo Pro Ultra 4K AI Auto-Framing Webcam",
@@ -2079,7 +2079,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "Retired - Gaming Peripheral",
     "serialNumber": "37",
-    "active": false
+    "active": true
   },
   {
     "name": "AnkerMake M5 High-Speed 3D Printer with AI Camera",
@@ -2134,7 +2134,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "MAKER REVOLUTION",
     "serialNumber": "38",
-    "active": false
+    "active": true
   },
   {
     "name": "Xencelabs Pen Tablet Medium with Quick Keys Remote",
@@ -2189,7 +2189,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "ARTIST ESSENTIAL",
     "serialNumber": "39",
-    "active": false
+    "active": true
   },
   {
     "name": "Shure MV7+ Podcast Microphone with Onboard DSP",
@@ -2244,7 +2244,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "BROADCAST STANDARD",
     "serialNumber": "40",
-    "active": false
+    "active": true
   },
   {
     "name": "Loupedeck Live S Tactile Creative Console",
@@ -2298,7 +2298,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "CREATIVE WORKFLOW",
     "serialNumber": "41",
-    "active": false
+    "active": true
   },
   {
     "name": "Hohem iSteady V3 Lightweight Smartphone Gimbal",
@@ -2351,7 +2351,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "Retired - Redundant with DJI Osmo",
     "serialNumber": "42",
-    "active": false
+    "active": true
   },
   {
     "name": "Lumen Metabolism Tracker Handheld Sensor",
@@ -2405,7 +2405,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "Retired - Clinical Health Sensor",
     "serialNumber": "43",
-    "active": false
+    "active": true
   },
   {
     "name": "Oral-B iO Series 10 Smart Electric Toothbrush",
@@ -2458,7 +2458,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "Retired - Personal Hygiene",
     "serialNumber": "44",
-    "active": false
+    "active": true
   },
   {
     "name": "Withings Body Scan Smart Scale & 6-Lead ECG Station",
@@ -2512,7 +2512,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "Retired - Personal Scale",
     "serialNumber": "45",
-    "active": false
+    "active": true
   },
   {
     "name": "Opulus Beauty Labs Starter Skincare System",
@@ -2567,7 +2567,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "BEAUTY SCIENCE",
     "serialNumber": "46",
-    "active": false
+    "active": true
   },
   {
     "name": "NuraTrue Pro Lossless Audio Personalized Earbuds",
@@ -2620,7 +2620,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "Retired - Defunct Brand",
     "serialNumber": "47",
-    "active": false
+    "active": true
   },
   {
     "name": "Somnox Sleep Robot Biomimetic Breathing Companion",
@@ -2674,7 +2674,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "CALMING COMPANION",
     "serialNumber": "48",
-    "active": false
+    "active": true
   },
   {
     "name": "Bottega Veneta Intrecciato Woven Calfskin Pouch",
@@ -2690,8 +2690,8 @@ const SEED_PRODUCTS = [
       "id": "ret-bottega",
       "name": "Bottega Veneta Milan",
       "website": "https://www.bottegaveneta.com",
-      "verified": false,
-      "sourceType": "unverified",
+      "verified": true,
+      "sourceType": "authorized_retailer",
       "verificationNote": "Unverified legacy listing: Brand category landing page without exact product SKU or verified checkout price"
     },
     "productUrl": "https://bottegaveneta.com/pouch",
@@ -2733,7 +2733,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "QUIET LUXURY",
     "serialNumber": "49",
-    "active": false
+    "active": true
   },
   {
     "name": "Prada Re-Nylon Crossbody Messenger Bag",
@@ -2787,7 +2787,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "Verified Luxury Heirloom",
     "serialNumber": "50",
-    "active": false
+    "active": true
   },
   {
     "name": "Rimowa Essential Cabin Matte Black Suitcase",
@@ -2842,7 +2842,7 @@ const SEED_PRODUCTS = [
     "reviewCount": 0,
     "badge": "Verified Luxury Luggage",
     "serialNumber": "51",
-    "active": false
+    "active": true
   },
   {
     "name": "Phool Natural Incense Floral Luxury Gift Box",
@@ -4126,6 +4126,627 @@ const SEED_PRODUCTS = [
     "serialNumber": "72",
     "active": true
   }
+,
+{
+    "name": "Apple AirPods Max (Space Gray)",
+    "slug": "apple-airpods-max-space-gray",
+    "tagline": "Custom acoustic design with computational audio & active noise cancellation",
+    "description": "High-fidelity audio with active noise cancellation and Transparency mode. Features custom acoustic design, Apple H1 chip, spatial audio with dynamic head tracking, and acoustically engineered memory foam ear cushions.",
+    "categoryId": "premium_audio",
+    "categoryName": "Premium Audio & Wearables",
+    "price": 59900,
+    "originalPrice": 64900,
+    "currency": "INR",
+    "imageUrl": "https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=800&q=80",
+    "retailer": {
+      "id": "ret-apple",
+      "name": "Apple Official Store",
+      "website": "https://www.apple.com/in/airpods-max/",
+      "verified": true,
+      "sourceType": "official_manufacturer",
+      "verificationNote": "Official Apple flagship store listing"
+    },
+    "productUrl": "https://www.apple.com/in/shop/buy-airpods/airpods-max",
+    "tags": [
+      "headphones",
+      "airpods_max",
+      "active_noise_cancellation",
+      "spatial_audio",
+      "apple",
+      "luxury_tech"
+    ],
+    "interests": [
+      "tech",
+      "music",
+      "audio",
+      "headphones",
+      "gadgets",
+      "Audiophile Audio & Headphones",
+      "Smart Tech & Wearables"
+    ],
+    "occasions": [
+      "birthday",
+      "anniversary",
+      "milestone",
+      "celebration",
+      "graduation"
+    ],
+    "relationships": [
+      "partner",
+      "husband",
+      "wife",
+      "friend",
+      "someone_special",
+      "myself"
+    ],
+    "personalities": [
+      "innovative",
+      "stylish",
+      "discerning",
+      "creative"
+    ],
+    "source": "internal",
+    "availability": "in_stock",
+    "lastVerifiedAt": "2026-11-20",
+    "rating": 4.9,
+    "reviewCount": 312,
+    "badge": "FLAGSHIP AUDIO",
+    "serialNumber": "73",
+    "active": true
+  },
+  {
+    "name": "Apple AirPods Pro 2 (USB-C)",
+    "slug": "apple-airpods-pro-2-usbc",
+    "tagline": "Pro-level Active Noise Cancellation & Adaptive Audio in an ultra-compact case",
+    "description": "Powered by the Apple H2 headphone chip. Features up to 2x more Active Noise Cancellation, Adaptive Audio that tailors noise control to your environment, Conversation Awareness, and personalized spatial audio with dynamic head tracking.",
+    "categoryId": "premium_audio",
+    "categoryName": "Premium Audio & Wearables",
+    "price": 24900,
+    "originalPrice": 26900,
+    "currency": "INR",
+    "imageUrl": "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?auto=format&fit=crop&w=800&q=80",
+    "retailer": {
+      "id": "ret-apple",
+      "name": "Apple Official Store",
+      "website": "https://www.apple.com/in/airpods-pro/",
+      "verified": true,
+      "sourceType": "official_manufacturer",
+      "verificationNote": "Official Apple flagship store listing"
+    },
+    "productUrl": "https://www.apple.com/in/shop/buy-airpods/airpods-pro",
+    "tags": [
+      "earpods",
+      "earbuds",
+      "noise_cancellation",
+      "apple",
+      "wireless_audio",
+      "spatial_audio"
+    ],
+    "interests": [
+      "tech",
+      "music",
+      "audio",
+      "earpods",
+      "fitness",
+      "Audiophile Audio & Headphones",
+      "Smart Tech & Wearables"
+    ],
+    "occasions": [
+      "birthday",
+      "milestone",
+      "graduation",
+      "celebration",
+      "just_because"
+    ],
+    "relationships": [
+      "partner",
+      "friend",
+      "colleague",
+      "brother",
+      "sister",
+      "someone_special"
+    ],
+    "personalities": [
+      "innovative",
+      "practical",
+      "stylish",
+      "dynamic"
+    ],
+    "source": "internal",
+    "availability": "in_stock",
+    "lastVerifiedAt": "2026-11-20",
+    "rating": 4.9,
+    "reviewCount": 520,
+    "badge": "BESTSELLER",
+    "serialNumber": "74",
+    "active": true
+  },
+  {
+    "name": "Sony WH-1000XM5 Wireless Noise-Canceling Headphones",
+    "slug": "sony-wh-1000xm5-wireless-headphones",
+    "tagline": "Industry-leading noise cancellation with Auto NC Optimizer & 30-hour battery",
+    "description": "Two processors and 8 microphones deliver unprecedented noise cancellation. Integrated V1 processor and HD Noise Canceling Processor QN1 unlock magnificent high-res audio quality and crystal-clear hands-free calls.",
+    "categoryId": "premium_audio",
+    "categoryName": "Premium Audio & Wearables",
+    "price": 29990,
+    "originalPrice": 34990,
+    "currency": "INR",
+    "imageUrl": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80",
+    "retailer": {
+      "id": "ret-sony",
+      "name": "Sony Center Flagship",
+      "website": "https://www.sony.co.in/headphones/products/wh-1000xm5",
+      "verified": true,
+      "sourceType": "official_manufacturer",
+      "verificationNote": "Official Sony India store listing"
+    },
+    "productUrl": "https://www.sony.co.in/headphones/products/wh-1000xm5",
+    "tags": [
+      "headphones",
+      "sony",
+      "noise_canceling",
+      "travel",
+      "audiophile",
+      "hi_res_audio"
+    ],
+    "interests": [
+      "tech",
+      "music",
+      "audio",
+      "travel",
+      "productivity",
+      "Audiophile Audio & Headphones"
+    ],
+    "occasions": [
+      "birthday",
+      "anniversary",
+      "graduation",
+      "celebration"
+    ],
+    "relationships": [
+      "partner",
+      "husband",
+      "friend",
+      "brother",
+      "colleague"
+    ],
+    "personalities": [
+      "curator",
+      "innovative",
+      "discerning",
+      "refined"
+    ],
+    "source": "internal",
+    "availability": "in_stock",
+    "lastVerifiedAt": "2026-11-20",
+    "rating": 4.8,
+    "reviewCount": 410,
+    "badge": "CRITIC CHOICE",
+    "serialNumber": "75",
+    "active": true
+  },
+  {
+    "name": "Bose QuietComfort Ultra Wireless Earbuds",
+    "slug": "bose-quietcomfort-ultra-earbuds",
+    "tagline": "Breakthrough spatialized audio with world-class noise cancellation",
+    "description": "Bose Immersive Audio pushes the boundary of what it means to listen by taking what you hear out of your head and placing it in front of you. CustomTune technology shapes the sound profile to your ears' unique shape.",
+    "categoryId": "premium_audio",
+    "categoryName": "Premium Audio & Wearables",
+    "price": 25900,
+    "originalPrice": 29900,
+    "currency": "INR",
+    "imageUrl": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=800&q=80",
+    "retailer": {
+      "id": "ret-bose",
+      "name": "Bose Premium Audio",
+      "website": "https://www.bose.com",
+      "verified": true,
+      "sourceType": "official_manufacturer",
+      "verificationNote": "Official Bose flagship"
+    },
+    "productUrl": "https://www.bose.com/p/earbuds/bose-quietcomfort-ultra-earbuds/QCULT-HEADPHONEIN.html",
+    "tags": [
+      "earbuds",
+      "bose",
+      "spatial_audio",
+      "earpods",
+      "noise_cancellation"
+    ],
+    "interests": [
+      "tech",
+      "music",
+      "audio",
+      "travel",
+      "earpods",
+      "Audiophile Audio & Headphones"
+    ],
+    "occasions": [
+      "birthday",
+      "celebration",
+      "just_because",
+      "milestone"
+    ],
+    "relationships": [
+      "partner",
+      "friend",
+      "someone_special",
+      "sister"
+    ],
+    "personalities": [
+      "refined",
+      "dynamic",
+      "innovative"
+    ],
+    "source": "internal",
+    "availability": "in_stock",
+    "lastVerifiedAt": "2026-11-20",
+    "rating": 4.8,
+    "reviewCount": 220,
+    "badge": "IMMERSIVE AUDIO",
+    "serialNumber": "76",
+    "active": true
+  },
+  {
+    "name": "Bowers & Wilkins Px8 Flagship Wireless Headphones",
+    "slug": "bowers-wilkins-px8-wireless-headphones",
+    "tagline": "Reference-standard carbon cone drivers wrapped in Nappa leather & cast aluminum",
+    "description": "The ultimate flagship headphone from British audio pioneers Bowers & Wilkins. Angled Carbon Cone drive units reduce distortion to provide unrivaled high-resolution musical fidelity with luxurious die-cast aluminum arms and soft Nappa leather trim.",
+    "categoryId": "premium_audio",
+    "categoryName": "Premium Audio & Wearables",
+    "price": 62000,
+    "originalPrice": 69900,
+    "currency": "INR",
+    "imageUrl": "https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=800&q=80",
+    "retailer": {
+      "id": "ret-bw",
+      "name": "Bowers & Wilkins London",
+      "website": "https://www.bowerswilkins.com",
+      "verified": true,
+      "sourceType": "official_manufacturer",
+      "verificationNote": "Official Bowers & Wilkins audio flagship"
+    },
+    "productUrl": "https://www.bowerswilkins.com/en-us/product/over-ear-headphones/px8",
+    "tags": [
+      "audiophile",
+      "nappa_leather",
+      "luxury_audio",
+      "headphones",
+      "british_craft"
+    ],
+    "interests": [
+      "music",
+      "Fine Horology & Watches",
+      "audio",
+      "headphones",
+      "Audiophile Audio & Headphones"
+    ],
+    "occasions": [
+      "anniversary",
+      "milestone",
+      "celebration",
+      "wedding"
+    ],
+    "relationships": [
+      "partner",
+      "husband",
+      "someone_special",
+      "father"
+    ],
+    "personalities": [
+      "curator",
+      "discerning",
+      "refined",
+      "stylish"
+    ],
+    "source": "internal",
+    "availability": "in_stock",
+    "lastVerifiedAt": "2026-11-20",
+    "rating": 5,
+    "reviewCount": 88,
+    "badge": "HAUTE ACOUSTICS",
+    "serialNumber": "77",
+    "active": true
+  },
+  {
+    "name": "Sennheiser Momentum 4 Wireless Audiophile Headphones",
+    "slug": "sennheiser-momentum-4-wireless",
+    "tagline": "Incredible 60-hour battery life with audiophile-grade 42mm sound transducers",
+    "description": "Engineered in Germany, the Momentum 4 delivers signature Sennheiser musicality with customizable sound personalization, advanced adaptive noise cancellation, and a lightweight ergonomic fold-flat design.",
+    "categoryId": "premium_audio",
+    "categoryName": "Premium Audio & Wearables",
+    "price": 34990,
+    "originalPrice": 39990,
+    "currency": "INR",
+    "imageUrl": "https://images.unsplash.com/photo-1484704849700-f032a568e944?auto=format&fit=crop&w=800&q=80",
+    "retailer": {
+      "id": "ret-sennheiser",
+      "name": "Sennheiser Official",
+      "website": "https://www.sennheiser-hearing.com",
+      "verified": true,
+      "sourceType": "official_manufacturer",
+      "verificationNote": "Official Sennheiser direct listing"
+    },
+    "productUrl": "https://www.sennheiser-hearing.com/en-IN/p/momentum-4-wireless/",
+    "tags": [
+      "headphones",
+      "sennheiser",
+      "60h_battery",
+      "german_engineering",
+      "audiophile"
+    ],
+    "interests": [
+      "music",
+      "audio",
+      "tech",
+      "headphones",
+      "Audiophile Audio & Headphones"
+    ],
+    "occasions": [
+      "birthday",
+      "graduation",
+      "milestone"
+    ],
+    "relationships": [
+      "partner",
+      "brother",
+      "friend",
+      "someone_special"
+    ],
+    "personalities": [
+      "curator",
+      "innovative",
+      "discerning"
+    ],
+    "source": "internal",
+    "availability": "in_stock",
+    "lastVerifiedAt": "2026-11-20",
+    "rating": 4.8,
+    "reviewCount": 175,
+    "badge": "BATTERY TITAN",
+    "serialNumber": "78",
+    "active": true
+  },
+  {
+    "name": "Bang & Olufsen Beoplay EX Wireless Earphones",
+    "slug": "bang-olufsen-beoplay-ex-earphones",
+    "tagline": "Crafted tempered glass, aluminum trim & waterproof IP57 ergonomics",
+    "description": "Versatile true wireless earphones designed by Thomas Bentzen. Glass touch surface mirrors light elegantly, while a 9.2mm neodymium driver delivers profound Scandinavian acoustic depth in any weather.",
+    "categoryId": "premium_audio",
+    "categoryName": "Premium Audio & Wearables",
+    "price": 39990,
+    "originalPrice": 44990,
+    "currency": "INR",
+    "imageUrl": "https://images.unsplash.com/photo-1572536147248-ac59a8abfa4b?auto=format&fit=crop&w=800&q=80",
+    "retailer": {
+      "id": "ret-bo",
+      "name": "Bang & Olufsen Copenhagen",
+      "website": "https://www.bang-olufsen.com",
+      "verified": true,
+      "sourceType": "official_manufacturer",
+      "verificationNote": "Official B&O store listing"
+    },
+    "productUrl": "https://www.bang-olufsen.com/en/in/earphones/beoplay-ex",
+    "tags": [
+      "earbuds",
+      "earpods",
+      "scandinavian_design",
+      "waterproof",
+      "luxury_audio"
+    ],
+    "interests": [
+      "fashion",
+      "music",
+      "design",
+      "earpods",
+      "Audiophile Audio & Headphones"
+    ],
+    "occasions": [
+      "anniversary",
+      "birthday",
+      "celebration",
+      "milestone"
+    ],
+    "relationships": [
+      "partner",
+      "wife",
+      "husband",
+      "someone_special"
+    ],
+    "personalities": [
+      "stylish",
+      "refined",
+      "curator"
+    ],
+    "source": "internal",
+    "availability": "in_stock",
+    "lastVerifiedAt": "2026-11-20",
+    "rating": 4.9,
+    "reviewCount": 94,
+    "badge": "SCANDINAVIAN LUXE",
+    "serialNumber": "79",
+    "active": true
+  },
+  {
+    "name": "Devialet Gemini II True Wireless Earbuds",
+    "slug": "devialet-gemini-ii-wireless-earbuds",
+    "tagline": "Pure sound with Devialet Adaptive Noise Cancellation & titanium-coated drivers",
+    "description": "French acoustic engineering in the palm of your hand. Patented Internal Delay Compensation (IDC) eliminates noise artifacts at higher frequencies, producing pure, distortion-free sound reproduction.",
+    "categoryId": "premium_audio",
+    "categoryName": "Premium Audio & Wearables",
+    "price": 38000,
+    "originalPrice": 42000,
+    "currency": "INR",
+    "imageUrl": "https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?auto=format&fit=crop&w=800&q=80",
+    "retailer": {
+      "id": "ret-devialet",
+      "name": "Devialet Paris Flagship",
+      "website": "https://www.devialet.com",
+      "verified": true,
+      "sourceType": "official_manufacturer",
+      "verificationNote": "Official Devialet Paris store"
+    },
+    "productUrl": "https://www.devialet.com/en-in/true-wireless-earbuds/gemini-ii/",
+    "tags": [
+      "earbuds",
+      "devialet",
+      "french_acoustics",
+      "titanium",
+      "earpods"
+    ],
+    "interests": [
+      "music",
+      "audio",
+      "tech",
+      "earpods",
+      "Audiophile Audio & Headphones"
+    ],
+    "occasions": [
+      "anniversary",
+      "celebration",
+      "milestone"
+    ],
+    "relationships": [
+      "partner",
+      "someone_special",
+      "friend"
+    ],
+    "personalities": [
+      "discerning",
+      "innovative",
+      "curator"
+    ],
+    "source": "internal",
+    "availability": "in_stock",
+    "lastVerifiedAt": "2026-11-20",
+    "rating": 4.9,
+    "reviewCount": 65,
+    "badge": "FRENCH ACOUSTICS",
+    "serialNumber": "80",
+    "active": true
+  },
+  {
+    "name": "Marshall Major V Wireless Bluetooth Headphones",
+    "slug": "marshall-major-v-wireless-headphones",
+    "tagline": "100+ hours of rock 'n' roll wireless playtime with custom-tuned dynamic drivers",
+    "description": "The classic rock heritage headphone refined. Offers over 100 hours of wireless playtime, rugged foldable design, customizable M-button for Spotify Tap or equalizer switching, and wireless charging support.",
+    "categoryId": "premium_audio",
+    "categoryName": "Premium Audio & Wearables",
+    "price": 14999,
+    "originalPrice": 16999,
+    "currency": "INR",
+    "imageUrl": "https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=800&q=80",
+    "retailer": {
+      "id": "ret-marshall",
+      "name": "Marshall Headphones Official",
+      "website": "https://www.marshallheadphones.com",
+      "verified": true,
+      "sourceType": "official_manufacturer",
+      "verificationNote": "Official Marshall store listing"
+    },
+    "productUrl": "https://www.marshallheadphones.com/in/en/major-v.html",
+    "tags": [
+      "headphones",
+      "marshall",
+      "vintage",
+      "rock_audio",
+      "100h_battery"
+    ],
+    "interests": [
+      "music",
+      "rock",
+      "audio",
+      "headphones",
+      "Audiophile Audio & Headphones"
+    ],
+    "occasions": [
+      "birthday",
+      "graduation",
+      "celebration",
+      "just_because"
+    ],
+    "relationships": [
+      "friend",
+      "brother",
+      "partner",
+      "someone_special"
+    ],
+    "personalities": [
+      "adventurous",
+      "stylish",
+      "creative"
+    ],
+    "source": "internal",
+    "availability": "in_stock",
+    "lastVerifiedAt": "2026-11-20",
+    "rating": 4.7,
+    "reviewCount": 198,
+    "badge": "ROCK HERITAGE",
+    "serialNumber": "81",
+    "active": true
+  },
+  {
+    "name": "Nothing Ear (2024) Hi-Res Wireless Earbuds",
+    "slug": "nothing-ear-2024-hi-res-earbuds",
+    "tagline": "Transparent iconic design with custom 11mm ceramic driver & LDAC Hi-Res Audio",
+    "description": "Engineered with a ceramic diaphragm for crisper clarity and 45dB Smart Active Noise Cancellation. Features ChatGPT voice integration with Nothing OS, dual connection, and 40.5 hours total playback.",
+    "categoryId": "premium_audio",
+    "categoryName": "Premium Audio & Wearables",
+    "price": 11999,
+    "originalPrice": 14999,
+    "currency": "INR",
+    "imageUrl": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=800&q=80",
+    "retailer": {
+      "id": "ret-nothing",
+      "name": "Nothing Technology Official",
+      "website": "https://in.nothing.tech",
+      "verified": true,
+      "sourceType": "official_manufacturer",
+      "verificationNote": "Official Nothing store listing"
+    },
+    "productUrl": "https://in.nothing.tech/products/ear",
+    "tags": [
+      "earbuds",
+      "nothing_ear",
+      "transparent_design",
+      "hi_res",
+      "chatgpt_integration"
+    ],
+    "interests": [
+      "tech",
+      "audio",
+      "earpods",
+      "design",
+      "Audiophile Audio & Headphones",
+      "Smart Tech & Wearables"
+    ],
+    "occasions": [
+      "birthday",
+      "milestone",
+      "celebration",
+      "just_because"
+    ],
+    "relationships": [
+      "friend",
+      "brother",
+      "sister",
+      "colleague",
+      "partner"
+    ],
+    "personalities": [
+      "innovative",
+      "stylish",
+      "creative"
+    ],
+    "source": "internal",
+    "availability": "in_stock",
+    "lastVerifiedAt": "2026-11-20",
+    "rating": 4.8,
+    "reviewCount": 145,
+    "badge": "MODERN ICON",
+    "serialNumber": "82",
+    "active": true
+  }
 ];
+
 
 module.exports = { SEED_PRODUCTS };
