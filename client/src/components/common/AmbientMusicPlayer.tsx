@@ -4,74 +4,110 @@ import { Volume2, VolumeX, Sparkles, Disc } from 'lucide-react';
 export const AmbientMusicPlayer: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [hasInteracted, setHasInteracted] = useState<boolean>(false);
-  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const fadeIntervalRef = useRef<number | null>(null);
 
-  // Read saved preference
+  // Initialize audio and check previous user preference
   useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    audio.volume = 0.55;
+
+    const onPlay = () => setIsPlaying(true);
+    const onPause = () => setIsPlaying(false);
+    const onError = () => {
+      console.warn('[CHARIS Music] Audio source error, switching to fallback stream...');
+      const fallback = 'https://stream.chillhop.com/mp3/9476';
+      if (!audio.src.includes('chillhop')) {
+        audio.src = fallback;
+        audio.load();
+        if (isPlaying) {
+          audio.play().catch(() => {});
+        }
+      }
+    };
+
+    audio.addEventListener('play', onPlay);
+    audio.addEventListener('pause', onPause);
+    audio.addEventListener('error', onError);
+
     try {
       const saved = localStorage.getItem('charis_music_enabled');
       if (saved === 'true') {
         setHasInteracted(true);
       }
     } catch {}
+
+    return () => {
+      audio.removeEventListener('play', onPlay);
+      audio.removeEventListener('pause', onPause);
+      audio.removeEventListener('error', onError);
+      if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
+    };
   }, []);
 
-  const sendIframeCommand = (command: 'playVideo' | 'pauseVideo' | 'mute' | 'unMute') => {
-    if (iframeRef.current && iframeRef.current.contentWindow) {
-      iframeRef.current.contentWindow.postMessage(
-        JSON.stringify({
-          event: 'command',
-          func: command,
-          args: [],
-        }),
-        '*'
-      );
-    }
+  const fadeIn = (audio: HTMLAudioElement) => {
+    if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
+    audio.volume = 0.05;
+    fadeIntervalRef.current = window.setInterval(() => {
+      if (audio.volume < 0.55) {
+        audio.volume = Math.min(0.55, audio.volume + 0.05);
+      } else {
+        if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
+      }
+    }, 80);
   };
 
-  const toggleMusic = () => {
-    const nextState = !isPlaying;
-    setIsPlaying(nextState);
+  const toggleMusic = async () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
     setHasInteracted(true);
 
-    if (nextState) {
-      sendIframeCommand('unMute');
-      sendIframeCommand('playVideo');
+    if (isPlaying) {
+      audio.pause();
+      setIsPlaying(false);
+      try {
+        localStorage.setItem('charis_music_enabled', 'false');
+      } catch {}
     } else {
-      sendIframeCommand('mute');
+      try {
+        await audio.play();
+        fadeIn(audio);
+        setIsPlaying(true);
+        try {
+          localStorage.setItem('charis_music_enabled', 'true');
+        } catch {}
+      } catch (err) {
+        console.warn('[CHARIS Music] Audio playback blocked by browser policy:', err);
+      }
     }
-
-    try {
-      localStorage.setItem('charis_music_enabled', nextState ? 'true' : 'false');
-    } catch {}
   };
 
   return (
     <>
-      {/* Headless Background YouTube Player */}
-      <div
-        className="fixed -z-50 opacity-0 pointer-events-none w-0 h-0 overflow-hidden"
-        aria-hidden="true"
-      >
-        <iframe
-          ref={iframeRef}
-          id="charis-ambient-audio-stream"
-          width="1"
-          height="1"
-          src="https://www.youtube.com/embed/BGiZSH-ozvM?enablejsapi=1&autoplay=1&loop=1&playlist=BGiZSH-ozvM&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&start=3260"
-          title="CHARIS Ambient Music"
-          allow="autoplay; encrypted-media"
-        />
-      </div>
+      {/* Native HTML5 Audio Element for 100% Reliable Background Lo-Fi */}
+      <audio
+        ref={audioRef}
+        id="charis-ambient-audio-stream"
+        src="/audio/charis-ambient.mp3"
+        preload="auto"
+        loop
+        playsInline
+      />
 
       {/* Floating Ambient Sound Controller */}
       <aside
         aria-label="CHARIS Ambient Sound Controller"
-        className="fixed bottom-20 right-4 sm:bottom-6 sm:right-6 z-40 flex flex-col items-end gap-2 select-none"
+        className="fixed bottom-20 right-4 sm:bottom-6 sm:right-6 z-[1250] flex flex-col items-end gap-2 select-none pointer-events-auto"
       >
-        {/* Intro Badge: Tap For Vibes */}
+        {/* Intro Tooltip Badge: Tap For Vibes */}
         {!hasInteracted && !isPlaying && (
-          <div className="animate-bounce flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#141110] text-[#ffd46e] border border-[#ef4a23]/40 shadow-lg text-[10px] font-archivo uppercase font-bold tracking-wider">
+          <div
+            onClick={toggleMusic}
+            className="animate-bounce flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#141110] text-[#ffd46e] border border-[#ef4a23]/40 shadow-lg text-[10px] font-archivo uppercase font-bold tracking-wider cursor-pointer hover:scale-105 transition-transform"
+          >
             <Sparkles className="w-3 h-3 text-[#ef4a23] animate-pulse" />
             <span>Tap For Vibes ♪</span>
           </div>
@@ -100,13 +136,14 @@ export const AmbientMusicPlayer: React.FC = () => {
 
             {/* Glowing Aura when Playing */}
             {isPlaying && (
-              <div className="absolute -inset-1.5 rounded-full bg-[#ef4a23]/20 blur-md animate-pulse pointer-events-none" />
+              <div className="absolute -inset-1.5 rounded-full bg-[#ef4a23]/25 blur-md animate-pulse pointer-events-none" />
             )}
 
             <button
               type="button"
               onClick={toggleMusic}
               aria-label={isPlaying ? 'Mute ambient melody' : 'Unmute ambient melody'}
+              title={isPlaying ? 'Pause Atelier Ambient Music' : 'Play Atelier Ambient Music'}
               className={`relative w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer overflow-hidden ${
                 isPlaying
                   ? 'bg-[#141110] text-[#ffd46e] border-2 border-[#ef4a23] shadow-[0_4px_20px_rgba(239,74,35,0.4)] hover:scale-105'
