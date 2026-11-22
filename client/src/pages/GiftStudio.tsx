@@ -4,6 +4,7 @@ import { ALL_100_CURATED_GIFTS, type CuratedGiftItem } from '../data/curatedGift
 import { useBag } from '../context/BagContext';
 import { useWishlist } from '../context/WishlistContext';
 import { FramedGiftCardModal } from '../components/gift/FramedGiftCardModal';
+import { getCuratedGiftDestination } from '../utils/giftUrlHelper';
 
 export const GiftStudio: React.FC = () => {
   const { addToBag, setIsBagOpen, items } = useBag();
@@ -58,6 +59,8 @@ export const GiftStudio: React.FC = () => {
   }, [selectedCategory, searchQuery, priceSort]);
 
   const handleAddToBag = (gift: CuratedGiftItem) => {
+    const destination = getCuratedGiftDestination(gift);
+
     addToBag({
       id: `gift-${gift.id}`,
       name: gift.name,
@@ -72,11 +75,11 @@ export const GiftStudio: React.FC = () => {
       imageUrl: gift.image,
       retailer: {
         id: 'charis-atelier',
-        name: 'CHARIS Master Atelier',
-        website: `https://www.google.com/search?q=${encodeURIComponent(gift.name + ' official store')}`,
+        name: destination.retailerName,
+        website: destination.url,
         verified: true
       },
-      productUrl: `https://www.google.com/search?q=${encodeURIComponent(gift.name + ' official store buy online')}`,
+      productUrl: destination.url,
       tags: [gift.tag, gift.sentiment],
       interests: [gift.category],
       occasions: ['anniversary', 'birthday', 'just_because'],

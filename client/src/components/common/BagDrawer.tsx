@@ -72,7 +72,6 @@ export const BagDrawer: React.FC = () => {
 
   const [isMultiAtelierModalOpen, setIsMultiAtelierModalOpen] = useState(false);
   const [popupBlockedNotice, setPopupBlockedNotice] = useState<string | null>(null);
-  const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
   // Freeze Lenis smooth scroll and prevent layout shift / vibration when bag drawer opens
@@ -110,35 +109,27 @@ export const BagDrawer: React.FC = () => {
 
   if (!isBagOpen && !isVisible) return null;
 
-  const handleCheckoutClick = async () => {
+  const handleCheckoutClick = () => {
     setPopupBlockedNotice(null);
-    if (selectedItems.length === 0 || isCheckingOut) return;
+    if (selectedItems.length === 0) return;
 
     if (selectedItems.length === 1) {
       const singleItem = selectedItems[0];
-      let destinationUrl = getProductDestinationUrl(singleItem.product);
+      const destinationUrl = getProductDestinationUrl(singleItem.product);
 
-      // Attempt backend authoritative checkout validation when active consultation exists
+      // Open tab synchronously directly within user click gesture to prevent browser popup block
+      const opened = window.open(destinationUrl, '_blank', 'noopener,noreferrer');
+
+      // Background checkout tracking
       if (activeConsultationId) {
-        setIsCheckingOut(true);
-        try {
-          const res = await bagAndWishlistService.checkout(activeConsultationId, [singleItem.product.id]);
-          const checkoutItem = res.checkoutItems[0];
-          if (checkoutItem?.checkoutUrl && isValidVerifiedHttpsUrl(checkoutItem.checkoutUrl)) {
-            destinationUrl = checkoutItem.checkoutUrl;
-          }
-        } catch (err: any) {
-          console.warn('[BagDrawer] Backend checkout validation fallback to direct store URL:', err);
-        } finally {
-          setIsCheckingOut(false);
-        }
+        bagAndWishlistService
+          .checkout(activeConsultationId, [singleItem.product.id])
+          .catch((err) => console.warn('[BagDrawer] Checkout tracking warning:', err));
       }
 
-      const opened = window.open(destinationUrl, '_blank', 'noopener,noreferrer');
-      if (!opened || opened.closed || typeof opened.closed === 'undefined') {
-        setPopupBlockedNotice(
-          'Your browser blocked the atelier checkout tab. Please click the atelier link directly.'
-        );
+      if (!opened) {
+        // Fallback for strict browser security policies: navigate directly
+        window.location.assign(destinationUrl);
       }
       return;
     }
@@ -334,9 +325,21 @@ export const BagDrawer: React.FC = () => {
                             )}
                           </div>
 
-                          <p className="text-xs font-bold text-[#292820] mt-0.5">
-                            ₹{product.price.toLocaleString('en-IN')}
-                          </p>
+                          <div className="flex items-center justify-between mt-1">
+                            <p className="text-xs font-bold text-[#292820]">
+                              ₹{product.price.toLocaleString('en-IN')}
+                            </p>
+                            <a
+                              href={getProductDestinationUrl(product)}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 text-[11px] font-bold text-[#ef4a23] hover:underline cursor-pointer"
+                              title={`Visit ${product.name} official store`}
+                            >
+                              <span>Visit Store</span>
+                              <ExternalLink className="w-3 h-3" />
+                            </a>
+                          </div>
                         </div>
 
                         {/* Stepper controls */}
@@ -397,9 +400,21 @@ export const BagDrawer: React.FC = () => {
               </div>
 
               {popupBlockedNotice && (
-                <div className="p-3 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-xs flex items-start gap-2">
-                  <Info className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
-                  <p>{popupBlockedNotice}</p>
+                <div className="p-3 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-xs flex flex-col gap-2">
+                  <div className="flex items-start gap-2">
+                    <Info className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
+                    <p>{popupBlockedNotice}</p>
+                  </div>
+                  {selectedItems.length === 1 && (
+                    <a
+                      href={getProductDestinationUrl(selectedItems[0].product)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 font-bold text-[#ef4a23] underline text-xs"
+                    >
+                      <span>Click here to open {selectedItems[0].product.name} atelier directly ↗</span>
+                    </a>
+                  )}
                 </div>
               )}
 
