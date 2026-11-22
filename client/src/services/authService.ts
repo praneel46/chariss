@@ -23,7 +23,17 @@ export const authService = {
    * POST /api/v1/auth/login
    */
   async login(email: string, password: string): Promise<User> {
-    const res = await api.post<AuthResponse>('/auth/login', { email, password });
+    const res = await api.post<AuthResponse & { refreshToken?: string }>('/auth/login', { email, password });
+    if (res.data.accessToken) {
+      try {
+        localStorage.setItem('charis_access_token', res.data.accessToken);
+        if (res.data.refreshToken) {
+          localStorage.setItem('charis_refresh_token', res.data.refreshToken);
+        }
+      } catch {
+        // ignore
+      }
+    }
     return res.data.user;
   },
 
@@ -32,7 +42,17 @@ export const authService = {
    * POST /api/v1/auth/register
    */
   async register(name: string, email: string, password: string): Promise<User> {
-    const res = await api.post<AuthResponse>('/auth/register', { name, email, password });
+    const res = await api.post<AuthResponse & { refreshToken?: string }>('/auth/register', { name, email, password });
+    if (res.data.accessToken) {
+      try {
+        localStorage.setItem('charis_access_token', res.data.accessToken);
+        if (res.data.refreshToken) {
+          localStorage.setItem('charis_refresh_token', res.data.refreshToken);
+        }
+      } catch {
+        // ignore
+      }
+    }
     return res.data.user;
   },
 
@@ -41,7 +61,23 @@ export const authService = {
    * POST /api/v1/auth/refresh
    */
   async refreshSession(): Promise<void> {
-    await api.post('/auth/refresh');
+    let refreshToken: string | null = null;
+    try {
+      refreshToken = localStorage.getItem('charis_refresh_token');
+    } catch {
+      // ignore
+    }
+    const res = await api.post<{ accessToken?: string; refreshToken?: string }>('/auth/refresh', { refreshToken });
+    if (res.data.accessToken) {
+      try {
+        localStorage.setItem('charis_access_token', res.data.accessToken);
+        if (res.data.refreshToken) {
+          localStorage.setItem('charis_refresh_token', res.data.refreshToken);
+        }
+      } catch {
+        // ignore
+      }
+    }
   },
 
   /**
@@ -49,7 +85,16 @@ export const authService = {
    * POST /api/v1/auth/logout
    */
   async logout(): Promise<void> {
-    await api.post('/auth/logout');
+    try {
+      await api.post('/auth/logout');
+    } finally {
+      try {
+        localStorage.removeItem('charis_access_token');
+        localStorage.removeItem('charis_refresh_token');
+      } catch {
+        // ignore
+      }
+    }
   },
 };
 

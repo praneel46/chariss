@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import axios from 'axios';
+import { API_BASE_URL } from './config/api';
 import { BagProvider } from './context/BagContext';
 import { WishlistProvider } from './context/WishlistContext';
 import { AuthProvider } from './context/AuthContext';
@@ -15,6 +17,17 @@ import { Login } from './pages/Login';
 import { Dashboard } from './pages/Dashboard';
 
 export const App: React.FC = () => {
+  // Proactively ping backend to keep Render warm and awake
+  useEffect(() => {
+    const backendBase = API_BASE_URL.replace(/\/api\/v1\/?$/, '');
+    const pingBackend = () => {
+      axios.get(`${backendBase}/health`).catch(() => {});
+    };
+    pingBackend();
+    const interval = setInterval(pingBackend, 10 * 60 * 1000); // every 10 minutes
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <BrowserRouter>
       <AuthProvider>

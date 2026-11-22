@@ -33,6 +33,19 @@ const processQueue = (error: AxiosError | null) => {
   failedQueue = [];
 };
 
+// Request interceptor: attach Bearer access token for cross-domain support (Safari/Chrome ITP)
+api.interceptors.request.use((config) => {
+  try {
+    const token = localStorage.getItem('charis_access_token');
+    if (token && !config.headers.Authorization) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+  } catch {
+    // ignore
+  }
+  return config;
+});
+
 // Response interceptor for automatic access-token refresh
 api.interceptors.response.use(
   (response) => response,
@@ -76,11 +89,43 @@ api.interceptors.response.use(
     isRefreshing = true;
 
     try {
-      // POST /api/v1/auth/refresh rotates the session (charis_refresh_token sent via cookie)
-      await api.post('/auth/refresh');
+      let refreshToken: string | null = null;
+      try {
+        refreshToken = localStorage.getItem('charis_refresh_token');
+      } catch {
+        // ignore
+      }
+
+      // POST /api/v1/auth/refresh rotates the session (sent via cookie AND via body fallback)
+      const refreshRes = await api.post<{
+        accessToken?: string;
+        refreshToken?: string;
+      }>('/auth/refresh', { refreshToken });
+
+      if (refreshRes.data?.accessToken) {
+        try {
+          localStorage.setItem('charis_access_token', refreshRes.data.accessToken);
+          if (refreshRes.data.refreshToken) {
+            localStorage.setItem('charis_refresh_token', refreshRes.data.refreshToken);
+          }
+        } catch {
+          // ignore
+        }
+        if (originalRequest.headers) {
+          originalRequest.headers.Authorization = `Bearer ${refreshRes.data.accessToken}`;
+        }
+      }
+
       processQueue(null);
       return api(originalRequest);
     } catch (refreshError) {
+      // If refresh fails, clear stored tokens so clean login can reoccur
+      try {
+        localStorage.removeItem('charis_access_token');
+        localStorage.removeItem('charis_refresh_token');
+      } catch {
+        // ignore
+      }
       processQueue(refreshError as AxiosError);
       return Promise.reject(refreshError);
     } finally {

@@ -271,6 +271,7 @@ async function register(req, res, next) {
       message: 'User registered successfully',
       user: sanitizeUser(user),
       accessToken,
+      refreshToken: rawToken,
     });
   } catch (error) {
     next(error);
@@ -341,6 +342,7 @@ async function login(req, res, next) {
       message: 'Authentication successful',
       user: sanitizeUser(user),
       accessToken,
+      refreshToken: rawToken,
     });
   } catch (error) {
     next(error);
@@ -459,6 +461,7 @@ async function refresh(req, res, next) {
       success: true,
       message: 'Tokens rotated successfully',
       accessToken: newAccessToken,
+      refreshToken: newRawToken,
     });
   } catch (error) {
     next(error);
