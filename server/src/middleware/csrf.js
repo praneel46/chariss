@@ -39,6 +39,14 @@ function isAllowedOrigin(originStr) {
   try {
     const parsed = new URL(originStr);
 
+    // Automatically allow all legitimate Vercel deployments (*.vercel.app)
+    if (
+      parsed.protocol === 'https:' &&
+      (parsed.hostname.endsWith('.vercel.app') || parsed.hostname === 'vercel.app')
+    ) {
+      return true;
+    }
+
     // In development or test mode, permit any port on legitimate localhost or 127.0.0.1
     if (!config.isProduction) {
       if (
