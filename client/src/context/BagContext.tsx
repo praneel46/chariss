@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
 import type { Product, BagItem } from '../types';
 import { bagAndWishlistService } from '../services/bagAndWishlistService';
 import { useAuth } from './AuthContext';
@@ -172,17 +172,36 @@ export const BagProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
   }, [user?.id, activeConsultationId, loadConsultationBag]);
 
+  const prevUserIdRef = useRef<string | null | undefined>(undefined);
+
   // Synchronize bag when user identity changes (login, logout, account switch)
   useEffect(() => {
     let isMounted = true;
 
-    if (!user) {
-      // User logged out: immediately clear bag state
-      setItems([]);
-      setSelectedProductIds([]);
+    // Initial mount: preserve existing items (don't clear guest bag!)
+    if (prevUserIdRef.current === undefined) {
+      prevUserIdRef.current = user?.id || null;
+      return;
+    }
+
+    // Only if a previously authenticated user explicitly logged out
+    if (prevUserIdRef.current && !user?.id) {
+      prevUserIdRef.current = null;
+      try {
+        const guestSaved = localStorage.getItem('charis_bag_guest_global');
+        const parsed: BagItem[] = guestSaved ? JSON.parse(guestSaved) : [];
+        setItems(parsed);
+        setSelectedProductIds(parsed.map((p) => p.product.id));
+      } catch {
+        setItems([]);
+        setSelectedProductIds([]);
+      }
       setActiveConsultationIdState(null);
       return;
     }
+
+    prevUserIdRef.current = user?.id || null;
+    if (!user) return;
 
     // Authenticated user: load isolated user bag
     const fetchUserBag = async () => {
@@ -282,6 +301,8 @@ export const BagProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         localStorage.setItem(key, JSON.stringify(updated));
         if (user?.id) {
           localStorage.setItem(`charis_bag_u_${user.id}`, JSON.stringify(updated));
+        } else {
+          localStorage.setItem('charis_bag_guest_global', JSON.stringify(updated));
         }
       } catch {
         // ignore
@@ -309,6 +330,8 @@ export const BagProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         localStorage.setItem(key, JSON.stringify(updated));
         if (user?.id) {
           localStorage.setItem(`charis_bag_u_${user.id}`, JSON.stringify(updated));
+        } else {
+          localStorage.setItem('charis_bag_guest_global', JSON.stringify(updated));
         }
       } catch {
         // ignore
@@ -341,6 +364,8 @@ export const BagProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         localStorage.setItem(key, JSON.stringify(updated));
         if (user?.id) {
           localStorage.setItem(`charis_bag_u_${user.id}`, JSON.stringify(updated));
+        } else {
+          localStorage.setItem('charis_bag_guest_global', JSON.stringify(updated));
         }
       } catch {
         // ignore

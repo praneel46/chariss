@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
 import type { Product } from '../types';
 import { bagAndWishlistService } from '../services/bagAndWishlistService';
 import { useAuth } from './AuthContext';
@@ -121,16 +121,33 @@ export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
   }, [user?.id, activeConsultationId, loadConsultationWishlist]);
 
+  const prevUserIdRef = useRef<string | null | undefined>(undefined);
+
   // Synchronize wishlist when user identity changes (login, logout, account switch)
   useEffect(() => {
     let isMounted = true;
 
-    if (!user) {
-      // User logged out: immediately purge in-memory wishlist
-      setWishlist([]);
+    // Initial mount: preserve existing wishlist (don't clear guest wishlist!)
+    if (prevUserIdRef.current === undefined) {
+      prevUserIdRef.current = user?.id || null;
+      return;
+    }
+
+    // Only if a previously authenticated user explicitly logged out
+    if (prevUserIdRef.current && !user?.id) {
+      prevUserIdRef.current = null;
+      try {
+        const guestSaved = localStorage.getItem('charis_wishlist_guest_global');
+        setWishlist(guestSaved ? JSON.parse(guestSaved) : []);
+      } catch {
+        setWishlist([]);
+      }
       setActiveConsultationIdState(null);
       return;
     }
+
+    prevUserIdRef.current = user?.id || null;
+    if (!user) return;
 
     // Authenticated user: load user's isolated account wishlist
     const fetchUserWishlist = async () => {
@@ -204,6 +221,8 @@ export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         localStorage.setItem(key, JSON.stringify(nextWishlist));
         if (user?.id) {
           localStorage.setItem(`charis_wishlist_u_${user.id}`, JSON.stringify(nextWishlist));
+        } else {
+          localStorage.setItem('charis_wishlist_guest_global', JSON.stringify(nextWishlist));
         }
       } catch {
         // ignore

@@ -6,7 +6,7 @@ import { useWishlist } from '../context/WishlistContext';
 import { FramedGiftCardModal } from '../components/gift/FramedGiftCardModal';
 
 export const GiftStudio: React.FC = () => {
-  const { addToBag, setIsBagOpen } = useBag();
+  const { addToBag, setIsBagOpen, items } = useBag();
   const { toggleWishlist, isWishlisted } = useWishlist();
 
   const [activeTab, setActiveTab] = useState<'collection' | 'card-writer'>('collection');
@@ -209,8 +209,10 @@ export const GiftStudio: React.FC = () => {
             {/* Gifts Grid (Continuous High Aesthetic) */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pt-4">
               {filteredGifts.map((gift) => {
-                const isAdded = addedItemIds.includes(gift.id);
-                const wishlisted = isWishlisted(String(gift.id));
+                const isAdded =
+                  items.some((item) => item.product.id === `gift-${gift.id}` || item.product.id === String(gift.id)) ||
+                  addedItemIds.includes(gift.id);
+                const wishlisted = isWishlisted(String(gift.id)) || isWishlisted(`gift-${gift.id}`);
 
                 return (
                   <div

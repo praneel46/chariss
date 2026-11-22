@@ -75,35 +75,36 @@ export const BagDrawer: React.FC = () => {
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
-  // Lock body scroll and compensate for scrollbar width to prevent layout shift ("vibration")
+  // Freeze Lenis smooth scroll and prevent layout shift / vibration when bag drawer opens
   useEffect(() => {
     if (isBagOpen) {
-      // Measure scrollbar width before locking
-      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-      document.body.style.overflow = 'hidden';
-      if (scrollbarWidth > 0) {
-        document.body.style.paddingRight = `${scrollbarWidth}px`;
-        // Compensate the fixed navbar so it doesn't shift
-        const nav = document.getElementById('kolibrie-nav');
-        if (nav) nav.style.paddingRight = `${scrollbarWidth}px`;
+      try {
+        (window as any).lenisInstance?.stop();
+      } catch {
+        // ignore
       }
+      document.body.style.overflow = 'hidden';
       requestAnimationFrame(() => setIsVisible(true));
     } else {
       setIsVisible(false);
       const t = setTimeout(() => {
         document.body.style.overflow = '';
-        document.body.style.paddingRight = '';
-        const nav = document.getElementById('kolibrie-nav');
-        if (nav) nav.style.paddingRight = '';
+        try {
+          (window as any).lenisInstance?.start();
+        } catch {
+          // ignore
+        }
         setIsMultiAtelierModalOpen(false);
       }, 300);
       return () => clearTimeout(t);
     }
     return () => {
       document.body.style.overflow = '';
-      document.body.style.paddingRight = '';
-      const nav = document.getElementById('kolibrie-nav');
-      if (nav) nav.style.paddingRight = '';
+      try {
+        (window as any).lenisInstance?.start();
+      } catch {
+        // ignore
+      }
     };
   }, [isBagOpen]);
 
@@ -187,7 +188,7 @@ export const BagDrawer: React.FC = () => {
   };
 
   return (
-    <div className={`fixed inset-0 z-50 overflow-hidden ${!isVisible ? 'pointer-events-none' : ''}`}>
+    <div className={`fixed inset-0 z-[1300] overflow-hidden ${!isVisible ? 'pointer-events-none' : ''}`}>
       {/* Dimmed backdrop */}
       <div
         onClick={() => {

@@ -9,11 +9,9 @@ import { CursorMarquee } from '../components/kolibrie/CursorMarquee';
 import { AmbientMusicPlayer } from '../components/common/AmbientMusicPlayer';
 import { CinematicOpening } from '../components/home/CinematicOpening';
 import { CurtainTransition } from '../components/common/CurtainTransition';
-import { useAuth } from '../context/AuthContext';
 
 export const MainLayout: React.FC = () => {
   const [activeModal, setActiveModal] = useState<ModalType>(null);
-  const { isAuthenticated } = useAuth();
   const location = useLocation();
   const isHome = location.pathname === '/';
 
@@ -31,18 +29,16 @@ export const MainLayout: React.FC = () => {
       {/* Universal Cursor Marquee */}
       <CursorMarquee />
 
-      {/* Fixed Positioned Underneath 100vh Footer (Curtain reveal mechanism matching Kinya Coffee) */}
-      {!isAuthenticated && (
-        <div className="fixed bottom-0 left-0 right-0 z-0 w-full h-screen">
-          <KolibrieFooter onOpenModal={(type) => setActiveModal(type)} />
-        </div>
-      )}
+      {/* Fixed Positioned Underneath 100vh Footer (Curtain reveal mechanism matching Kinya Coffee) - Always rendered for all visitors */}
+      <div className="fixed bottom-0 left-0 right-0 z-0 w-full h-[100dvh] min-h-screen">
+        <KolibrieFooter onOpenModal={(type) => setActiveModal(type)} />
+      </div>
 
       {/* Main Elevated Parchment Card Container that peels up to reveal the full-height footer */}
       <div
         className="relative z-10 bg-[#faf3e4] rounded-b-[36px] sm:rounded-b-[60px] shadow-[0_30px_70px_rgba(20,17,16,0.38)] min-h-screen flex flex-col transition-[border-radius] duration-300"
         style={{
-          marginBottom: !isAuthenticated ? '100vh' : 0,
+          marginBottom: '100dvh',
         }}
       >
         <div className="flex-1 w-full">
@@ -55,7 +51,7 @@ export const MainLayout: React.FC = () => {
         </div>
 
         {/* Bottom smooth bumper padding */}
-        {!isAuthenticated && <div className="h-10 sm:h-16 w-full" />}
+        <div className="h-10 sm:h-16 w-full" />
       </div>
 
       {/* Single-Source Ambient Beats Player (Floating) */}
