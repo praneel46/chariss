@@ -243,32 +243,7 @@ body.locked [data-cursor-marquee] {
 }
 
 #replay {
-  position: fixed;
-  bottom: calc(14px + env(safe-area-inset-bottom, 0px));
-  left: max(14px, env(safe-area-inset-left, 0px));
-  z-index: 60;
-  display: none;
-  min-height: 44px;
-  border: 1px solid rgb(217 198 167 / 30%);
-  border-radius: 999px;
-  background: #14110e;
-  box-shadow: 0 6px 20px rgb(0 0 0 / 25%);
-  color: var(--opening-champagne);
-  font-size: 0.76rem;
-  letter-spacing: 0.12em;
-  padding: 0.65rem 1.1rem;
-  text-transform: uppercase;
-  transition: transform 0.2s, background 0.2s;
-}
-
-#replay.show {
-  display: block;
-}
-
-#replay:hover {
-  transform: translateY(-2px);
-  background: var(--opening-rose);
-  color: #fff;
+  display: none !important;
 }
 
 @media (max-width: 520px) {

@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import gsap from 'gsap';
 import './CinematicOpening.css';
 import { LegacyOpening } from './LegacyOpening';
 import type { GiftScene } from './gift3d/giftScene';
@@ -45,10 +44,9 @@ export const CinematicOpening: React.FC<CinematicOpeningProps> = (props) => {
 const Opening3D: React.FC<CinematicOpeningProps & { onFail: () => void }> = ({ onOpeningComplete, onFail }) => {
   const initiallyHidden = () => wasSeen() || prefersReduced();
   const [hidden, setHidden] = useState(initiallyHidden);
-  const [showReplay, setShowReplay] = useState(initiallyHidden);
   const [ready, setReady] = useState(false);
   const [soundOn, setSoundOn] = useState(false);
-  const [run, setRun] = useState(0);
+  const run = 0;
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sceneRef = useRef<GiftScene | null>(null);
@@ -63,7 +61,6 @@ const Opening3D: React.FC<CinematicOpeningProps & { onFail: () => void }> = ({ o
     document.body.classList.remove('locked');
     try { sessionStorage.setItem('charis-opened', '1'); } catch { /* ignore */ }
     setHidden(true);
-    setShowReplay(true);
     onOpeningComplete?.();
   }, [onOpeningComplete]);
 
@@ -121,13 +118,6 @@ const Opening3D: React.FC<CinematicOpeningProps & { onFail: () => void }> = ({ o
     setSoundOn(next);
   };
 
-  const replay = () => {
-    gsap.set(['#opening', '#opencopy', '#flood', '#opening .sfx-toggle'], { clearProps: 'all' });
-    window.scrollTo(0, 0);
-    setRun((r) => r + 1);
-    setHidden(false);
-  };
-
   return (
     <>
       <div id="opening" className="gl3d" role="dialog" aria-modal="true" aria-label="Gift opening introduction" hidden={hidden}>
@@ -145,10 +135,6 @@ const Opening3D: React.FC<CinematicOpeningProps & { onFail: () => void }> = ({ o
           <small className="hint">Drag to look around · or pull the ribbon</small>
         </div>
       </div>
-
-      <button className={`replay ${showReplay && hidden ? 'show' : ''}`} id="replay" type="button" onClick={replay}>
-        Replay opening
-      </button>
     </>
   );
 };

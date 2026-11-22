@@ -20,7 +20,6 @@ export const LegacyOpening: React.FC<CinematicOpeningProps> = ({ onOpeningComple
     }
   };
   const [hidden, setHidden] = useState(initiallyHidden);
-  const [showReplay, setShowReplay] = useState(initiallyHidden);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const giftMountRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<gsap.core.Timeline | null>(null);
@@ -162,7 +161,6 @@ export const LegacyOpening: React.FC<CinematicOpeningProps> = ({ onOpeningComple
     }
 
     setHidden(true);
-    setShowReplay(true);
 
     if (onOpeningComplete) {
       onOpeningComplete();
@@ -219,27 +217,6 @@ export const LegacyOpening: React.FC<CinematicOpeningProps> = ({ onOpeningComple
       .to('#opening', { opacity: 0, duration: 1, ease: 'power1.inOut' }, 5.4);
   };
 
-  const resetOpening = () => {
-    if (timelineRef.current) {
-      timelineRef.current.kill();
-      timelineRef.current = null;
-    }
-    const mount = giftMountRef.current;
-    if (mount) {
-      mount.innerHTML = getBoxSVG('og');
-    }
-    gsap.set(['#opening', '#spot', '#giftmount', '#opencopy', '#ring', '#flash', '#rays', '#opening .logo'], { clearProps: 'all' });
-    document.body.classList.add('locked');
-    setHidden(false);
-    isPlayingRef.current = false;
-    ambOnRef.current = true;
-    particlesRef.current.live = true;
-    resizeCanvas();
-    initAmbient();
-    animationFrameRef.current = requestAnimationFrame(renderParticles);
-    window.scrollTo(0, 0);
-  };
-
   useEffect(() => {
     let seen = false;
     try {
@@ -252,7 +229,6 @@ export const LegacyOpening: React.FC<CinematicOpeningProps> = ({ onOpeningComple
 
     if (seen || reduced) {
       setHidden(true);
-      setShowReplay(true);
     } else {
       document.body.classList.add('locked');
       const mount = giftMountRef.current;
@@ -325,15 +301,6 @@ export const LegacyOpening: React.FC<CinematicOpeningProps> = ({ onOpeningComple
         </div>
         <div className="flash" id="flash" />
       </div>
-
-      <button
-        className={`replay ${showReplay ? 'show' : ''}`}
-        id="replay"
-        type="button"
-        onClick={resetOpening}
-      >
-        Replay opening
-      </button>
     </>
   );
 };
