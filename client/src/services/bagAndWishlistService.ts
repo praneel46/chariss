@@ -68,36 +68,60 @@ export const bagAndWishlistService = {
   },
 
   async addToBag(
-    consultationId: string,
+    consultationId: string | null | undefined,
     product: Product,
     quantity = 1,
     selected = true
   ): Promise<BagApiResponse> {
-    const res = await api.post(`/consultations/${consultationId}/bag`, {
+    const isObjectId = Boolean(consultationId && /^[0-9a-fA-F]{24}$/.test(consultationId));
+    const endpoint = isObjectId
+      ? `/consultations/${consultationId}/bag`
+      : '/consultations/account/bag';
+
+    const res = await api.post(endpoint, {
       productId: product.id,
       product,
       quantity,
       selected,
+      consultationId: isObjectId ? consultationId : undefined,
     });
     return res.data;
   },
 
   async updateBagItem(
-    consultationId: string,
+    consultationId: string | null | undefined,
     productId: string,
     data: { quantity?: number; selected?: boolean }
   ): Promise<BagApiResponse> {
-    const res = await api.patch(`/consultations/${consultationId}/bag/${productId}`, data);
+    const isObjectId = Boolean(consultationId && /^[0-9a-fA-F]{24}$/.test(consultationId));
+    const endpoint = isObjectId
+      ? `/consultations/${consultationId}/bag/${productId}`
+      : `/consultations/account/bag/${productId}`;
+
+    const res = await api.patch(endpoint, data);
     return res.data;
   },
 
-  async removeFromBag(consultationId: string, productId: string): Promise<BagApiResponse> {
-    const res = await api.delete(`/consultations/${consultationId}/bag/${productId}`);
+  async removeFromBag(
+    consultationId: string | null | undefined,
+    productId: string
+  ): Promise<BagApiResponse> {
+    const isObjectId = Boolean(consultationId && /^[0-9a-fA-F]{24}$/.test(consultationId));
+    const endpoint = isObjectId
+      ? `/consultations/${consultationId}/bag/${productId}`
+      : `/consultations/account/bag/${productId}`;
+
+    const res = await api.delete(endpoint);
     return res.data;
   },
 
-  async clearBag(consultationId: string): Promise<BagApiResponse> {
-    const res = await api.delete(`/consultations/${consultationId}/bag`);
+  async clearBag(consultationId: string | null | undefined): Promise<BagApiResponse> {
+    const isObjectId = Boolean(consultationId && /^[0-9a-fA-F]{24}$/.test(consultationId));
+    const endpoint = isObjectId
+      ? `/consultations/${consultationId}/bag`
+      : '/consultations/account/bag';
+
+    const res = await api.delete(endpoint);
     return res.data;
   },
 
@@ -138,16 +162,33 @@ export const bagAndWishlistService = {
     return res.data;
   },
 
-  async toggleWishlist(consultationId: string, product: Product): Promise<{ success: boolean; wishlisted: boolean; wishlist: string[] }> {
-    const res = await api.post(`/consultations/${consultationId}/wishlist`, {
+  async toggleWishlist(
+    consultationId: string | null | undefined,
+    product: Product
+  ): Promise<{ success: boolean; wishlisted: boolean; wishlist: string[] }> {
+    const isObjectId = Boolean(consultationId && /^[0-9a-fA-F]{24}$/.test(consultationId));
+    const endpoint = isObjectId
+      ? `/consultations/${consultationId}/wishlist`
+      : '/consultations/account/wishlist';
+
+    const res = await api.post(endpoint, {
       productId: product.id,
       product,
+      consultationId: isObjectId ? consultationId : undefined,
     });
     return res.data;
   },
 
-  async removeFromWishlist(consultationId: string, productId: string): Promise<{ success: boolean; wishlist: string[] }> {
-    const res = await api.delete(`/consultations/${consultationId}/wishlist/${productId}`);
+  async removeFromWishlist(
+    consultationId: string | null | undefined,
+    productId: string
+  ): Promise<{ success: boolean; wishlist: string[] }> {
+    const isObjectId = Boolean(consultationId && /^[0-9a-fA-F]{24}$/.test(consultationId));
+    const endpoint = isObjectId
+      ? `/consultations/${consultationId}/wishlist/${productId}`
+      : `/consultations/account/wishlist/${productId}`;
+
+    const res = await api.delete(endpoint);
     return res.data;
   },
 };

@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Sparkles, Search, SlidersHorizontal, ShoppingBag, Check, Heart, ExternalLink, PenTool } from 'lucide-react';
 import { ALL_100_CURATED_GIFTS, type CuratedGiftItem } from '../data/curatedGifts100';
+import type { Product } from '../types';
 import { useBag } from '../context/BagContext';
 import { useWishlist } from '../context/WishlistContext';
 import { FramedGiftCardModal } from '../components/gift/FramedGiftCardModal';
@@ -238,7 +239,31 @@ export const GiftStudio: React.FC = () => {
 
                       {/* Wishlist Button */}
                       <button
-                        onClick={() => toggleWishlist(String(gift.id))}
+                        onClick={() => {
+                          const destination = getCuratedGiftDestination(gift);
+                          toggleWishlist({
+                            id: `gift-${gift.id}`,
+                            name: gift.name,
+                            slug: `gift-${gift.id}`,
+                            tagline: gift.tag,
+                            description: gift.description,
+                            categoryId: gift.category.toLowerCase().replace(/\s+/g, '-'),
+                            categoryName: gift.category,
+                            price: gift.price,
+                            originalPrice: gift.price,
+                            currency: 'INR',
+                            imageUrl: gift.image,
+                            retailer: {
+                              id: 'charis-atelier',
+                              name: destination.retailerName,
+                              website: destination.url,
+                              verified: true,
+                            },
+                            productUrl: destination.url,
+                            tags: [gift.tag],
+                            source: 'affiliate',
+                          } as unknown as Product);
+                        }}
                         className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 text-[#141110] flex items-center justify-center hover:bg-[#ef4a23] hover:text-white transition-colors cursor-pointer shadow-xs"
                       >
                         <Heart className={`w-4 h-4 ${wishlisted ? 'fill-[#ef4a23] text-[#ef4a23]' : ''}`} />

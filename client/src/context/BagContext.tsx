@@ -5,7 +5,7 @@ import { useAuth } from './AuthContext';
 
 interface BagContextType {
   items: BagItem[];
-  addToBag: (product: Product, quantity?: number) => Promise<void>;
+  addToBag: (product: Product, quantity?: number, openDrawer?: boolean) => Promise<void>;
   removeFromBag: (productId: string) => Promise<void>;
   updateQuantity: (productId: string, quantity: number) => Promise<void>;
   clearBag: () => Promise<void>;
@@ -74,22 +74,28 @@ export const BagProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   });
 
   const [isBagOpen, setIsBagOpen] = useState(false);
+  const mutationSeqRef = useRef<number>(0);
 
   // Load bag whenever active consultation or user identity changes
   const loadConsultationBag = useCallback(
     async (consultationId: string | null) => {
+      const currentSeq = ++mutationSeqRef.current;
       if (!consultationId) {
         if (user?.id) {
           try {
             const res = await bagAndWishlistService.getUserBag();
+            if (mutationSeqRef.current !== currentSeq) return;
             if (res && Array.isArray(res.items)) {
               const mapped: BagItem[] = res.items.map((i) => ({
                 product: i.product,
                 quantity: i.quantity,
               }));
-              setItems(mapped);
-              setSelectedProductIds(
-                res.items.filter((i) => i.selected !== false).map((i) => i.productId)
+              // Never wipe out optimistic items if server returns empty
+              setItems((prev) => (mapped.length === 0 && prev.length > 0 ? prev : mapped));
+              setSelectedProductIds((prev) =>
+                mapped.length === 0 && prev.length > 0
+                  ? prev
+                  : res.items.filter((i) => i.selected !== false).map((i) => i.productId)
               );
               localStorage.setItem(`charis_bag_u_${user.id}`, JSON.stringify(mapped));
             }
@@ -100,11 +106,12 @@ export const BagProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           try {
             const saved = localStorage.getItem('charis_bag_guest_global');
             const parsed: BagItem[] = saved ? JSON.parse(saved) : [];
-            setItems(parsed);
-            setSelectedProductIds(parsed.map((p) => p.product.id));
+            setItems((prev) => (parsed.length === 0 && prev.length > 0 ? prev : parsed));
+            setSelectedProductIds((prev) =>
+              parsed.length === 0 && prev.length > 0 ? prev : parsed.map((p) => p.product.id)
+            );
           } catch {
-            setItems([]);
-            setSelectedProductIds([]);
+            // ignore
           }
         }
         return;
@@ -116,8 +123,10 @@ export const BagProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         const saved = localStorage.getItem(localKey);
         if (saved) {
           const parsed: BagItem[] = JSON.parse(saved);
-          setItems(parsed);
-          setSelectedProductIds(parsed.map((p) => p.product.id));
+          if (parsed.length > 0) {
+            setItems(parsed);
+            setSelectedProductIds(parsed.map((p) => p.product.id));
+          }
         }
       } catch {
         // ignore
@@ -126,18 +135,27 @@ export const BagProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       // Fetch live backend bag
       try {
         const response = await bagAndWishlistService.getBag(consultationId);
-        if (response && response.items) {
+        // Stale sequence check: if user mutated bag while request was in-flight, discard stale response
+        if (mutationSeqRef.current !== currentSeq) return;
+
+        if (response && Array.isArray(response.items)) {
           const mappedItems: BagItem[] = response.items.map((i) => ({
             product: i.product,
             quantity: i.quantity,
           }));
-          setItems(mappedItems);
-          const selected = response.items
-            .filter((i) => i.selected !== false)
-            .map((i) => i.productId);
-          setSelectedProductIds(selected);
-          const localKey = getStorageKey(consultationId);
-          localStorage.setItem(localKey, JSON.stringify(mappedItems));
+          // Never overwrite non-empty local bag with an empty server array
+          setItems((prev) => (mappedItems.length === 0 && prev.length > 0 ? prev : mappedItems));
+          setSelectedProductIds((prev) =>
+            mappedItems.length === 0 && prev.length > 0
+              ? prev
+              : response.items
+                  .filter((i) => i.selected !== false)
+                  .map((i) => i.productId)
+          );
+          if (mappedItems.length > 0) {
+            const localKey = getStorageKey(consultationId);
+            localStorage.setItem(localKey, JSON.stringify(mappedItems));
+          }
         }
       } catch (err) {
         console.warn('[BagContext] Live bag fetch warning:', err);
@@ -147,17 +165,21 @@ export const BagProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   );
 
   const refreshBag = useCallback(async () => {
+    const currentSeq = ++mutationSeqRef.current;
     if (user?.id) {
       try {
         const res = await bagAndWishlistService.getUserBag();
+        if (mutationSeqRef.current !== currentSeq) return;
         if (res && Array.isArray(res.items)) {
           const mapped: BagItem[] = res.items.map((i) => ({
             product: i.product,
             quantity: i.quantity,
           }));
-          setItems(mapped);
-          setSelectedProductIds(
-            res.items.filter((i) => i.selected !== false).map((i) => i.productId)
+          setItems((prev) => (mapped.length === 0 && prev.length > 0 ? prev : mapped));
+          setSelectedProductIds((prev) =>
+            mapped.length === 0 && prev.length > 0
+              ? prev
+              : res.items.filter((i) => i.selected !== false).map((i) => i.productId)
           );
           localStorage.setItem(`charis_bag_u_${user.id}`, JSON.stringify(mapped));
         }
@@ -166,9 +188,6 @@ export const BagProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       }
     } else if (activeConsultationId) {
       await loadConsultationBag(activeConsultationId);
-    } else {
-      setItems([]);
-      setSelectedProductIds([]);
     }
   }, [user?.id, activeConsultationId, loadConsultationBag]);
 
@@ -218,15 +237,19 @@ export const BagProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           }
         }
 
+        const currentSeq = ++mutationSeqRef.current;
         const res = await bagAndWishlistService.getUserBag();
+        if (mutationSeqRef.current !== currentSeq) return;
         if (isMounted && res && Array.isArray(res.items)) {
           const mapped: BagItem[] = res.items.map((i) => ({
             product: i.product,
             quantity: i.quantity,
           }));
-          setItems(mapped);
-          setSelectedProductIds(
-            res.items.filter((i) => i.selected !== false).map((i) => i.productId)
+          setItems((prev) => (mapped.length === 0 && prev.length > 0 ? prev : mapped));
+          setSelectedProductIds((prev) =>
+            mapped.length === 0 && prev.length > 0
+              ? prev
+              : res.items.filter((i) => i.selected !== false).map((i) => i.productId)
           );
           localStorage.setItem(userKey, JSON.stringify(mapped));
         }
@@ -246,8 +269,9 @@ export const BagProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setActiveConsultationIdState(id);
     if (id) {
       localStorage.setItem('charis_active_consultation_id', id);
+    } else {
+      localStorage.removeItem('charis_active_consultation_id');
     }
-    loadConsultationBag(id);
   };
 
   useEffect(() => {
@@ -284,7 +308,8 @@ export const BagProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     });
   }, [items]);
 
-  const addToBag = async (product: Product, quantity = 1) => {
+  const addToBag = async (product: Product, quantity = 1, openDrawer = false) => {
+    mutationSeqRef.current += 1;
     setItems((prev) => {
       const existing = prev.find((item) => item.product.id === product.id);
       let updated: BagItem[];
@@ -311,18 +336,19 @@ export const BagProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     });
 
     setSelectedProductIds((prev) => (prev.includes(product.id) ? prev : [...prev, product.id]));
-    setIsBagOpen(true);
+    if (openDrawer) {
+      setIsBagOpen(true);
+    }
 
-    if (activeConsultationId) {
-      try {
-        await bagAndWishlistService.addToBag(activeConsultationId, product, quantity, true);
-      } catch (err) {
-        console.warn('[BagContext] Failed to sync addToBag with backend:', err);
-      }
+    try {
+      await bagAndWishlistService.addToBag(activeConsultationId, product, quantity, true);
+    } catch (err) {
+      console.warn('[BagContext] Failed to sync addToBag with backend:', err);
     }
   };
 
   const removeFromBag = async (productId: string) => {
+    mutationSeqRef.current += 1;
     setItems((prev) => {
       const updated = prev.filter((item) => item.product.id !== productId);
       try {
@@ -340,16 +366,15 @@ export const BagProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     });
     setSelectedProductIds((prev) => prev.filter((id) => id !== productId));
 
-    if (activeConsultationId) {
-      try {
-        await bagAndWishlistService.removeFromBag(activeConsultationId, productId);
-      } catch (err) {
-        console.warn('[BagContext] Failed to sync removeFromBag with backend:', err);
-      }
+    try {
+      await bagAndWishlistService.removeFromBag(activeConsultationId, productId);
+    } catch (err) {
+      console.warn('[BagContext] Failed to sync removeFromBag with backend:', err);
     }
   };
 
   const updateQuantity = async (productId: string, quantity: number) => {
+    mutationSeqRef.current += 1;
     if (quantity <= 0) {
       await removeFromBag(productId);
       return;
@@ -373,16 +398,15 @@ export const BagProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       return updated;
     });
 
-    if (activeConsultationId) {
-      try {
-        await bagAndWishlistService.updateBagItem(activeConsultationId, productId, { quantity });
-      } catch (err) {
-        console.warn('[BagContext] Failed to sync updateQuantity with backend:', err);
-      }
+    try {
+      await bagAndWishlistService.updateBagItem(activeConsultationId, productId, { quantity });
+    } catch (err) {
+      console.warn('[BagContext] Failed to sync updateQuantity with backend:', err);
     }
   };
 
   const clearBag = async () => {
+    mutationSeqRef.current += 1;
     setItems([]);
     setSelectedProductIds([]);
     try {
@@ -395,12 +419,10 @@ export const BagProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       // ignore
     }
 
-    if (activeConsultationId) {
-      try {
-        await bagAndWishlistService.clearBag(activeConsultationId);
-      } catch (err) {
-        console.warn('[BagContext] Failed to sync clearBag with backend:', err);
-      }
+    try {
+      await bagAndWishlistService.clearBag(activeConsultationId);
+    } catch (err) {
+      console.warn('[BagContext] Failed to sync clearBag with backend:', err);
     }
   };
 

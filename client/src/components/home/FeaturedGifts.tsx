@@ -139,10 +139,10 @@ export const FeaturedGifts: React.FC = () => {
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        toggleWishlist(product.id);
+                        toggleWishlist(product);
                       }}
                       aria-label="Add to wishlist"
-                      className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 backdrop-blur-xs flex items-center justify-center text-[#292820] hover:text-red-600 transition-colors z-10 shadow-xs"
+                      className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 backdrop-blur-xs flex items-center justify-center text-[#292820] hover:text-red-600 transition-colors z-10 shadow-xs cursor-pointer"
                     >
                       <Heart
                         className={`w-4 h-4 ${

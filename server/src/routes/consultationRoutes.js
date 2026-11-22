@@ -4,6 +4,11 @@ const bagAndWishlistRoutes = require('./bagAndWishlistRoutes');
 const {
   getUserWishlist,
   getUserBag,
+  addToAccountBag,
+  removeFromAccountBag,
+  clearAccountBag,
+  toggleAccountWishlist,
+  removeFromAccountWishlist,
 } = require('../controllers/bagAndWishlistController');
 const {
   createConsultation,
@@ -54,7 +59,13 @@ router.post(
 
 // User account-scoped Wishlist & Bag routes (must be defined before /:consultationId and /:id)
 router.get('/account/wishlist', auth, getUserWishlist);
+router.post('/account/wishlist', auth, toggleAccountWishlist);
+router.delete('/account/wishlist/:productId', auth, removeFromAccountWishlist);
+
 router.get('/account/bag', auth, getUserBag);
+router.post('/account/bag', auth, addToAccountBag);
+router.delete('/account/bag/:productId', auth, removeFromAccountBag);
+router.delete('/account/bag', auth, clearAccountBag);
 
 // Sub-resource routes for consultation-specific Gift Bag & Wishlist
 router.use('/:consultationId', bagAndWishlistRoutes);

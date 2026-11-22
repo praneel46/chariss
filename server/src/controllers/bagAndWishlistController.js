@@ -147,6 +147,167 @@ async function getUserBag(req, res, next) {
 }
 
 /**
+ * POST /api/v1/consultations/account/bag
+ * Adds or updates an item in the user's account gift bag.
+ */
+async function addToAccountBag(req, res, next) {
+  try {
+    if (!req.user || !req.user.id) {
+      return res.status(401).json({
+        success: false,
+        message: 'Authentication required for account gift bag.',
+        code: 'AUTH_REQUIRED',
+      });
+    }
+
+    const { productId, product, quantity = 1, selected = true, consultationId } = req.body;
+    if (!productId || !product) {
+      return res.status(400).json({
+        success: false,
+        message: 'productId and product details are required.',
+        code: 'MISSING_REQUIRED_FIELDS',
+      });
+    }
+
+    const itemQuantity = Math.max(1, parseInt(quantity, 10) || 1);
+    const userId = req.user.id;
+
+    let sanitizedProduct = product ? { ...product } : {};
+    let dbProduct = null;
+    if (mongoose.Types.ObjectId.isValid(productId)) {
+      dbProduct = await Product.findById(productId);
+    }
+    if (!dbProduct && product?.id && mongoose.Types.ObjectId.isValid(product.id)) {
+      dbProduct = await Product.findById(product.id);
+    }
+    if (!dbProduct) {
+      dbProduct = await Product.findOne({
+        $or: [{ slug: productId }, { name: product?.name }],
+      });
+    }
+
+    if (dbProduct) {
+      sanitizedProduct = {
+        id: dbProduct._id.toString(),
+        name: dbProduct.name,
+        price: dbProduct.price,
+        imageUrl: dbProduct.imageUrl,
+        productUrl: dbProduct.productUrl,
+        categoryName: dbProduct.categoryName,
+        retailer: {
+          id: dbProduct.retailer?.id || 'ret-01',
+          name: dbProduct.retailer?.name || 'Artisan Workshop',
+          website: dbProduct.retailer?.website || '',
+          verified: Boolean(dbProduct.retailer?.verified),
+        },
+      };
+    } else {
+      sanitizedProduct.retailer = {
+        ...sanitizedProduct.retailer,
+        verified: false,
+      };
+    }
+
+    const validConsultationId =
+      consultationId && mongoose.Types.ObjectId.isValid(consultationId)
+        ? consultationId
+        : 'account-global';
+
+    const existing = await GiftBag.findOne({ userId, productId });
+    let item;
+    if (existing) {
+      existing.quantity += itemQuantity;
+      existing.selected = selected !== undefined ? Boolean(selected) : existing.selected;
+      existing.product = sanitizedProduct;
+      if (validConsultationId !== 'account-global') existing.consultationId = validConsultationId;
+      item = await existing.save();
+    } else {
+      item = await GiftBag.create({
+        consultationId: validConsultationId,
+        userId,
+        productId,
+        product: sanitizedProduct,
+        quantity: itemQuantity,
+        selected: Boolean(selected),
+      });
+    }
+
+    const allItems = await GiftBag.find({ userId }).sort({ addedAt: -1 });
+    const totalCount = allItems.reduce((sum, it) => sum + it.quantity, 0);
+    const totalAmount = allItems.reduce((sum, it) => sum + (it.product?.price || 0) * it.quantity, 0);
+
+    return res.status(200).json({
+      success: true,
+      item,
+      items: allItems,
+      totalCount,
+      totalAmount,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * DELETE /api/v1/consultations/account/bag/:productId
+ */
+async function removeFromAccountBag(req, res, next) {
+  try {
+    if (!req.user || !req.user.id) {
+      return res.status(401).json({
+        success: false,
+        message: 'Authentication required.',
+        code: 'AUTH_REQUIRED',
+      });
+    }
+
+    const { productId } = req.params;
+    await GiftBag.deleteMany({ userId: req.user.id, productId });
+
+    const allItems = await GiftBag.find({ userId: req.user.id }).sort({ addedAt: -1 });
+    const totalCount = allItems.reduce((sum, it) => sum + it.quantity, 0);
+    const totalAmount = allItems.reduce((sum, it) => sum + (it.product?.price || 0) * it.quantity, 0);
+
+    return res.status(200).json({
+      success: true,
+      message: 'Item removed from account bag.',
+      items: allItems,
+      totalCount,
+      totalAmount,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * DELETE /api/v1/consultations/account/bag
+ */
+async function clearAccountBag(req, res, next) {
+  try {
+    if (!req.user || !req.user.id) {
+      return res.status(401).json({
+        success: false,
+        message: 'Authentication required.',
+        code: 'AUTH_REQUIRED',
+      });
+    }
+
+    await GiftBag.deleteMany({ userId: req.user.id });
+
+    return res.status(200).json({
+      success: true,
+      message: 'Account bag cleared.',
+      items: [],
+      totalCount: 0,
+      totalAmount: 0,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
  * GET /api/v1/consultations/:consultationId/bag
  */
 async function getBag(req, res, next) {
@@ -443,6 +604,94 @@ async function getUserWishlist(req, res, next) {
 }
 
 /**
+ * POST /api/v1/consultations/account/wishlist
+ * Toggles a product in the user's account wishlist.
+ */
+async function toggleAccountWishlist(req, res, next) {
+  try {
+    if (!req.user || !req.user.id) {
+      return res.status(401).json({
+        success: false,
+        message: 'Authentication required for account wishlist.',
+        code: 'AUTH_REQUIRED',
+      });
+    }
+
+    const { productId, product, consultationId } = req.body;
+    if (!productId) {
+      return res.status(400).json({
+        success: false,
+        message: 'productId is required.',
+        code: 'MISSING_PRODUCT_ID',
+      });
+    }
+
+    const userId = req.user.id;
+    const existing = await Wishlist.findOne({ userId, productId });
+    let wishlisted = false;
+
+    if (existing) {
+      await Wishlist.deleteMany({ userId, productId });
+      wishlisted = false;
+    } else {
+      const validConsultationId =
+        consultationId && mongoose.Types.ObjectId.isValid(consultationId)
+          ? consultationId
+          : 'account-global';
+
+      await Wishlist.create({
+        consultationId: validConsultationId,
+        userId,
+        productId,
+        product: product || {},
+      });
+      wishlisted = true;
+    }
+
+    const allWishlist = await Wishlist.find({ userId });
+    const wishlist = allWishlist.map((w) => w.productId);
+
+    return res.status(200).json({
+      success: true,
+      wishlisted,
+      productId,
+      wishlist,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * DELETE /api/v1/consultations/account/wishlist/:productId
+ */
+async function removeFromAccountWishlist(req, res, next) {
+  try {
+    if (!req.user || !req.user.id) {
+      return res.status(401).json({
+        success: false,
+        message: 'Authentication required.',
+        code: 'AUTH_REQUIRED',
+      });
+    }
+
+    const { productId } = req.params;
+    await Wishlist.deleteMany({ userId: req.user.id, productId });
+
+    const allWishlist = await Wishlist.find({ userId: req.user.id });
+    const wishlist = allWishlist.map((w) => w.productId);
+
+    return res.status(200).json({
+      success: true,
+      message: 'Item removed from wishlist.',
+      wishlist,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
  * GET /api/v1/consultations/:consultationId/wishlist
  */
 async function getWishlist(req, res, next) {
@@ -697,12 +946,17 @@ async function validateAndProcessCheckout(req, res, next) {
 
 module.exports = {
   getUserBag,
+  addToAccountBag,
+  removeFromAccountBag,
+  clearAccountBag,
   getBag,
   addToBag,
   updateBagItem,
   removeFromBag,
   clearBag,
   getUserWishlist,
+  toggleAccountWishlist,
+  removeFromAccountWishlist,
   getWishlist,
   toggleWishlist,
   removeFromWishlist,

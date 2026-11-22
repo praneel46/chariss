@@ -196,7 +196,7 @@ export const Occasions: React.FC = () => {
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                     <button
-                      onClick={() => toggleWishlist(product.id)}
+                      onClick={() => toggleWishlist(product)}
                       aria-label="Wishlist"
                       className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 backdrop-blur-xs flex items-center justify-center text-[#292820] hover:text-red-600 transition-colors z-10 cursor-pointer shadow-xs"
                     >

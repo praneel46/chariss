@@ -581,7 +581,7 @@ export const Recommendations: React.FC = () => {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {displayedItems.map(({ product, score, rationale }, rankIdx) => {
-                  const isWish = isWishlisted(product.id);
+                  const isWish = isWishlisted(product);
                   const isAdded = addedId === product.id;
 
                   return (
@@ -634,7 +634,7 @@ export const Recommendations: React.FC = () => {
                       {/* Bottom Actions */}
                       <div className="p-6 pt-0 flex flex-wrap items-center justify-between gap-3 border-t border-[#141110]/5">
                         <button
-                          onClick={() => toggleWishlist(product.id)}
+                          onClick={() => toggleWishlist(product)}
                           className="flex items-center gap-1.5 text-xs font-archivo uppercase tracking-wider text-[#141110]/70 hover:text-[#ef4a23] transition-colors cursor-pointer"
                         >
                           <Heart className={`w-4 h-4 ${isWish ? 'fill-[#ef4a23] text-[#ef4a23]' : ''}`} />

@@ -6,7 +6,7 @@ import { useAuth } from './AuthContext';
 interface WishlistContextType {
   wishlist: string[];
   toggleWishlist: (productOrId: Product | string) => Promise<void>;
-  isWishlisted: (productId: string) => boolean;
+  isWishlisted: (productOrId: Product | string) => boolean;
   activeConsultationId: string | null;
   setActiveConsultationId: (id: string | null) => void;
   refreshWishlist: () => Promise<void>;
@@ -53,14 +53,18 @@ export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
   });
 
+  const wishlistMutationSeqRef = useRef<number>(0);
+
   const loadConsultationWishlist = useCallback(
     async (consultationId: string | null) => {
+      const currentSeq = ++wishlistMutationSeqRef.current;
       if (!consultationId) {
         if (user?.id) {
           try {
             const res = await bagAndWishlistService.getUserWishlist();
+            if (wishlistMutationSeqRef.current !== currentSeq) return;
             if (res && Array.isArray(res.wishlist)) {
-              setWishlist(res.wishlist);
+              setWishlist((prev) => (res.wishlist.length === 0 && prev.length > 0 ? prev : res.wishlist));
               localStorage.setItem(`charis_wishlist_u_${user.id}`, JSON.stringify(res.wishlist));
             }
           } catch (err) {
@@ -69,9 +73,10 @@ export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         } else {
           try {
             const saved = localStorage.getItem('charis_wishlist_guest_global');
-            setWishlist(saved ? JSON.parse(saved) : []);
+            const parsed = saved ? JSON.parse(saved) : [];
+            setWishlist((prev) => (parsed.length === 0 && prev.length > 0 ? prev : parsed));
           } catch {
-            setWishlist([]);
+            // ignore
           }
         }
         return;
@@ -82,7 +87,10 @@ export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         const localKey = getStorageKey(consultationId);
         const saved = localStorage.getItem(localKey);
         if (saved) {
-          setWishlist(JSON.parse(saved));
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setWishlist(parsed);
+          }
         }
       } catch {
         // ignore
@@ -91,10 +99,13 @@ export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       // Fetch live backend wishlist
       try {
         const response = await bagAndWishlistService.getWishlist(consultationId);
+        if (wishlistMutationSeqRef.current !== currentSeq) return;
         if (response && Array.isArray(response.wishlist)) {
-          setWishlist(response.wishlist);
-          const localKey = getStorageKey(consultationId);
-          localStorage.setItem(localKey, JSON.stringify(response.wishlist));
+          setWishlist((prev) => (response.wishlist.length === 0 && prev.length > 0 ? prev : response.wishlist));
+          if (response.wishlist.length > 0) {
+            const localKey = getStorageKey(consultationId);
+            localStorage.setItem(localKey, JSON.stringify(response.wishlist));
+          }
         }
       } catch (err) {
         console.warn('[WishlistContext] Live wishlist fetch warning:', err);
@@ -104,11 +115,13 @@ export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   );
 
   const refreshWishlist = useCallback(async () => {
+    const currentSeq = ++wishlistMutationSeqRef.current;
     if (user?.id) {
       try {
         const res = await bagAndWishlistService.getUserWishlist();
+        if (wishlistMutationSeqRef.current !== currentSeq) return;
         if (res && Array.isArray(res.wishlist)) {
-          setWishlist(res.wishlist);
+          setWishlist((prev) => (res.wishlist.length === 0 && prev.length > 0 ? prev : res.wishlist));
           localStorage.setItem(`charis_wishlist_u_${user.id}`, JSON.stringify(res.wishlist));
         }
       } catch (err) {
@@ -116,8 +129,6 @@ export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       }
     } else if (activeConsultationId) {
       await loadConsultationWishlist(activeConsultationId);
-    } else {
-      setWishlist([]);
     }
   }, [user?.id, activeConsultationId, loadConsultationWishlist]);
 
@@ -162,9 +173,11 @@ export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({ chil
           }
         }
 
+        const currentSeq = ++wishlistMutationSeqRef.current;
         const res = await bagAndWishlistService.getUserWishlist();
+        if (wishlistMutationSeqRef.current !== currentSeq) return;
         if (isMounted && res && Array.isArray(res.wishlist)) {
-          setWishlist(res.wishlist);
+          setWishlist((prev) => (res.wishlist.length === 0 && prev.length > 0 ? prev : res.wishlist));
           localStorage.setItem(userKey, JSON.stringify(res.wishlist));
         }
       } catch (err) {
@@ -183,8 +196,9 @@ export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     setActiveConsultationIdState(id);
     if (id) {
       localStorage.setItem('charis_active_consultation_id', id);
+    } else {
+      localStorage.removeItem('charis_active_consultation_id');
     }
-    loadConsultationWishlist(id);
   };
 
   useEffect(() => {
@@ -207,6 +221,7 @@ export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   }, [wishlist, activeConsultationId, getStorageKey, user?.id]);
 
   const toggleWishlist = async (productOrId: Product | string) => {
+    wishlistMutationSeqRef.current += 1;
     const productId = typeof productOrId === 'string' ? productOrId : productOrId.id;
     const product = typeof productOrId === 'string' ? ({ id: productId } as Product) : productOrId;
 
@@ -230,33 +245,44 @@ export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       return nextWishlist;
     });
 
-    if (activeConsultationId) {
-      try {
-        const res = await bagAndWishlistService.toggleWishlist(activeConsultationId, product);
-        if (res && Array.isArray(res.wishlist)) {
-          // Only update if server state differs from optimistic (avoid double-render flicker)
-          setWishlist((current) => {
-            const serverSet = new Set(res.wishlist);
-            const currentSet = new Set(current);
-            const isSame =
-              serverSet.size === currentSet.size &&
-              [...serverSet].every((id) => currentSet.has(id));
-            if (isSame) return current; // no-op — prevents re-render flicker
-            const key = getStorageKey(activeConsultationId);
-            localStorage.setItem(key, JSON.stringify(res.wishlist));
-            if (user?.id) {
-              localStorage.setItem(`charis_wishlist_u_${user.id}`, JSON.stringify(res.wishlist));
-            }
-            return res.wishlist;
-          });
-        }
-      } catch (err) {
-        console.warn('[WishlistContext] Failed to sync toggleWishlist with backend:', err);
+    try {
+      const res = await bagAndWishlistService.toggleWishlist(activeConsultationId, product);
+      if (res && Array.isArray(res.wishlist)) {
+        setWishlist((current) => {
+          const serverSet = new Set(res.wishlist);
+          const currentSet = new Set(current);
+          const isSame =
+            serverSet.size === currentSet.size &&
+            [...serverSet].every((id) => currentSet.has(id));
+          if (isSame) return current;
+          const key = getStorageKey(activeConsultationId);
+          localStorage.setItem(key, JSON.stringify(res.wishlist));
+          if (user?.id) {
+            localStorage.setItem(`charis_wishlist_u_${user.id}`, JSON.stringify(res.wishlist));
+          }
+          return res.wishlist;
+        });
       }
+    } catch (err) {
+      console.warn('[WishlistContext] Failed to sync toggleWishlist with backend:', err);
     }
   };
 
-  const isWishlisted = (productId: string) => wishlist.includes(productId);
+  const isWishlisted = useCallback(
+    (productOrId: Product | string) => {
+      if (!productOrId) return false;
+      const targetId = typeof productOrId === 'string' ? productOrId : productOrId.id;
+      const targetMongoId = typeof productOrId === 'object' ? (productOrId as any)._id : undefined;
+      const targetSlug = typeof productOrId === 'object' ? productOrId.slug : undefined;
+
+      return (
+        (Boolean(targetId) && wishlist.includes(targetId)) ||
+        (Boolean(targetMongoId) && wishlist.includes(targetMongoId!)) ||
+        (Boolean(targetSlug) && wishlist.includes(targetSlug!))
+      );
+    },
+    [wishlist]
+  );
 
   return (
     <WishlistContext.Provider

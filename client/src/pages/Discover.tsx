@@ -7,7 +7,7 @@ import type { Product } from '../types';
 
 export const Discover: React.FC = () => {
   const { addToBag } = useBag();
-  const { wishlist, toggleWishlist } = useWishlist();
+  const { isWishlisted, toggleWishlist } = useWishlist();
   
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -202,7 +202,7 @@ export const Discover: React.FC = () => {
           /* Active Real Products Grid */
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredProducts.map((product) => {
-              const isWish = wishlist.includes(product.id);
+              const isWish = isWishlisted(product);
               const isAdded = addedId === product.id;
 
               return (
@@ -225,7 +225,7 @@ export const Discover: React.FC = () => {
                     )}
 
                     <button
-                      onClick={() => toggleWishlist(product.id)}
+                      onClick={() => toggleWishlist(product)}
                       aria-label="Wishlist"
                       className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 backdrop-blur-xs flex items-center justify-center text-[#292820] hover:text-red-600 transition-colors z-10 shadow-xs cursor-pointer"
                     >

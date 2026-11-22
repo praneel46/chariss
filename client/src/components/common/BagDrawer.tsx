@@ -74,37 +74,17 @@ export const BagDrawer: React.FC = () => {
   const [popupBlockedNotice, setPopupBlockedNotice] = useState<string | null>(null);
   const [isVisible, setIsVisible] = useState(false);
 
-  // Freeze Lenis smooth scroll and prevent layout shift / vibration when bag drawer opens
+  // Smooth transition for bag drawer without window scrollbar jitter or layout vibration
   useEffect(() => {
     if (isBagOpen) {
-      try {
-        (window as any).lenisInstance?.stop();
-      } catch {
-        // ignore
-      }
-      document.body.style.overflow = 'hidden';
-      requestAnimationFrame(() => setIsVisible(true));
+      setIsVisible(true);
     } else {
       setIsVisible(false);
       const t = setTimeout(() => {
-        document.body.style.overflow = '';
-        try {
-          (window as any).lenisInstance?.start();
-        } catch {
-          // ignore
-        }
         setIsMultiAtelierModalOpen(false);
       }, 300);
       return () => clearTimeout(t);
     }
-    return () => {
-      document.body.style.overflow = '';
-      try {
-        (window as any).lenisInstance?.start();
-      } catch {
-        // ignore
-      }
-    };
   }, [isBagOpen]);
 
   if (!isBagOpen && !isVisible) return null;
