@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { jsPDF } from 'jspdf';
-import { X, Sparkles, Download, Printer, Copy, Check, RefreshCw, PenLine, Shield, Award } from 'lucide-react';
+import { X, Sparkles, Download, Printer, Copy, Check, RefreshCw, PenLine, Shield, Award, Mail } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
 export interface FramedGiftCardModalProps {
@@ -48,6 +48,20 @@ export const FramedGiftCardModal: React.FC<FramedGiftCardModalProps> = ({
   const [isExporting, setIsExporting] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const [variationIndex, setVariationIndex] = useState(0);
+
+  // Digital Wax Seal Unboxing State
+  const [previewMode, setPreviewMode] = useState<'unboxing' | 'card'>('unboxing');
+  const [isSealBroken, setIsSealBroken] = useState(false);
+  const [isBreaking, setIsBreaking] = useState(false);
+
+  const handleBreakSeal = () => {
+    if (isSealBroken || isBreaking) return;
+    setIsBreaking(true);
+    setTimeout(() => {
+      setIsBreaking(false);
+      setIsSealBroken(true);
+    }, 450);
+  };
 
   // Synchronize initial values when modal opens
   useEffect(() => {
@@ -485,18 +499,135 @@ export const FramedGiftCardModal: React.FC<FramedGiftCardModalProps> = ({
           </div>
         </div>
 
-        {/* RIGHT COLUMN: Live Framed Card Preview ("keep a nice frame for it") */}
+        {/* RIGHT COLUMN: Live Framed Card Preview & Digital Wax Seal Unboxing */}
         <div className="w-full lg:w-1/2 p-6 sm:p-10 flex flex-col items-center justify-center bg-[#faf3e4]/60">
-          <div className="text-center mb-4">
+          <div className="flex items-center justify-between w-full max-w-sm mb-4">
             <span className="text-[10px] font-archivo uppercase tracking-widest text-[#141110]/60 font-bold">
-              Live Stationery Framing Preview
+              {previewMode === 'unboxing' && !isSealBroken
+                ? 'Wax-Sealed Atelier Envelope'
+                : 'Live Stationery Framing Preview'}
             </span>
+            <div className="inline-flex p-0.5 bg-[#141110]/8 rounded-full text-[10px] font-archivo uppercase font-bold tracking-wider">
+              <button
+                type="button"
+                onClick={() => setPreviewMode('unboxing')}
+                className={`px-3 py-1 rounded-full transition-all cursor-pointer flex items-center gap-1 ${
+                  previewMode === 'unboxing'
+                    ? 'bg-[#141110] text-[#faf3e4] shadow-xs'
+                    : 'text-[#141110]/70 hover:text-[#141110]'
+                }`}
+              >
+                <Mail className="w-3 h-3 text-[#ffd46e]" />
+                <span>Unboxing</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setPreviewMode('card')}
+                className={`px-3 py-1 rounded-full transition-all cursor-pointer flex items-center gap-1 ${
+                  previewMode === 'card'
+                    ? 'bg-[#141110] text-[#faf3e4] shadow-xs'
+                    : 'text-[#141110]/70 hover:text-[#141110]'
+                }`}
+              >
+                <Sparkles className="w-3 h-3 text-[#ef4a23]" />
+                <span>Stationery</span>
+              </button>
+            </div>
           </div>
 
-          {/* Bespoke Physical-Style Framed Card */}
-          <div
-            ref={cardPreviewRef}
-            className={`w-full max-w-sm rounded-xl p-6 sm:p-8 transition-all duration-300 relative select-none shadow-[0_20px_60px_rgba(20,17,16,0.18)] ${
+          {previewMode === 'unboxing' && !isSealBroken ? (
+            /* INTERACTIVE WAX-SEALED ENVELOPE */
+            <div
+              className="w-full max-w-sm rounded-2xl p-6 sm:p-8 bg-[#FAF6EE] text-[#141110] border-2 border-[#141110]/15 relative shadow-[0_20px_50px_rgba(20,17,16,0.15)] flex flex-col justify-between animate-in fade-in duration-300"
+              style={{ minHeight: '440px' }}
+            >
+              {/* Deckled Edge Inset */}
+              <div className="absolute inset-2.5 rounded-xl border border-dashed border-[#141110]/20 pointer-events-none" />
+
+              {/* Envelope Flap Header */}
+              <div className="relative z-10 text-center pt-2">
+                <span className="font-yellowtail text-2xl text-[#ef4a23] inline-block -rotate-6">charis.</span>
+                <p className="font-archivo text-[9px] uppercase tracking-widest text-[#141110]/60 mt-0.5 font-bold">
+                  SEALED ATELIER SENTIMENT
+                </p>
+              </div>
+
+              {/* Addressee Card */}
+              <div className="relative z-10 text-center my-auto space-y-1.5 px-4 py-5 bg-white/70 rounded-xl border border-[#141110]/10 shadow-2xs backdrop-blur-2xs">
+                <p className="font-playfair text-[10px] uppercase tracking-wider text-[#141110]/50 font-bold">
+                  Delivered with Deep Regard for
+                </p>
+                <h3 className="font-playfair italic font-bold text-2xl text-[#141110]">
+                  Dearest {recipient || 'Someone Special'}
+                </h3>
+                <p className="font-archivo text-[10px] text-[#ef4a23] font-bold uppercase tracking-wider pt-0.5">
+                  Keepsake: {giftName}
+                </p>
+              </div>
+
+              {/* Interactive 3D Wax Seal Button */}
+              <div className="relative z-10 flex flex-col items-center justify-center pt-2 pb-1 space-y-2">
+                <button
+                  type="button"
+                  onClick={handleBreakSeal}
+                  disabled={isBreaking}
+                  aria-label="Crack wax seal and unbox gift card"
+                  className={`w-16 h-16 rounded-full flex items-center justify-center text-white font-yellowtail text-2xl shadow-[0_8px_24px_rgba(0,0,0,0.3)] transition-all cursor-pointer relative group ${
+                    isBreaking ? 'scale-90 animate-ping' : 'hover:scale-110 active:scale-95 animate-pulse'
+                  }`}
+                  style={{
+                    backgroundColor:
+                      sealColor === 'tomato'
+                        ? '#ef4a23'
+                        : sealColor === 'gold'
+                        ? '#d4af37'
+                        : sealColor === 'sage'
+                        ? '#5a7863'
+                        : '#1a1817',
+                  }}
+                >
+                  <span className="relative z-10 -rotate-12 select-none">C</span>
+                  <div className="absolute inset-1 rounded-full border-2 border-white/40 pointer-events-none" />
+                  <div className="absolute -inset-1.5 rounded-full border border-[#ef4a23]/30 animate-ping pointer-events-none" />
+                </button>
+                <div className="text-center">
+                  <span className="text-[10px] font-archivo uppercase tracking-widest font-bold text-[#ef4a23] block">
+                    {isBreaking ? 'Cracking Wax Seal...' : '✦ Click Seal to Unbox ✦'}
+                  </span>
+                  <span className="text-[9px] font-playfair italic text-[#141110]/50 block mt-0.5">
+                    Bespoke letter from {sender || 'A Grateful Heart'}
+                  </span>
+                </div>
+              </div>
+
+              {/* Envelope Footer */}
+              <div className="relative z-10 flex items-center justify-between pt-2 border-t border-[#141110]/10 text-[9px] font-mono text-[#141110]/40">
+                <span>PROVENANCE GUARANTEED</span>
+                <span>{dateStr}</span>
+              </div>
+            </div>
+          ) : (
+            /* BESPOKE PHYSICAL-STYLE FRAMED CARD */
+            <div className="w-full max-w-sm flex flex-col items-center animate-in zoom-in-95 duration-300">
+              {isSealBroken && (
+                <div className="mb-3 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[10px] font-archivo uppercase font-bold flex items-center justify-between w-full shadow-2xs">
+                  <span className="flex items-center gap-1.5">
+                    <Check className="w-3.5 h-3.5 text-emerald-600" />
+                    <span>Wax Seal Broken • Unboxed</span>
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setIsSealBroken(false)}
+                    className="text-[#ef4a23] hover:underline cursor-pointer flex items-center gap-1"
+                  >
+                    <RefreshCw className="w-2.5 h-2.5" />
+                    <span>Reseal Envelope</span>
+                  </button>
+                </div>
+              )}
+              <div
+                ref={cardPreviewRef}
+                className={`w-full rounded-xl p-6 sm:p-8 transition-all duration-300 relative select-none shadow-[0_20px_60px_rgba(20,17,16,0.18)] ${
               frameStyle === 'midnight-obsidian'
                 ? 'bg-[#1a1817] text-[#faf3e4]'
                 : frameStyle === 'botanical-sage'
@@ -610,6 +741,8 @@ export const FramedGiftCardModal: React.FC<FramedGiftCardModalProps> = ({
               </div>
             </div>
           </div>
+        </div>
+        )}
 
           {/* Quick Subtitle */}
           <div className="flex items-center gap-2 mt-4 text-[11px] font-mono text-[#141110]/60">

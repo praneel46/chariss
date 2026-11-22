@@ -157,6 +157,31 @@ const INTEREST_ALIASES = Object.freeze({
   'fine horology & watches': ['watches', 'watch', 'horology', 'timepiece', 'timepieces'],
   'handcrafted sunglasses': ['sunglasses', 'eyewear', 'shades', 'frames'],
   'biometric rings & health': ['biometric rings', 'rings', 'health', 'wellness', 'wearables'],
+  'audiophile audio & headphones': [
+    'audiophile audio & headphones',
+    'audiophile',
+    'audio',
+    'headphones',
+    'headphone',
+    'earphones',
+    'earbuds',
+    'earpods',
+    'spatial_audio',
+    'hi_res_audio',
+    'music',
+    'sound',
+  ],
+  'smart tech & wearables': [
+    'smart tech & wearables',
+    'tech',
+    'wearables',
+    'smart_wearables',
+    'gadgets',
+    'ai_wearables',
+    'smart_glasses',
+    'smart_watch',
+    'smart_ring',
+  ],
 });
 
 // Build reverse lookup index for O(1) interest alias matching

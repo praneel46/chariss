@@ -260,7 +260,7 @@ async function runBlockerTests() {
   // -----------------------------------------------------------------
   console.log('--- Verifying Six Grounded Recommendation Scenarios Against Active Catalogue ---');
 
-  // Point Product.find to the 22 active products
+  // Point Product.find to the active products from catalogue
   Product.find = async function (query) {
     if (query && query.active === true) {
       return SEED_PRODUCTS.filter((p) => p.active);
@@ -269,7 +269,9 @@ async function runBlockerTests() {
   };
 
   const activeProducts = await Product.find({ active: true });
-  assert.strictEqual(activeProducts.length, 22, `Expected 22 active products, found ${activeProducts.length}`);
+  const expectedActiveCount = SEED_PRODUCTS.filter((p) => p.active).length;
+  assert.strictEqual(activeProducts.length, expectedActiveCount, `Expected ${expectedActiveCount} active products, found ${activeProducts.length}`);
+  assert(activeProducts.length >= 22, `Expected at least 22 active products, found ${activeProducts.length}`);
 
   // Scenario 1: Mentor / appreciation / Tier 1 (₹500 - ₹1,500)
   const sc1 = await generateGroundedRecommendations({

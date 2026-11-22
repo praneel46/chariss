@@ -620,12 +620,12 @@ export const Consultation: React.FC = () => {
                 animate={{ opacity: 1, x: 0 }}
                 className="flex items-center justify-end gap-2 group"
               >
-                <button
-                  type="button"
-                  onClick={() => handleEditStep(1)}
-                  className="opacity-0 group-hover:opacity-100 focus:opacity-100 text-xs font-archivo text-[#141110]/50 hover:text-[#ef4a23] transition-all flex items-center gap-1 cursor-pointer pr-1"
-                  aria-label="Edit recipient name"
-                >
+                  <button
+                    type="button"
+                    onClick={() => handleEditStep(1)}
+                    className="opacity-70 sm:opacity-0 group-hover:opacity-100 focus:opacity-100 text-xs font-archivo text-[#141110]/60 hover:text-[#ef4a23] transition-all flex items-center gap-1 cursor-pointer pr-1"
+                    aria-label="Edit recipient name"
+                  >
                   <Edit3 className="w-3 h-3" />
                   <span>Edit</span>
                 </button>
@@ -717,7 +717,7 @@ export const Consultation: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => handleEditStep(2)}
-                    className="opacity-0 group-hover:opacity-100 focus:opacity-100 text-xs font-archivo text-[#141110]/50 hover:text-[#ef4a23] transition-all flex items-center gap-1 cursor-pointer pr-1"
+                    className="opacity-70 sm:opacity-0 group-hover:opacity-100 focus:opacity-100 text-xs font-archivo text-[#141110]/60 hover:text-[#ef4a23] transition-all flex items-center gap-1 cursor-pointer pr-1"
                     aria-label="Edit relationship"
                   >
                     <Edit3 className="w-3 h-3" />
@@ -804,7 +804,7 @@ export const Consultation: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => handleEditStep(3)}
-                    className="opacity-0 group-hover:opacity-100 focus:opacity-100 text-xs font-archivo text-[#141110]/50 hover:text-[#ef4a23] transition-all flex items-center gap-1 cursor-pointer pr-1"
+                    className="opacity-70 sm:opacity-0 group-hover:opacity-100 focus:opacity-100 text-xs font-archivo text-[#141110]/60 hover:text-[#ef4a23] transition-all flex items-center gap-1 cursor-pointer pr-1"
                     aria-label="Edit occasion"
                   >
                     <Edit3 className="w-3 h-3" />
@@ -891,7 +891,7 @@ export const Consultation: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => handleEditStep(4)}
-                    className="opacity-0 group-hover:opacity-100 focus:opacity-100 text-xs font-archivo text-[#141110]/50 hover:text-[#ef4a23] transition-all flex items-center gap-1 cursor-pointer pr-1"
+                    className="opacity-70 sm:opacity-0 group-hover:opacity-100 focus:opacity-100 text-xs font-archivo text-[#141110]/60 hover:text-[#ef4a23] transition-all flex items-center gap-1 cursor-pointer pr-1"
                     aria-label="Edit personality traits"
                   >
                     <Edit3 className="w-3 h-3" />
@@ -982,7 +982,7 @@ export const Consultation: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => handleEditStep(5)}
-                    className="opacity-0 group-hover:opacity-100 focus:opacity-100 text-xs font-archivo text-[#141110]/50 hover:text-[#ef4a23] transition-all flex items-center gap-1 cursor-pointer pr-1"
+                    className="opacity-70 sm:opacity-0 group-hover:opacity-100 focus:opacity-100 text-xs font-archivo text-[#141110]/60 hover:text-[#ef4a23] transition-all flex items-center gap-1 cursor-pointer pr-1"
                     aria-label="Edit aesthetic interests"
                   >
                     <Edit3 className="w-3 h-3" />
@@ -1083,7 +1083,7 @@ export const Consultation: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => handleEditStep(6)}
-                    className="opacity-0 group-hover:opacity-100 focus:opacity-100 text-xs font-archivo text-[#141110]/50 hover:text-[#ef4a23] transition-all flex items-center gap-1 cursor-pointer pr-1"
+                    className="opacity-70 sm:opacity-0 group-hover:opacity-100 focus:opacity-100 text-xs font-archivo text-[#141110]/60 hover:text-[#ef4a23] transition-all flex items-center gap-1 cursor-pointer pr-1"
                     aria-label="Edit desired emotion"
                   >
                     <Edit3 className="w-3 h-3" />

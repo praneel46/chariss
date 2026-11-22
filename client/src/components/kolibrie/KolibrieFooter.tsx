@@ -1,13 +1,22 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { ArrowUp } from 'lucide-react';
 import type { ModalType } from './AtelierAndFooterModals';
 
 interface KolibrieFooterProps {
-  onOpenModal: (type: ModalType) => void;
+  onOpenModal?: (type: ModalType) => void;
 }
 
-export const KolibrieFooter: React.FC<KolibrieFooterProps> = ({ onOpenModal }) => {
+export const KolibrieFooter: React.FC<KolibrieFooterProps> = () => {
   const giantRef = useRef<HTMLDivElement>(null);
+
+  const scrollToTop = () => {
+    if (window.Lenis && (window as any).lenisInstance) {
+      (window as any).lenisInstance.scrollTo(0, { duration: 1.2 });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
   useEffect(() => {
     const giant = giantRef.current;
@@ -71,95 +80,42 @@ export const KolibrieFooter: React.FC<KolibrieFooterProps> = ({ onOpenModal }) =
   }, []);
 
   return (
-    <footer className="relative z-10 w-full pt-[5rem] pb-[3.5rem] px-4 sm:px-8 bg-[#141110] text-[#faf3e4] border-t border-[#faf3e4]/10 overflow-hidden">
+    <footer className="relative z-0 w-full h-screen min-h-screen flex flex-col justify-between pt-20 sm:pt-24 pb-8 px-6 sm:px-12 bg-[#141110] text-[#faf3e4] overflow-hidden select-none">
       {/* Background Subtle Watermark */}
       <div
         aria-hidden="true"
-        className="absolute -bottom-8 left-1/2 -translate-x-1/2 select-none pointer-events-none font-yellowtail text-[18vw] text-white/[0.02] whitespace-nowrap leading-none z-0"
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 pointer-events-none font-yellowtail text-[22vw] text-white/[0.015] whitespace-nowrap leading-none z-0"
       >
         charis.
       </div>
 
-      <div className="max-w-7xl mx-auto relative z-10 space-y-12 sm:space-y-16">
-        {/* Top Row: Brand & Tagline + 4 Interactive Highlights */}
-        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 pb-10 border-b border-[#faf3e4]/10">
-          <div>
-            <div className="flex items-center gap-3">
-              <span className="font-yellowtail text-[#ef4a23] text-[3.2rem] leading-none inline-block -rotate-6">
-                charis.
-              </span>
-              <span className="font-archivo text-xs uppercase tracking-widest text-[#ffd46e] px-2.5 py-1 rounded-full bg-white/5 border border-white/10 font-bold">
-                Atelier Edition
-              </span>
-            </div>
-            <p className="text-[1.1rem] font-playfair tracking-wide text-[#faf3e4]/70 mt-2 max-w-md italic">
-              All feelings, zero guesswork. Translating genuine human relationships into master atelier keepsakes.
-            </p>
+      <div className="max-w-7xl mx-auto w-full relative z-10 flex flex-col justify-between h-full">
+        {/* Minimalist Top Bar: Clean & Elegant */}
+        <div className="flex items-center justify-between border-b border-[#faf3e4]/10 pb-4 shrink-0">
+          <div className="flex items-center gap-3">
+            <span className="w-2 h-2 rounded-full bg-[#ef4a23] animate-pulse" />
+            <span className="font-mono text-xs tracking-[0.25em] uppercase text-[#faf3e4]/70 font-bold">
+              YOU'VE REACHED THE SANCTUARY
+            </span>
           </div>
 
-          {/* Requested 4 Core Interactive Pillars with Animated Draw-Underline */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 w-full lg:w-auto">
-            <button
-              onClick={() => onOpenModal('how-it-works')}
-              className="px-4 py-3 rounded-xl bg-white/5 hover:bg-[#ef4a23] hover:text-white border border-white/10 text-left transition-all group cursor-pointer"
-            >
-              <span className="block font-archivo uppercase text-[0.8rem] font-bold tracking-wider group-hover:translate-x-1 transition-transform">
-                How CHARIS Works →
-              </span>
-              <span className="block text-[0.75rem] font-playfair text-[#faf3e4]/60 group-hover:text-white/80 mt-0.5">
-                3-Step Calibration
-              </span>
-            </button>
-
-            <button
-              onClick={() => onOpenModal('pricing-trust')}
-              className="px-4 py-3 rounded-xl bg-white/5 hover:bg-[#ef4a23] hover:text-white border border-white/10 text-left transition-all group cursor-pointer"
-            >
-              <span className="block font-archivo uppercase text-[0.8rem] font-bold tracking-wider group-hover:translate-x-1 transition-transform">
-                Verified Pricing →
-              </span>
-              <span className="block text-[0.75rem] font-playfair text-[#faf3e4]/60 group-hover:text-white/80 mt-0.5">
-                Zero Retail Markups
-              </span>
-            </button>
-
-            <button
-              onClick={() => onOpenModal('faq')}
-              className="px-4 py-3 rounded-xl bg-white/5 hover:bg-[#ef4a23] hover:text-white border border-white/10 text-left transition-all group cursor-pointer"
-            >
-              <span className="block font-archivo uppercase text-[0.8rem] font-bold tracking-wider group-hover:translate-x-1 transition-transform">
-                Frequent Questions →
-              </span>
-              <span className="block text-[0.75rem] font-playfair text-[#faf3e4]/60 group-hover:text-white/80 mt-0.5">
-                Shipping & Engraving
-              </span>
-            </button>
-
-            <button
-              onClick={() => onOpenModal('privacy')}
-              className="px-4 py-3 rounded-xl bg-white/5 hover:bg-[#ef4a23] hover:text-white border border-white/10 text-left transition-all group cursor-pointer"
-            >
-              <span className="block font-archivo uppercase text-[0.8rem] font-bold tracking-wider group-hover:translate-x-1 transition-transform">
-                Privacy Safeguards →
-              </span>
-              <span className="block text-[0.75rem] font-playfair text-[#faf3e4]/60 group-hover:text-white/80 mt-0.5">
-                Discrete Packaging
-              </span>
-            </button>
-          </div>
+          <span className="font-mono text-[11px] text-[#ffd46e] tracking-widest uppercase font-bold hidden sm:inline-block">
+            EST. 2026 · ATELIER EDITION
+          </span>
         </div>
 
-        {/* Centerpiece: Floating, Flowing, Glowing CHARIS Signature with Cursor Magnetic Glow */}
-        <div className="py-2 sm:py-6 overflow-hidden">
+        {/* Centerpiece: Monumental, Grand Scale CHARIS */}
+        <div className="my-auto py-2 sm:py-6 flex items-center justify-center overflow-hidden w-full">
           <div
             ref={giantRef}
-            className="giant-footer-charis select-none"
+            className="giant-footer-charis select-none flex items-center justify-center gap-1 sm:gap-3 md:gap-5 w-full"
             aria-label="CHARIS"
           >
             {'CHARIS'.split('').map((char, index) => (
               <span
                 key={index}
-                className="giant-footer-letter cursor-default font-archivo tracking-tighter"
+                className="giant-footer-letter cursor-default font-archivo tracking-tighter text-[19vw] sm:text-[18vw] font-black leading-none text-transparent bg-clip-text bg-gradient-to-b from-[#faf3e4] via-[#faf3e4] to-[#ef4a23] drop-shadow-[0_20px_50px_rgba(239,74,35,0.25)]"
+                style={{ fontStretch: '72%' }}
               >
                 {char}
               </span>
@@ -167,31 +123,46 @@ export const KolibrieFooter: React.FC<KolibrieFooterProps> = ({ onOpenModal }) =
           </div>
         </div>
 
-        {/* Bottom Row: Navigation Links & Copyright */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-4 text-xs border-t border-[#faf3e4]/10">
-          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-6 font-archivo uppercase tracking-wider text-[#faf3e4]/80">
-            <Link to="/consultation" className="hover:text-[#ef4a23] transition-colors">
-              Start Consultation
-            </Link>
-            <Link to="/gift-studio" className="hover:text-[#ef4a23] transition-colors">
-              Gift Studio (100 Curated)
-            </Link>
-            <a href="/#occasions" className="hover:text-[#ef4a23] transition-colors">
-              Occasions
-            </a>
-            <button
-              onClick={() => onOpenModal('ateliers')}
-              className="hover:text-[#ef4a23] transition-colors uppercase font-archivo cursor-pointer"
-            >
-              What are Ateliers?
-            </button>
-          </div>
+        {/* Bottom Row: Navigation Links, Back to Top, and Copyright */}
+        <div className="pt-6 border-t border-[#faf3e4]/10 shrink-0">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs">
+            {/* Sitemap Quick Links */}
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-5 sm:gap-8 font-archivo uppercase tracking-widest text-[#faf3e4]/80 text-[11px] sm:text-xs font-bold">
+              <Link to="/consultation" className="hover:text-[#ef4a23] transition-colors">
+                Start Consultation
+              </Link>
+              <Link to="/gift-studio" className="hover:text-[#ef4a23] transition-colors">
+                Gift Studio
+              </Link>
+              <Link to="/discover" className="hover:text-[#ef4a23] transition-colors">
+                Discover
+              </Link>
+              <Link to="/occasions" className="hover:text-[#ef4a23] transition-colors">
+                Occasions
+              </Link>
+            </div>
 
-          <p className="font-mono text-[#faf3e4]/50 text-center sm:text-right">
-            © {new Date().getFullYear()} CHARIS Atelier. All emotional curations protected.
-          </p>
+            {/* Back to Top Pill & Copyright (with right padding so floating audio player never overlaps) */}
+            <div className="flex items-center gap-6 pr-0 lg:pr-24">
+              <button
+                onClick={scrollToTop}
+                className="group flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#faf3e4]/70 hover:text-[#ffd46e] transition-colors cursor-pointer"
+              >
+                <span>BACK TO TOP</span>
+                <div className="w-8 h-8 rounded-full border border-[#faf3e4]/30 flex items-center justify-center group-hover:border-[#ffd46e] group-hover:bg-[#ffd46e]/10 transition-all">
+                  <ArrowUp className="w-3.5 h-3.5 group-hover:-translate-y-0.5 transition-transform text-[#ffd46e]" />
+                </div>
+              </button>
+
+              <p className="font-mono text-[10px] sm:text-xs text-[#faf3e4]/50 hidden sm:block">
+                © 2026 CHARIS Atelier.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
   );
 };
+
+export default KolibrieFooter;

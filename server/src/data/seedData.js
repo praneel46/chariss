@@ -4415,7 +4415,6 @@ const SEED_PRODUCTS = [
     ],
     "interests": [
       "music",
-      "Fine Horology & Watches",
       "audio",
       "headphones",
       "Audiophile Audio & Headphones"

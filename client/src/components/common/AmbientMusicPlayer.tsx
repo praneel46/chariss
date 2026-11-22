@@ -1,115 +1,87 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Volume2, VolumeX, Sparkles, Disc } from 'lucide-react';
+import React, { useState, useRef, useCallback } from 'react';
+import { Volume2, VolumeX, Disc } from 'lucide-react';
+
+const YOUTUBE_VIDEO_ID = 'BGiZSH-ozvM'; // Kinya Coffee track (roti. - Let’s relax with some music)
+const YOUTUBE_START_SECONDS = 3260; // 54m 20s
 
 export const AmbientMusicPlayer: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [hasInteracted, setHasInteracted] = useState<boolean>(false);
-  const audioRef = useRef<HTMLAudioElement>(null);
-  const fadeIntervalRef = useRef<number | null>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const isIframeReadyRef = useRef<boolean>(false);
 
-  // Initialize audio and check previous user preference
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    audio.volume = 0.55;
-
-    const onPlay = () => setIsPlaying(true);
-    const onPause = () => setIsPlaying(false);
-    const onError = () => {
-      console.warn('[CHARIS Music] Audio source error, switching to fallback stream...');
-      const fallback = 'https://stream.chillhop.com/mp3/9476';
-      if (!audio.src.includes('chillhop')) {
-        audio.src = fallback;
-        audio.load();
-        if (isPlaying) {
-          audio.play().catch(() => {});
-        }
+  // Send API command to YouTube iframe via postMessage
+  const sendIframeCommand = useCallback((func: string, args: any[] = []) => {
+    if (iframeRef.current && iframeRef.current.contentWindow) {
+      try {
+        iframeRef.current.contentWindow.postMessage(
+          JSON.stringify({ event: 'command', func, args }),
+          '*'
+        );
+      } catch {
+        // Safe cross-origin postMessage handler
       }
-    };
-
-    audio.addEventListener('play', onPlay);
-    audio.addEventListener('pause', onPause);
-    audio.addEventListener('error', onError);
-
-    try {
-      const saved = localStorage.getItem('charis_music_enabled');
-      if (saved === 'true') {
-        setHasInteracted(true);
-      }
-    } catch {}
-
-    return () => {
-      audio.removeEventListener('play', onPlay);
-      audio.removeEventListener('pause', onPause);
-      audio.removeEventListener('error', onError);
-      if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
-    };
+    }
   }, []);
 
-  const fadeIn = (audio: HTMLAudioElement) => {
-    if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
-    audio.volume = 0.05;
-    fadeIntervalRef.current = window.setInterval(() => {
-      if (audio.volume < 0.55) {
-        audio.volume = Math.min(0.55, audio.volume + 0.05);
-      } else {
-        if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
-      }
-    }, 80);
+  const handleIframeLoad = () => {
+    isIframeReadyRef.current = true;
+    // Always start strictly muted to comply with browser autoplay policies & prevent overlap
+    sendIframeCommand('mute');
   };
 
-  const toggleMusic = async () => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    setHasInteracted(true);
+  const toggleMusic = () => {
+    if (!isIframeReadyRef.current) return;
 
     if (isPlaying) {
-      audio.pause();
+      // Pause and mute YouTube audio stream completely
+      sendIframeCommand('pauseVideo');
+      sendIframeCommand('mute');
       setIsPlaying(false);
-      try {
-        localStorage.setItem('charis_music_enabled', 'false');
-      } catch {}
     } else {
-      try {
-        await audio.play();
-        fadeIn(audio);
-        setIsPlaying(true);
-        try {
-          localStorage.setItem('charis_music_enabled', 'true');
-        } catch {}
-      } catch (err) {
-        console.warn('[CHARIS Music] Audio playback blocked by browser policy:', err);
-      }
+      // Unmute, set volume, and play single YouTube audio stream
+      sendIframeCommand('unMute');
+      sendIframeCommand('setVolume', [65]);
+      sendIframeCommand('playVideo');
+      setIsPlaying(true);
     }
   };
 
   return (
     <>
-      {/* Native HTML5 Audio Element for 100% Reliable Background Lo-Fi */}
-      <audio
-        ref={audioRef}
-        id="charis-ambient-audio-stream"
-        src="/audio/charis-ambient.mp3"
-        preload="auto"
-        loop
-        playsInline
-      />
+      {/* Single, Dedicated YouTube Background Audio Iframe (Exact Kinya Coffee Source) */}
+      <div className="fixed -z-50 opacity-0 pointer-events-none" aria-hidden="true">
+        <iframe
+          ref={iframeRef}
+          width="1"
+          height="1"
+          src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?enablejsapi=1&autoplay=1&loop=1&playlist=${YOUTUBE_VIDEO_ID}&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&start=${YOUTUBE_START_SECONDS}`}
+          title="CHARIS Background Ambient Stream"
+          allow="autoplay; encrypted-media"
+          onLoad={handleIframeLoad}
+        />
+      </div>
 
       {/* Floating Ambient Sound Controller */}
       <aside
         aria-label="CHARIS Ambient Sound Controller"
-        className="fixed bottom-20 right-4 sm:bottom-6 sm:right-6 z-[1250] flex flex-col items-end gap-2 select-none pointer-events-auto"
+        className="fixed bottom-6 right-4 sm:bottom-6 sm:right-6 z-[1250] flex flex-col items-end gap-2.5 select-none pointer-events-auto"
       >
-        {/* Intro Tooltip Badge: Tap For Vibes */}
-        {!hasInteracted && !isPlaying && (
+        {/* Intro Tooltip Badge: Tap For Vibes with Brutalist Corner Brackets */}
+        {!isPlaying && (
           <div
             onClick={toggleMusic}
-            className="animate-bounce flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#141110] text-[#ffd46e] border border-[#ef4a23]/40 shadow-lg text-[10px] font-archivo uppercase font-bold tracking-wider cursor-pointer hover:scale-105 transition-transform"
+            className="animate-bounce relative bg-[#141110] text-[#faf3e4] px-4 py-2 font-mono text-xs font-bold border-2 border-[#141110] shadow-xl cursor-pointer hover:scale-105 transition-transform"
           >
-            <Sparkles className="w-3 h-3 text-[#ef4a23] animate-pulse" />
-            <span>Tap For Vibes ♪</span>
+            {/* 4 Corner Accent Brackets matching Kinya Coffee */}
+            <div className="absolute -top-1 -left-1 w-2.5 h-2.5 border-t-2 border-l-2 border-[#ef4a23]" />
+            <div className="absolute -top-1 -right-1 w-2.5 h-2.5 border-t-2 border-r-2 border-[#ef4a23]" />
+            <div className="absolute -bottom-1 -left-1 w-2.5 h-2.5 border-b-2 border-l-2 border-[#ef4a23]" />
+            <div className="absolute -bottom-1 -right-1 w-2.5 h-2.5 border-b-2 border-r-2 border-[#ef4a23]" />
+            <div className="flex items-center gap-2">
+              <span className="text-[#ef4a23] text-sm animate-spin">♪</span>
+              <span className="tracking-widest uppercase">TAP FOR VIBES</span>
+              <span className="w-1.5 h-3 bg-[#ef4a23] animate-pulse ml-0.5" />
+            </div>
           </div>
         )}
 
@@ -117,7 +89,7 @@ export const AmbientMusicPlayer: React.FC = () => {
           {/* Animated 4-Bar Equalizer Waveform when music is playing */}
           {isPlaying && (
             <div
-              className="flex items-end gap-[3px] h-8 px-2.5 py-1.5 bg-[#141110]/95 backdrop-blur-md rounded-2xl border border-[#ef4a23]/30 shadow-md animate-in fade-in slide-in-from-right-2 duration-300"
+              className="flex items-end gap-[3px] h-8 px-2.5 py-1.5 bg-[#141110]/95 backdrop-blur-md rounded-2xl border border-[#ef4a23]/40 shadow-md animate-in fade-in slide-in-from-right-2 duration-300"
               title="CHARIS Atelier Radio Active"
             >
               <span className="w-1 bg-[#ef4a23] rounded-full animate-equalizer-1" />
@@ -136,17 +108,17 @@ export const AmbientMusicPlayer: React.FC = () => {
 
             {/* Glowing Aura when Playing */}
             {isPlaying && (
-              <div className="absolute -inset-1.5 rounded-full bg-[#ef4a23]/25 blur-md animate-pulse pointer-events-none" />
+              <div className="absolute -inset-1.5 rounded-full bg-[#ef4a23]/30 blur-md animate-pulse pointer-events-none" />
             )}
 
             <button
               type="button"
               onClick={toggleMusic}
-              aria-label={isPlaying ? 'Mute ambient melody' : 'Unmute ambient melody'}
-              title={isPlaying ? 'Pause Atelier Ambient Music' : 'Play Atelier Ambient Music'}
+              aria-label={isPlaying ? 'Mute background music' : 'Unmute background music'}
+              title={isPlaying ? 'Mute background music' : 'Unmute background music'}
               className={`relative w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer overflow-hidden ${
                 isPlaying
-                  ? 'bg-[#141110] text-[#ffd46e] border-2 border-[#ef4a23] shadow-[0_4px_20px_rgba(239,74,35,0.4)] hover:scale-105'
+                  ? 'bg-[#141110] text-[#ffd46e] border-2 border-[#ef4a23] shadow-[0_4px_25px_rgba(239,74,35,0.45)] hover:scale-105'
                   : 'bg-[#faf3e4] text-[#141110] border-2 border-[#141110] shadow-[3px_3px_0px_#141110] hover:bg-white hover:translate-x-[-1px] hover:translate-y-[-1px]'
               }`}
             >
@@ -171,17 +143,17 @@ export const AmbientMusicPlayer: React.FC = () => {
         </div>
 
         {/* Micro-Caption status */}
-        <div className="px-2 py-0.5 rounded-md bg-[#faf3e4]/90 backdrop-blur-xs border border-[#141110]/10 shadow-xs">
-          <p className="font-mono text-[9px] sm:text-[10px] tracking-wider uppercase font-bold text-[#141110]/80">
+        <div className="px-2.5 py-1 rounded-md bg-[#faf3e4]/95 backdrop-blur-xs border border-[#141110]/15 shadow-xs">
+          <p className="font-mono text-[9px] sm:text-[10px] tracking-wider uppercase font-bold text-[#141110]">
             {isPlaying ? (
-              <span className="text-[#ef4a23] flex items-center gap-1">
-                <span>♪</span>
-                <span>Vibing</span>
+              <span className="text-[#ef4a23] flex items-center gap-1.5 font-extrabold">
+                <span className="animate-pulse">♪</span>
+                <span>VIBING</span>
                 <span>·</span>
-                <span className="text-[#141110]/60">Mute</span>
+                <span className="text-[#141110]/60">CLICK TO MUTE</span>
               </span>
             ) : (
-              <span>[ Sound Off ]</span>
+              <span>[ SOUND OFF ]</span>
             )}
           </p>
         </div>

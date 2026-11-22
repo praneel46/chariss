@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
 import { KolibrieNav } from '../components/kolibrie/KolibrieNav';
 import { KolibrieFooter } from '../components/kolibrie/KolibrieFooter';
 import { AtelierAndFooterModals, type ModalType } from '../components/kolibrie/AtelierAndFooterModals';
@@ -7,6 +8,7 @@ import { BagDrawer } from '../components/common/BagDrawer';
 import { CursorMarquee } from '../components/kolibrie/CursorMarquee';
 import { AmbientMusicPlayer } from '../components/common/AmbientMusicPlayer';
 import { CinematicOpening } from '../components/home/CinematicOpening';
+import { CurtainTransition } from '../components/common/CurtainTransition';
 import { useAuth } from '../context/AuthContext';
 
 export const MainLayout: React.FC = () => {
@@ -22,25 +24,42 @@ export const MainLayout: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#faf3e4] text-[#141110] font-archivo selection:bg-[#ef4a23] selection:text-white">
+    <div className="relative bg-[#141110] min-h-screen text-[#141110] font-archivo selection:bg-[#ef4a23] selection:text-white overflow-x-hidden">
       {/* Universal Kolibrie Fixed Header */}
       <KolibrieNav />
 
       {/* Universal Cursor Marquee */}
       <CursorMarquee />
 
-      {/* Main Content Area */}
-      <div className="flex-1 w-full">
-        <Outlet />
+      {/* Fixed Positioned Underneath 100vh Footer (Curtain reveal mechanism matching Kinya Coffee) */}
+      {!isAuthenticated && (
+        <div className="fixed bottom-0 left-0 right-0 z-0 w-full h-screen">
+          <KolibrieFooter onOpenModal={(type) => setActiveModal(type)} />
+        </div>
+      )}
+
+      {/* Main Elevated Parchment Card Container that peels up to reveal the full-height footer */}
+      <div
+        className="relative z-10 bg-[#faf3e4] rounded-b-[36px] sm:rounded-b-[60px] shadow-[0_30px_70px_rgba(20,17,16,0.38)] min-h-screen flex flex-col transition-[border-radius] duration-300"
+        style={{
+          marginBottom: !isAuthenticated ? '100vh' : 0,
+        }}
+      >
+        <div className="flex-1 w-full">
+          {/* Section & Page Transition Curtain Animation */}
+          <AnimatePresence mode="wait">
+            <CurtainTransition key={location.pathname}>
+              <Outlet />
+            </CurtainTransition>
+          </AnimatePresence>
+        </div>
+
+        {/* Bottom smooth bumper padding */}
+        {!isAuthenticated && <div className="h-10 sm:h-16 w-full" />}
       </div>
 
-      {/* Ambient Lo-Fi Beats Player (Floating) */}
+      {/* Single-Source Ambient Beats Player (Floating) */}
       <AmbientMusicPlayer />
-
-      {/* Universal Interactive Kolibrie Footer with 4 Pillars & Ateliers (Hidden for authenticated members) */}
-      {!isAuthenticated && (
-        <KolibrieFooter onOpenModal={(type) => setActiveModal(type)} />
-      )}
 
       {/* Shopping Bag Drawer */}
       <BagDrawer />
@@ -53,3 +72,5 @@ export const MainLayout: React.FC = () => {
     </div>
   );
 };
+
+export default MainLayout;

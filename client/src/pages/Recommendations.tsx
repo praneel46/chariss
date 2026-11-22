@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { consultationService } from '../services/consultationService';
 import { useBag } from '../context/BagContext';
 import { useWishlist } from '../context/WishlistContext';
 import { useAuth } from '../context/AuthContext';
 import type { Product, ConsultationProfile, RankedRecommendationItem } from '../types';
-import { Sparkles, Heart, Check, RotateCcw, PenTool, BookmarkCheck, ShoppingBag, AlertCircle, Compass } from 'lucide-react';
+import { Sparkles, Heart, Check, RotateCcw, PenTool, BookmarkCheck, ShoppingBag, AlertCircle, Compass, SlidersHorizontal } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { FramedGiftCardModal } from '../components/gift/FramedGiftCardModal';
 
@@ -45,6 +45,104 @@ export const Recommendations: React.FC = () => {
   const [addedId, setAddedId] = useState<string | null>(null);
   const [sessionSavedNotice, setSessionSavedNotice] = useState(false);
   const [cardProduct, setCardProduct] = useState<Product | null>(null);
+
+  // Atelier Fine-Tune Dial (Client-Side Real-Time Calibration Tuning)
+  const [isDialOpen, setIsDialOpen] = useState(false);
+  const [archetypeFilter, setArchetypeFilter] = useState<'all' | 'audio_tech' | 'stationery_keepsakes' | 'scents_wellness' | 'leather_living'>('all');
+  const [budgetCeiling, setBudgetCeiling] = useState<number | null>(null);
+  const [sortOrder, setSortOrder] = useState<'authoritative' | 'price_asc' | 'price_desc'>('authoritative');
+
+  const minItemPrice = useMemo(() => {
+    if (rankedItems.length === 0) return 500;
+    return Math.min(...rankedItems.map((it) => it.product.price));
+  }, [rankedItems]);
+
+  const maxItemPrice = useMemo(() => {
+    if (rankedItems.length === 0) return 100000;
+    return Math.max(...rankedItems.map((it) => it.product.price));
+  }, [rankedItems]);
+
+  const effectiveBudgetCeiling = budgetCeiling !== null ? budgetCeiling : maxItemPrice;
+  const isDialActive = archetypeFilter !== 'all' || budgetCeiling !== null || sortOrder !== 'authoritative';
+
+  const handleResetDial = () => {
+    setArchetypeFilter('all');
+    setBudgetCeiling(null);
+    setSortOrder('authoritative');
+  };
+
+  const displayedItems = useMemo(() => {
+    let list = [...rankedItems];
+
+    if (archetypeFilter === 'audio_tech') {
+      list = list.filter((it) => {
+        const cat = (it.product.categoryName || '').toLowerCase();
+        const tags = (it.product.tags || []).join(' ').toLowerCase();
+        const ints = (it.product.interests || []).join(' ').toLowerCase();
+        return (
+          cat.includes('audio') ||
+          cat.includes('tech') ||
+          cat.includes('wearable') ||
+          tags.includes('headphone') ||
+          tags.includes('earbud') ||
+          tags.includes('earpod') ||
+          ints.includes('audio') ||
+          ints.includes('tech')
+        );
+      });
+    } else if (archetypeFilter === 'stationery_keepsakes') {
+      list = list.filter((it) => {
+        const cat = (it.product.categoryName || '').toLowerCase();
+        const tags = (it.product.tags || []).join(' ').toLowerCase();
+        return (
+          cat.includes('stationery') ||
+          cat.includes('keepsake') ||
+          cat.includes('writing') ||
+          tags.includes('pen') ||
+          tags.includes('bookmark') ||
+          tags.includes('journal')
+        );
+      });
+    } else if (archetypeFilter === 'scents_wellness') {
+      list = list.filter((it) => {
+        const cat = (it.product.categoryName || '').toLowerCase();
+        const tags = (it.product.tags || []).join(' ').toLowerCase();
+        return (
+          cat.includes('scent') ||
+          cat.includes('fragrance') ||
+          cat.includes('wellness') ||
+          tags.includes('candle') ||
+          tags.includes('perfume') ||
+          tags.includes('tea')
+        );
+      });
+    } else if (archetypeFilter === 'leather_living') {
+      list = list.filter((it) => {
+        const cat = (it.product.categoryName || '').toLowerCase();
+        const tags = (it.product.tags || []).join(' ').toLowerCase();
+        return (
+          cat.includes('leather') ||
+          cat.includes('home') ||
+          cat.includes('living') ||
+          tags.includes('leather') ||
+          tags.includes('barware') ||
+          tags.includes('glassware')
+        );
+      });
+    }
+
+    if (budgetCeiling !== null) {
+      list = list.filter((it) => it.product.price <= budgetCeiling);
+    }
+
+    if (sortOrder === 'price_asc') {
+      list.sort((a, b) => a.product.price - b.product.price);
+    } else if (sortOrder === 'price_desc') {
+      list.sort((a, b) => b.product.price - a.product.price);
+    }
+
+    return list;
+  }, [rankedItems, archetypeFilter, budgetCeiling, sortOrder]);
 
   // Synchronize consultation-isolated Gift Bag and Wishlist context
   useEffect(() => {
@@ -335,104 +433,251 @@ export const Recommendations: React.FC = () => {
             </div>
           </div>
         ) : (
-          /* Success State: Products Rendered in Exact Backend Order with Real Scores & Rationales */
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {rankedItems.map(({ product, score, rationale }, rankIdx) => {
-              const isWish = isWishlisted(product.id);
-              const isAdded = addedId === product.id;
+          /* Success State: Atelier Fine-Tune Dial & Authoritative Recommendations Grid */
+          <div className="space-y-8">
+            {/* Atelier Fine-Tune Dial Bar */}
+            <div className="bg-white rounded-2xl p-4 sm:p-5 border border-[#141110]/10 shadow-xs space-y-4">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => setIsDialOpen(!isDialOpen)}
+                    className={`px-4 py-2 rounded-full text-xs font-archivo uppercase tracking-wider font-bold transition-all flex items-center gap-2 cursor-pointer shadow-xs ${
+                      isDialOpen
+                        ? 'bg-[#141110] text-white'
+                        : isDialActive
+                        ? 'bg-[#ef4a23] text-white'
+                        : 'bg-[#faf3e4] hover:bg-[#141110] text-[#141110] hover:text-white border border-[#141110]/10'
+                    }`}
+                  >
+                    <SlidersHorizontal className="w-3.5 h-3.5" />
+                    <span>Atelier Fine-Tune Dial</span>
+                    {isDialActive && (
+                      <span className="w-2 h-2 rounded-full bg-[#ffd46e] animate-pulse" />
+                    )}
+                  </button>
 
-              return (
-                <div
-                  key={product.id}
-                  className="bg-white rounded-3xl border border-[#141110]/10 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
-                >
-                  <div className="p-6 space-y-4">
-                    {/* Top Bar: Rank & Real Backend Score */}
-                    <div className="flex items-center justify-between">
-                      <span className="px-3 py-1 rounded-full bg-[#141110] text-[#faf3e4] text-xs font-archivo uppercase tracking-wider font-bold">
-                        Match #{rankIdx + 1}
-                      </span>
-                      <span className="text-xs font-archivo font-bold text-[#ef4a23] px-2.5 py-0.5 rounded-full bg-[#ef4a23]/10">
-                        {score}% Emotional Fit
-                      </span>
-                    </div>
+                  <span className="text-xs font-playfair italic text-[#141110]/70">
+                    Showing <strong className="text-[#141110] font-archivo not-italic">{displayedItems.length}</strong> of {rankedItems.length} curated pieces
+                  </span>
+                </div>
 
-                    {/* Image & Title */}
-                    <div className="flex gap-5 items-start">
-                      <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden bg-stone-100 shrink-0">
-                        <img
-                          src={product.imageUrl}
-                          alt={product.name}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <div className="space-y-1.5 flex-1">
-                        <span className="text-[10px] font-mono uppercase tracking-widest text-[#141110]/50 font-bold">
-                          {product.categoryName}
-                        </span>
-                        <h3 className="font-archivo uppercase text-lg sm:text-xl font-bold text-[#141110] leading-tight">
-                          {product.name}
-                        </h3>
-                        <p className="font-playfair text-xs sm:text-sm text-[#141110]/75 line-clamp-2 italic">
-                          {product.tagline}
-                        </p>
-                        <div className="font-archivo text-xl font-bold text-[#141110] pt-1">
-                          ₹{product.price.toLocaleString('en-IN')}
-                        </div>
-                      </div>
-                    </div>
+                {isDialActive && (
+                  <button
+                    onClick={handleResetDial}
+                    className="inline-flex items-center gap-1.5 text-xs font-archivo uppercase tracking-wider text-[#ef4a23] hover:text-[#141110] font-bold transition-colors cursor-pointer"
+                  >
+                    <RotateCcw className="w-3 h-3" />
+                    <span>Reset Dial</span>
+                  </button>
+                )}
+              </div>
 
-                    {/* Real Grounded Calibration Rationale from Backend */}
-                    <div className="p-3.5 rounded-xl bg-[#faf3e4]/60 border border-[#141110]/10 text-xs font-playfair text-[#141110]/80 italic leading-relaxed">
-                      "{rationale}"
+              {/* Collapsible Atelier Controls */}
+              {isDialOpen && (
+                <div className="pt-4 border-t border-[#141110]/10 grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  {/* 1. Category Archetype */}
+                  <div className="space-y-2">
+                    <label className="text-[11px] font-archivo uppercase tracking-wider text-[#141110]/60 font-bold block">
+                      1. Curated Archetype Focus
+                    </label>
+                    <div className="flex flex-wrap gap-1.5">
+                      {[
+                        { id: 'all', label: 'All Curations' },
+                        { id: 'audio_tech', label: 'Audio & Tech' },
+                        { id: 'stationery_keepsakes', label: 'Keepsakes' },
+                        { id: 'scents_wellness', label: 'Scents & Wellness' },
+                        { id: 'leather_living', label: 'Leather & Living' },
+                      ].map((arch) => (
+                        <button
+                          key={arch.id}
+                          onClick={() => setArchetypeFilter(arch.id as any)}
+                          className={`px-3 py-1.5 rounded-full text-[11px] font-archivo uppercase tracking-wider font-bold transition-colors cursor-pointer ${
+                            archetypeFilter === arch.id
+                              ? 'bg-[#141110] text-white shadow-xs'
+                              : 'bg-[#faf3e4]/80 hover:bg-[#141110]/10 text-[#141110]/80'
+                          }`}
+                        >
+                          {arch.label}
+                        </button>
+                      ))}
                     </div>
                   </div>
 
-                  {/* Bottom Actions */}
-                  <div className="p-6 pt-0 flex flex-wrap items-center justify-between gap-3 border-t border-[#141110]/5">
-                    <button
-                      onClick={() => toggleWishlist(product.id)}
-                      className="flex items-center gap-1.5 text-xs font-archivo uppercase tracking-wider text-[#141110]/70 hover:text-[#ef4a23] transition-colors cursor-pointer"
-                    >
-                      <Heart className={`w-4 h-4 ${isWish ? 'fill-[#ef4a23] text-[#ef4a23]' : ''}`} />
-                      <span>{isWish ? 'Saved' : 'Wishlist'}</span>
-                    </button>
+                  {/* 2. Budget Ceiling Slider */}
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <label className="text-[11px] font-archivo uppercase tracking-wider text-[#141110]/60 font-bold">
+                        2. Budget Ceiling
+                      </label>
+                      <span className="text-xs font-mono font-bold text-[#ef4a23]">
+                        ≤ ₹{effectiveBudgetCeiling.toLocaleString('en-IN')}
+                      </span>
+                    </div>
+                    <input
+                      type="range"
+                      min={minItemPrice}
+                      max={maxItemPrice}
+                      step={500}
+                      value={effectiveBudgetCeiling}
+                      onChange={(e) => setBudgetCeiling(Number(e.target.value))}
+                      className="w-full accent-[#ef4a23] cursor-pointer"
+                    />
+                    <div className="flex justify-between text-[10px] font-mono text-[#141110]/40">
+                      <span>₹{minItemPrice.toLocaleString('en-IN')}</span>
+                      <span>Max ₹{maxItemPrice.toLocaleString('en-IN')}</span>
+                    </div>
+                  </div>
 
-                    <div className="flex items-center gap-2">
-                      <button
-                        onClick={() => setCardProduct(product)}
-                        className="px-4 py-2.5 rounded-full border border-[#ef4a23]/30 text-[#ef4a23] hover:bg-[#ef4a23] hover:text-white font-archivo uppercase text-xs tracking-wider font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-xs"
-                        title="Personalize AI Gift Card for this recommendation"
-                      >
-                        <PenTool className="w-3.5 h-3.5" />
-                        <span>Framed Card</span>
-                      </button>
-
-                      <button
-                        onClick={() => handleAdd(product)}
-                        className={`px-5 py-2.5 rounded-full font-archivo uppercase text-xs tracking-wider font-bold transition-all flex items-center gap-2 cursor-pointer ${
-                          isAdded
-                            ? 'bg-emerald-600 text-white'
-                            : 'bg-[#141110] hover:bg-[#ef4a23] text-white shadow-sm'
-                        }`}
-                      >
-                        {isAdded ? (
-                          <>
-                            <Check className="w-3.5 h-3.5" />
-                            <span>Added</span>
-                          </>
-                        ) : (
-                          <>
-                            <ShoppingBag className="w-3.5 h-3.5" />
-                            <span>Add to Bag</span>
-                          </>
-                        )}
-                      </button>
+                  {/* 3. Ordering Mode */}
+                  <div className="space-y-2">
+                    <label className="text-[11px] font-archivo uppercase tracking-wider text-[#141110]/60 font-bold block">
+                      3. Arrangement Sequence
+                    </label>
+                    <div className="flex flex-wrap gap-1.5">
+                      {[
+                        { id: 'authoritative', label: 'Match Score (Authoritative)' },
+                        { id: 'price_asc', label: 'Price: Low → High' },
+                        { id: 'price_desc', label: 'Price: High → Low' },
+                      ].map((sort) => (
+                        <button
+                          key={sort.id}
+                          onClick={() => setSortOrder(sort.id as any)}
+                          className={`px-3 py-1.5 rounded-full text-[11px] font-archivo uppercase tracking-wider font-bold transition-colors cursor-pointer ${
+                            sortOrder === sort.id
+                              ? 'bg-[#ef4a23] text-white shadow-xs'
+                              : 'bg-[#faf3e4]/80 hover:bg-[#141110]/10 text-[#141110]/80'
+                          }`}
+                        >
+                          {sort.label}
+                        </button>
+                      ))}
                     </div>
                   </div>
                 </div>
-              );
-            })}
+              )}
+            </div>
+
+            {displayedItems.length === 0 ? (
+              <div className="text-center py-16 px-6 bg-white rounded-3xl border border-[#141110]/10 max-w-xl mx-auto space-y-4">
+                <div className="w-12 h-12 rounded-full bg-[#faf3e4] text-[#ef4a23] mx-auto flex items-center justify-center">
+                  <SlidersHorizontal className="w-6 h-6" />
+                </div>
+                <div className="space-y-1">
+                  <h3 className="font-archivo text-xl font-bold uppercase tracking-tight text-[#141110]">
+                    No Curations Match Refined Dial
+                  </h3>
+                  <p className="text-sm font-playfair italic text-[#141110]/70 max-w-md mx-auto leading-relaxed">
+                    None of the {rankedItems.length} calibrated matches fit within the active archetype or budget ceiling.
+                  </p>
+                </div>
+                <button
+                  onClick={handleResetDial}
+                  className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#141110] hover:bg-[#ef4a23] text-white text-xs font-archivo uppercase tracking-wider font-bold transition-colors cursor-pointer shadow-sm"
+                >
+                  <RotateCcw className="w-3.5 h-3.5" />
+                  <span>Reset Fine-Tune Dial</span>
+                </button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {displayedItems.map(({ product, score, rationale }, rankIdx) => {
+                  const isWish = isWishlisted(product.id);
+                  const isAdded = addedId === product.id;
+
+                  return (
+                    <div
+                      key={product.id}
+                      className="bg-white rounded-3xl border border-[#141110]/10 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                    >
+                      <div className="p-6 space-y-4">
+                        {/* Top Bar: Rank & Real Backend Score */}
+                        <div className="flex items-center justify-between">
+                          <span className="px-3 py-1 rounded-full bg-[#141110] text-[#faf3e4] text-xs font-archivo uppercase tracking-wider font-bold">
+                            {sortOrder === 'authoritative' ? `Match #${rankIdx + 1}` : 'Curated Match'}
+                          </span>
+                          <span className="text-xs font-archivo font-bold text-[#ef4a23] px-2.5 py-0.5 rounded-full bg-[#ef4a23]/10">
+                            {score}% Emotional Fit
+                          </span>
+                        </div>
+
+                        {/* Image & Title */}
+                        <div className="flex gap-5 items-start">
+                          <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden bg-stone-100 shrink-0">
+                            <img
+                              src={product.imageUrl}
+                              alt={product.name}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                          <div className="space-y-1.5 flex-1">
+                            <span className="text-[10px] font-mono uppercase tracking-widest text-[#141110]/50 font-bold">
+                              {product.categoryName}
+                            </span>
+                            <h3 className="font-archivo uppercase text-lg sm:text-xl font-bold text-[#141110] leading-tight">
+                              {product.name}
+                            </h3>
+                            <p className="font-playfair text-xs sm:text-sm text-[#141110]/75 line-clamp-2 italic">
+                              {product.tagline}
+                            </p>
+                            <div className="font-archivo text-xl font-bold text-[#141110] pt-1">
+                              ₹{product.price.toLocaleString('en-IN')}
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Real Grounded Calibration Rationale from Backend */}
+                        <div className="p-3.5 rounded-xl bg-[#faf3e4]/60 border border-[#141110]/10 text-xs font-playfair text-[#141110]/80 italic leading-relaxed">
+                          "{rationale}"
+                        </div>
+                      </div>
+
+                      {/* Bottom Actions */}
+                      <div className="p-6 pt-0 flex flex-wrap items-center justify-between gap-3 border-t border-[#141110]/5">
+                        <button
+                          onClick={() => toggleWishlist(product.id)}
+                          className="flex items-center gap-1.5 text-xs font-archivo uppercase tracking-wider text-[#141110]/70 hover:text-[#ef4a23] transition-colors cursor-pointer"
+                        >
+                          <Heart className={`w-4 h-4 ${isWish ? 'fill-[#ef4a23] text-[#ef4a23]' : ''}`} />
+                          <span>{isWish ? 'Saved' : 'Wishlist'}</span>
+                        </button>
+
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => setCardProduct(product)}
+                            className="px-4 py-2.5 rounded-full border border-[#ef4a23]/30 text-[#ef4a23] hover:bg-[#ef4a23] hover:text-white font-archivo uppercase text-xs tracking-wider font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-xs"
+                            title="Personalize Framed Gift Card for this recommendation"
+                          >
+                            <PenTool className="w-3.5 h-3.5" />
+                            <span>Framed Card</span>
+                          </button>
+
+                          <button
+                            onClick={() => handleAdd(product)}
+                            className={`px-5 py-2.5 rounded-full font-archivo uppercase text-xs tracking-wider font-bold transition-all flex items-center gap-2 cursor-pointer ${
+                              isAdded
+                                ? 'bg-emerald-600 text-white'
+                                : 'bg-[#141110] hover:bg-[#ef4a23] text-white shadow-sm'
+                            }`}
+                          >
+                            {isAdded ? (
+                              <>
+                                <Check className="w-3.5 h-3.5" />
+                                <span>Added</span>
+                              </>
+                            ) : (
+                              <>
+                                <ShoppingBag className="w-3.5 h-3.5" />
+                                <span>Add to Bag</span>
+                              </>
+                            )}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         )}
 

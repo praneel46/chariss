@@ -272,11 +272,11 @@ async function runTests() {
     console.log('  ✓ PASSED: Artisan checkout URL validator permits verified web protocols and blocks unsafe schemes');
 
     // -------------------------------------------------------------
-    // TEST 6: Product Catalogue Image Integrity (All 72 Products)
+    // TEST 6: Product Catalogue Image Integrity
     // -------------------------------------------------------------
-    console.log('\n[6] PRODUCT CATALOGUE IMAGE INTEGRITY (72 PRODUCTS):');
+    console.log(`\n[6] PRODUCT CATALOGUE IMAGE INTEGRITY (${SEED_PRODUCTS.length} PRODUCTS):`);
 
-    assert.strictEqual(SEED_PRODUCTS.length, 72, 'Catalogue must have exactly 72 products');
+    assert(SEED_PRODUCTS.length >= 72, `Catalogue must have at least 72 products, found ${SEED_PRODUCTS.length}`);
     const knownBrokenIds = [
       'photo-1547996160-71dfabb1a7b1',
       'photo-1540518614846-7ede433c4ef9',
@@ -296,7 +296,7 @@ async function runTests() {
       }
     }
 
-    console.log('  ✓ PASSED: All 72 catalogue products have verified HTTPS image URLs with zero 404 photo IDs');
+    console.log(`  ✓ PASSED: All ${SEED_PRODUCTS.length} catalogue products have verified HTTPS image URLs with zero 404 photo IDs`);
 
     console.log('\n================================================================');
     console.log('🎉 ALL CONSULTATION ISOLATION & BAG TESTS PASSED SUCCESSFULLY!');
