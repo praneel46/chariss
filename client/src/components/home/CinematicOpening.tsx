@@ -133,7 +133,6 @@ const Opening3D: React.FC<CinematicOpeningProps & { onFail: () => void }> = ({ o
       <div id="opening" className="gl3d" role="dialog" aria-modal="true" aria-label="Gift opening introduction" hidden={hidden}>
         <canvas key={run} ref={canvasRef} className="gl" aria-hidden="true" />
         <div className="flood" id="flood" />
-        <div className="logo">CHARIS</div>
         <button className="skip" id="skip" type="button" onClick={finish}>Skip</button>
         <button className="sfx-toggle" type="button" aria-pressed={soundOn} onClick={toggleSound}>
           {soundOn ? 'Sound on' : 'Sound off'}

@@ -63,6 +63,7 @@ export const AmbientMusicPlayer: React.FC = () => {
 
       {/* Floating Ambient Sound Controller */}
       <aside
+        id="ambient-music-player"
         aria-label="CHARIS Ambient Sound Controller"
         className="fixed bottom-6 right-4 sm:bottom-6 sm:right-6 z-[1250] flex flex-col items-end gap-2.5 select-none pointer-events-auto"
       >

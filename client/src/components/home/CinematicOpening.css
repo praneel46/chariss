@@ -2,6 +2,17 @@ body.locked {
   overflow: hidden;
 }
 
+/* Hide header and ambient sound controller while 3D intro is running */
+body.locked #kolibrie-nav,
+body.locked #ambient-music-player,
+body.locked aside[aria-label="CHARIS Ambient Sound Controller"],
+body.locked [data-cursor-marquee] {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.5s ease;
+}
+
 #opening {
   --opening-ink: #14110e;
   --opening-ivory: #faf3e4;
@@ -9,7 +20,7 @@ body.locked {
   --opening-rose: #a53e35;
   position: fixed;
   inset: 0;
-  z-index: 1101;
+  z-index: 9999;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -39,6 +50,7 @@ body.locked {
 }
 
 #opening .logo {
+  display: none !important;
   position: absolute;
   top: calc(28px + env(safe-area-inset-top, 0px));
   color: var(--opening-champagne);
