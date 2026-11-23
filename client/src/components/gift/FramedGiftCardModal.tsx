@@ -63,13 +63,17 @@ export const FramedGiftCardModal: React.FC<FramedGiftCardModalProps> = ({
     }, 450);
   };
 
-  // Synchronize initial values when modal opens
+  // Synchronize initial values when modal opens and lock background scroll
   useEffect(() => {
     if (isOpen) {
       if (initialRecipientName) setRecipient(initialRecipientName);
       if (initialEmotion) setSelectedEmotion(initialEmotion);
       if (user?.name) setSender(user.name);
+      document.body.classList.add('charis-modal-open');
     }
+    return () => {
+      document.body.classList.remove('charis-modal-open');
+    };
   }, [isOpen, initialRecipientName, initialEmotion, user?.name]);
 
   // AI-generated message database tailored to gift & emotion archetypes
@@ -289,24 +293,24 @@ export const FramedGiftCardModal: React.FC<FramedGiftCardModalProps> = ({
     <div
       role="dialog"
       aria-modal="true"
-      className="fixed inset-0 z-[250] flex items-center justify-center p-3 sm:p-6 overflow-y-auto bg-[#141110]/85 backdrop-blur-md transition-all duration-300"
+      className="fixed inset-0 z-[2000] flex items-center justify-center p-3 sm:p-6 overflow-y-auto bg-[#141110]/90 backdrop-blur-md transition-all duration-300"
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-5xl max-h-[92vh] overflow-y-auto bg-[#faf3e4] text-[#141110] rounded-3xl shadow-2xl border border-[#ef4a23]/30 my-4 flex flex-col lg:flex-row overflow-hidden animate-in fade-in zoom-in-95 duration-200"
+        className="relative w-full max-w-5xl max-h-[92vh] bg-[#faf3e4] text-[#141110] rounded-3xl shadow-2xl border border-[#ef4a23]/30 my-auto flex flex-col lg:flex-row overflow-hidden animate-in fade-in zoom-in-95 duration-200"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Close Button */}
         <button
           onClick={onClose}
           aria-label="Close card modal"
-          className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-white/90 hover:bg-[#ef4a23] hover:text-white text-[#141110] flex items-center justify-center shadow-md transition-colors cursor-pointer"
+          className="absolute top-4 right-4 z-30 w-10 h-10 rounded-full bg-white/95 hover:bg-[#ef4a23] hover:text-white text-[#141110] flex items-center justify-center shadow-lg transition-colors cursor-pointer border border-[#141110]/15"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* LEFT COLUMN: Controls, AI Calibrator & Editor */}
-        <div className="w-full lg:w-1/2 p-6 sm:p-8 space-y-6 border-b lg:border-b-0 lg:border-r border-[#141110]/10 overflow-y-auto">
+        <div className="w-full lg:w-1/2 p-6 sm:p-8 space-y-6 border-b lg:border-b-0 lg:border-r border-[#141110]/10 overflow-y-auto max-h-[92vh]">
           {/* Header */}
           <div className="space-y-1">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#141110]/5 text-[10px] font-archivo uppercase tracking-widest text-[#ef4a23] font-bold">
@@ -500,7 +504,7 @@ export const FramedGiftCardModal: React.FC<FramedGiftCardModalProps> = ({
         </div>
 
         {/* RIGHT COLUMN: Live Framed Card Preview & Digital Wax Seal Unboxing */}
-        <div className="w-full lg:w-1/2 p-6 sm:p-10 flex flex-col items-center justify-center bg-[#faf3e4]/60">
+        <div className="w-full lg:w-1/2 p-6 sm:p-8 flex flex-col items-center justify-start lg:justify-center bg-[#faf3e4]/60 overflow-y-auto max-h-[92vh]">
           <div className="flex items-center justify-between w-full max-w-sm mb-4">
             <span className="text-[10px] font-archivo uppercase tracking-widest text-[#141110]/60 font-bold">
               {previewMode === 'unboxing' && !isSealBroken

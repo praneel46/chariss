@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { Volume2, VolumeX, Disc } from 'lucide-react';
 import { useBag } from '../../context/BagContext';
 
@@ -8,8 +8,20 @@ const YOUTUBE_START_SECONDS = 3260; // 54m 20s
 export const AmbientMusicPlayer: React.FC = () => {
   const { isBagOpen } = useBag();
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const isIframeReadyRef = useRef<boolean>(false);
+
+  // Watch for any active full-screen modals to avoid overlapping
+  useEffect(() => {
+    const updateModalState = () => {
+      setIsModalOpen(document.body.classList.contains('charis-modal-open'));
+    };
+    const observer = new MutationObserver(updateModalState);
+    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    updateModalState();
+    return () => observer.disconnect();
+  }, []);
 
   // Send API command to YouTube iframe via postMessage
   const sendIframeCommand = useCallback((func: string, args: any[] = []) => {
@@ -67,8 +79,8 @@ export const AmbientMusicPlayer: React.FC = () => {
       <aside
         id="ambient-music-player"
         aria-label="CHARIS Ambient Sound Controller"
-        className={`fixed bottom-6 right-4 sm:bottom-6 sm:right-6 z-[1250] flex flex-col items-end gap-2.5 select-none pointer-events-auto transition-opacity duration-300 ${
-          isBagOpen ? 'opacity-0 pointer-events-none !hidden' : 'opacity-100'
+        className={`fixed bottom-6 right-4 sm:bottom-6 sm:right-6 z-[1050] flex flex-col items-end gap-2.5 select-none pointer-events-auto transition-opacity duration-300 ${
+          isBagOpen || isModalOpen ? 'opacity-0 pointer-events-none !hidden' : 'opacity-100'
         }`}
       >
         {/* Intro Tooltip Badge: Tap For Vibes with Brutalist Corner Brackets */}

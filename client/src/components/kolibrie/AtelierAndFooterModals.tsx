@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { X, Sparkles, ShieldCheck, HeartHandshake, HelpCircle, Layers, CheckCircle2, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -10,13 +10,22 @@ interface AtelierAndFooterModalsProps {
 }
 
 export const AtelierAndFooterModals: React.FC<AtelierAndFooterModalsProps> = ({ activeModal, onClose }) => {
+  useEffect(() => {
+    if (activeModal) {
+      document.body.classList.add('charis-modal-open');
+    }
+    return () => {
+      document.body.classList.remove('charis-modal-open');
+    };
+  }, [activeModal]);
+
   if (!activeModal) return null;
 
   return (
     <div
       role="dialog"
       aria-modal="true"
-      className="fixed inset-0 z-[200] flex items-center justify-center p-4 sm:p-6 overflow-y-auto bg-[#141110]/80 backdrop-blur-md transition-all duration-300"
+      className="fixed inset-0 z-[2000] flex items-center justify-center p-4 sm:p-6 overflow-y-auto bg-[#141110]/85 backdrop-blur-md transition-all duration-300"
       onClick={onClose}
     >
       <div

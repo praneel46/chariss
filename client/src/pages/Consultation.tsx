@@ -1286,7 +1286,7 @@ export const Consultation: React.FC = () => {
       {/* GUEST PRE-CURATION AUTHENTICATION PROMPT MODAL */}
       <AnimatePresence>
         {isAuthModalOpen && (
-          <div className="fixed inset-0 z-[250] bg-[#141110]/70 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-[2000] bg-[#141110]/85 backdrop-blur-md flex items-center justify-center p-4">
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -1453,7 +1453,7 @@ export const Consultation: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[300] bg-[#141110]/95 backdrop-blur-md flex flex-col items-center justify-center p-6 text-[#faf3e4] text-center space-y-6"
+            className="fixed inset-0 z-[2000] bg-[#141110]/95 backdrop-blur-md flex flex-col items-center justify-center p-6 text-[#faf3e4] text-center space-y-6"
           >
             <div className="relative w-20 h-20 flex items-center justify-center">
               <div className="absolute inset-0 rounded-full border-4 border-white/10 border-t-[#ef4a23] animate-spin" />

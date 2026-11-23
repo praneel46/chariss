@@ -480,3 +480,18 @@ html:not([data-page-ready]) main {
     animation: none !important;
   }
 }
+
+/* Modal Open Locks: Prevent background scrolling and hide ambient floating elements */
+body.charis-modal-open {
+  overflow: hidden !important;
+}
+
+body.charis-modal-open #ambient-music-player {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+body.charis-modal-open #kolibrie-nav {
+  pointer-events: none !important;
+}

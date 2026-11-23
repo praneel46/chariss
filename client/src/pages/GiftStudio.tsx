@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Sparkles, Search, SlidersHorizontal, ShoppingBag, Check, Heart, ExternalLink, PenTool } from 'lucide-react';
 import { ALL_100_CURATED_GIFTS, type CuratedGiftItem } from '../data/curatedGifts100';
 import type { Product } from '../types';
@@ -17,6 +17,17 @@ export const GiftStudio: React.FC = () => {
   const [priceSort, setPriceSort] = useState<'default' | 'low-high' | 'high-low'>('default');
   const [selectedGiftDetail, setSelectedGiftDetail] = useState<CuratedGiftItem | null>(null);
   const [giftForCard, setGiftForCard] = useState<CuratedGiftItem | null>(null);
+
+  useEffect(() => {
+    if (selectedGiftDetail) {
+      document.body.classList.add('charis-modal-open');
+    } else {
+      document.body.classList.remove('charis-modal-open');
+    }
+    return () => {
+      document.body.classList.remove('charis-modal-open');
+    };
+  }, [selectedGiftDetail]);
   const [addedItemIds, setAddedItemIds] = useState<number[]>([]);
 
   // AI Card writer state
@@ -446,7 +457,7 @@ export const GiftStudio: React.FC = () => {
         {/* Quick Details Modal for Gift */}
         {selectedGiftDetail && (
           <div
-            className="fixed inset-0 z-[250] flex items-center justify-center p-4 bg-[#141110]/80 backdrop-blur-sm"
+            className="fixed inset-0 z-[2000] flex items-center justify-center p-4 bg-[#141110]/90 backdrop-blur-md"
             onClick={() => setSelectedGiftDetail(null)}
           >
             <div
