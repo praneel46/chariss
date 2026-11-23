@@ -18,8 +18,8 @@ export const CURATED_PRODUCTS: Product[] = [
     imageUrl: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=800&q=80',
     retailer: {
       id: 'ret-meta',
-      name: 'Meta x Luxottica Flagship',
-      website: 'https://ray-ban.com',
+      name: 'Ray-Ban x Meta Flagship',
+      website: 'https://www.ray-ban.com',
       verified: true
     },
     productUrl: 'https://ray-ban.com/meta-smart-glasses',
@@ -83,7 +83,7 @@ export const CURATED_PRODUCTS: Product[] = [
     retailer: {
       id: 'ret-apple',
       name: 'Apple Store India',
-      website: 'https://apple.com/in',
+      website: 'https://www.apple.com/in/',
       verified: true
     },
     productUrl: 'https://apple.com/in/apple-watch',
@@ -114,7 +114,7 @@ export const CURATED_PRODUCTS: Product[] = [
     retailer: {
       id: 'ret-sony',
       name: 'Sony Audio Flagship',
-      website: 'https://sony.co.in',
+      website: 'https://www.sony.co.in',
       verified: true
     },
     productUrl: 'https://sony.co.in/headphones',
@@ -146,7 +146,7 @@ export const CURATED_PRODUCTS: Product[] = [
     retailer: {
       id: 'ret-plaud',
       name: 'Plaud AI Official',
-      website: 'https://plaud.ai',
+      website: 'https://www.plaud.ai',
       verified: true
     },
     productUrl: 'https://plaud.ai/products/plaud-note',
@@ -177,7 +177,7 @@ export const CURATED_PRODUCTS: Product[] = [
     retailer: {
       id: 'ret-xreal',
       name: 'Xreal Spatial Store',
-      website: 'https://xreal.com',
+      website: 'https://us.shop.xreal.com',
       verified: true
     },
     productUrl: 'https://xreal.com/air-3',
@@ -207,8 +207,8 @@ export const CURATED_PRODUCTS: Product[] = [
     imageUrl: 'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=800&q=80',
     retailer: {
       id: 'ret-samsung',
-      name: 'Samsung Flagship Direct',
-      website: 'https://samsung.com/in',
+      name: 'Samsung Direct',
+      website: 'https://www.samsung.com',
       verified: true
     },
     productUrl: 'https://samsung.com/in/galaxy-ring',
@@ -239,11 +239,11 @@ export const CURATED_PRODUCTS: Product[] = [
     imageUrl: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=800&q=80',
     retailer: {
       id: 'ret-atelier',
-      name: 'Atelier Firenze',
-      website: 'https://atelierfirenze.it',
+      name: 'Nappa Dori Atelier',
+      website: 'https://nappadori.com',
       verified: true
     },
-    productUrl: 'https://atelierfirenze.it/totes',
+    productUrl: 'https://nappadori.com/',
     tags: ['luxury_bag', 'italian_leather', 'tote', 'craftsmanship'],
     interests: ['fashion', 'travel', 'architecture', 'design'],
     occasions: ['anniversary', 'promotion', 'birthday', 'celebration'],
@@ -306,8 +306,8 @@ export const CURATED_PRODUCTS: Product[] = [
     imageUrl: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80',
     retailer: {
       id: 'ret-roborock',
-      name: 'Roborock Direct',
-      website: 'https://roborock.com',
+      name: 'Roborock Official Store',
+      website: 'https://us.roborock.com',
       verified: true
     },
     productUrl: 'https://roborock.com/saros',
@@ -338,7 +338,7 @@ export const CURATED_PRODUCTS: Product[] = [
     retailer: {
       id: 'ret-hue',
       name: 'Signify Hue Official',
-      website: 'https://philips-hue.com',
+      website: 'https://www.philips-hue.com',
       verified: true
     },
     productUrl: 'https://philips-hue.com/sync-box',
@@ -404,8 +404,8 @@ export const CURATED_PRODUCTS: Product[] = [
     imageUrl: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&q=80',
     retailer: {
       id: 'ret-dji',
-      name: 'DJI Official Store India',
-      website: 'https://dji.com',
+      name: 'DJI Official Store',
+      website: 'https://store.dji.com',
       verified: true
     },
     productUrl: 'https://dji.com/osmo-pocket-3',
@@ -437,7 +437,7 @@ export const CURATED_PRODUCTS: Product[] = [
     retailer: {
       id: 'ret-logi',
       name: 'Logitech Store India',
-      website: 'https://logitech.com',
+      website: 'https://www.logitech.com',
       verified: true
     },
     productUrl: 'https://logitech.com/mx-master-3s',
@@ -468,7 +468,7 @@ export const CURATED_PRODUCTS: Product[] = [
     retailer: {
       id: 'ret-elgato',
       name: 'Corsair Elgato',
-      website: 'https://elgato.com',
+      website: 'https://www.elgato.com',
       verified: true
     },
     productUrl: 'https://elgato.com/stream-deck-mk2',
@@ -503,7 +503,7 @@ export const CURATED_PRODUCTS: Product[] = [
     retailer: {
       id: 'ret-therabody',
       name: 'Therabody Direct',
-      website: 'https://therabody.com',
+      website: 'https://www.therabody.com',
       verified: true
     },
     productUrl: 'https://therabody.com/theragun-pro',
@@ -534,7 +534,7 @@ export const CURATED_PRODUCTS: Product[] = [
     retailer: {
       id: 'ret-dyson',
       name: 'Dyson India Flagship',
-      website: 'https://dyson.in',
+      website: 'https://www.dyson.in',
       verified: true
     },
     productUrl: 'https://dyson.in/airstrait',
@@ -599,7 +599,7 @@ export const CURATED_PRODUCTS: Product[] = [
     imageUrl: 'https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=800&q=80',
     retailer: {
       id: 'ret-infinite',
-      name: 'Infinite Objects Studio',
+      name: 'Infinite Objects NYC',
       website: 'https://infiniteobjects.com',
       verified: true
     },
@@ -631,11 +631,11 @@ export const CURATED_PRODUCTS: Product[] = [
     imageUrl: 'https://images.unsplash.com/photo-1529699211952-734e80c4d42b?auto=format&fit=crop&w=800&q=80',
     retailer: {
       id: 'ret-chess',
-      name: 'Algorithmic Atelier',
-      website: 'https://algorithmicatelier.com',
+      name: 'The House of Staunton',
+      website: 'https://www.houseofstaunton.com',
       verified: true
     },
-    productUrl: 'https://algorithmicatelier.com/chess',
+    productUrl: 'https://www.houseofstaunton.com/',
     tags: ['chess', 'generative_design', 'sculpture', 'heirloom'],
     interests: ['chess', 'mathematics', 'architecture', 'strategy'],
     occasions: ['milestone', 'birthday', 'graduation', 'celebration'],
@@ -662,7 +662,7 @@ export const CURATED_PRODUCTS: Product[] = [
     imageUrl: 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=800&q=80',
     retailer: {
       id: 'ret-furbo',
-      name: 'Furbo Official Store',
+      name: 'Tomofun Furbo Direct',
       website: 'https://furbo.com',
       verified: true
     },
@@ -694,7 +694,7 @@ export const CURATED_PRODUCTS: Product[] = [
     retailer: {
       id: 'ret-timekettle',
       name: 'Timekettle Global',
-      website: 'https://timekettle.co',
+      website: 'https://www.timekettle.co',
       verified: true
     },
     productUrl: 'https://timekettle.co/products/wt2-edge',
@@ -724,11 +724,11 @@ export const CURATED_PRODUCTS: Product[] = [
     imageUrl: 'https://images.unsplash.com/photo-1579586337278-3befd40fd17a?auto=format&fit=crop&w=800&q=80',
     retailer: {
       id: 'ret-humane',
-      name: 'Humane Store',
-      website: 'https://hu.ma.ne',
+      name: 'Apple Store India',
+      website: 'https://www.apple.com/in/',
       verified: true
     },
-    productUrl: 'https://hu.ma.ne/aipin',
+    productUrl: 'https://www.apple.com/in/apple-watch-ultra-2/',
     tags: ['ai_pin', 'wearable_tech', 'screenless', 'laser_display'],
     interests: ['futuristic_tech', 'minimalism', 'hardware', 'gadgets'],
     occasions: ['milestone', 'birthday', 'celebration'],
@@ -755,8 +755,8 @@ export const CURATED_PRODUCTS: Product[] = [
     imageUrl: 'https://images.unsplash.com/photo-1510017803434-a899398421b3?auto=format&fit=crop&w=800&q=80',
     retailer: {
       id: 'ret-whoop',
-      name: 'Whoop Performance',
-      website: 'https://whoop.com',
+      name: 'WHOOP Direct Store',
+      website: 'https://www.whoop.com',
       verified: true
     },
     productUrl: 'https://whoop.com',
@@ -787,7 +787,7 @@ export const CURATED_PRODUCTS: Product[] = [
     retailer: {
       id: 'ret-cartier',
       name: 'Cartier Paris Flagship',
-      website: 'https://cartier.com',
+      website: 'https://www.cartier.com',
       verified: true
     },
     productUrl: 'https://cartier.com/santos-dumont',
@@ -817,8 +817,8 @@ export const CURATED_PRODUCTS: Product[] = [
     imageUrl: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=800&q=80',
     retailer: {
       id: 'ret-omega',
-      name: 'Omega Boutiques',
-      website: 'https://omegawatches.com',
+      name: 'OMEGA Swiss Flagship',
+      website: 'https://www.omegawatches.com',
       verified: true
     },
     productUrl: 'https://omegawatches.com/speedmaster',
@@ -848,8 +848,8 @@ export const CURATED_PRODUCTS: Product[] = [
     imageUrl: 'https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=800&q=80',
     retailer: {
       id: 'ret-oliver',
-      name: 'Oliver Peoples Los Angeles',
-      website: 'https://oliverpeoples.com',
+      name: 'Oliver Peoples West Hollywood',
+      website: 'https://www.oliverpeoples.com',
       verified: true
     },
     productUrl: 'https://oliverpeoples.com/fairmont',
@@ -879,7 +879,7 @@ export const CURATED_PRODUCTS: Product[] = [
     imageUrl: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=80',
     retailer: {
       id: 'ret-jmm',
-      name: 'Jacques Marie Mage Flagship',
+      name: 'Jacques Marie Mage LA',
       website: 'https://jacquesmariemage.com',
       verified: true
     },
@@ -910,8 +910,8 @@ export const CURATED_PRODUCTS: Product[] = [
     imageUrl: 'https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?auto=format&fit=crop&w=800&q=80',
     retailer: {
       id: 'ret-persol',
-      name: 'Persol Boutique',
-      website: 'https://persol.com',
+      name: 'Persol Torino',
+      website: 'https://www.persol.com',
       verified: true
     },
     productUrl: 'https://persol.com/714',
@@ -941,8 +941,8 @@ export const CURATED_PRODUCTS: Product[] = [
     imageUrl: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80',
     retailer: {
       id: 'ret-narwal',
-      name: 'Narwal Robotics',
-      website: 'https://narwal.com',
+      name: 'Narwal Robotics Direct',
+      website: 'https://us.narwal.com',
       verified: true
     },
     productUrl: 'https://narwal.com/freo-x-ultra',
@@ -1003,8 +1003,8 @@ export const CURATED_PRODUCTS: Product[] = [
     imageUrl: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80',
     retailer: {
       id: 'ret-kohler',
-      name: 'Kohler Luxury Signature',
-      website: 'https://kohler.com',
+      name: 'Kohler Flagship Studio',
+      website: 'https://www.kohler.com',
       verified: true
     },
     productUrl: 'https://kohler.com/numi',
@@ -1034,8 +1034,8 @@ export const CURATED_PRODUCTS: Product[] = [
     imageUrl: 'https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=800&q=80',
     retailer: {
       id: 'ret-yale',
-      name: 'Yale Home Security',
-      website: 'https://yalehome.com',
+      name: 'Yale Home Official',
+      website: 'https://www.yalehome.com',
       verified: true
     },
     productUrl: 'https://yalehome.com/assure-3',
@@ -1065,8 +1065,8 @@ export const CURATED_PRODUCTS: Product[] = [
     imageUrl: 'https://images.unsplash.com/photo-1543512214-318c7553f230?auto=format&fit=crop&w=800&q=80',
     retailer: {
       id: 'ret-amazon',
-      name: 'Amazon Devices',
-      website: 'https://amazon.in',
+      name: 'Amazon Device Store',
+      website: 'https://www.amazon.in',
       verified: true
     },
     productUrl: 'https://amazon.in/echo-show-11',
@@ -1096,8 +1096,8 @@ export const CURATED_PRODUCTS: Product[] = [
     imageUrl: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=800&q=80',
     retailer: {
       id: 'ret-eightsleep',
-      name: 'Eight Sleep Flagship',
-      website: 'https://eightsleep.com',
+      name: 'Eight Sleep NYC',
+      website: 'https://www.eightsleep.com',
       verified: true
     },
     productUrl: 'https://eightsleep.com/pod-5',
@@ -1127,8 +1127,8 @@ export const CURATED_PRODUCTS: Product[] = [
     imageUrl: 'https://images.unsplash.com/photo-1589802829985-817e51171b92?auto=format&fit=crop&w=800&q=80',
     retailer: {
       id: 'ret-insta360',
-      name: 'Insta360 Flagship',
-      website: 'https://insta360.com',
+      name: 'Insta360 Direct',
+      website: 'https://store.insta360.com',
       verified: true
     },
     productUrl: 'https://insta360.com/flow-pro',
@@ -1158,8 +1158,8 @@ export const CURATED_PRODUCTS: Product[] = [
     imageUrl: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=800&q=80',
     retailer: {
       id: 'ret-razer',
-      name: 'Razer Official',
-      website: 'https://razer.com',
+      name: 'Razer Store Global',
+      website: 'https://www.razer.com',
       verified: true
     },
     productUrl: 'https://razer.com/kiyo-pro-ultra',
@@ -1189,8 +1189,8 @@ export const CURATED_PRODUCTS: Product[] = [
     imageUrl: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80',
     retailer: {
       id: 'ret-anker',
-      name: 'Anker Innovation Direct',
-      website: 'https://ankermake.com',
+      name: 'AnkerMake Official',
+      website: 'https://www.ankermake.com',
       verified: true
     },
     productUrl: 'https://ankermake.com/m5',
@@ -1221,7 +1221,7 @@ export const CURATED_PRODUCTS: Product[] = [
     retailer: {
       id: 'ret-xencelabs',
       name: 'Xencelabs Creative Studio',
-      website: 'https://xencelabs.com',
+      website: 'https://www.xencelabs.com',
       verified: true
     },
     productUrl: 'https://xencelabs.com/pen-tablet',
@@ -1251,8 +1251,8 @@ export const CURATED_PRODUCTS: Product[] = [
     imageUrl: 'https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&w=800&q=80',
     retailer: {
       id: 'ret-shure',
-      name: 'Shure Audio Pro',
-      website: 'https://shure.com',
+      name: 'Shure Audio Direct',
+      website: 'https://www.shure.com',
       verified: true
     },
     productUrl: 'https://shure.com/mv7-plus',
@@ -1282,7 +1282,7 @@ export const CURATED_PRODUCTS: Product[] = [
     imageUrl: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80',
     retailer: {
       id: 'ret-loupedeck',
-      name: 'Loupedeck Direct',
+      name: 'Loupedeck Helsinki',
       website: 'https://loupedeck.com',
       verified: true
     },
@@ -1313,8 +1313,8 @@ export const CURATED_PRODUCTS: Product[] = [
     imageUrl: 'https://images.unsplash.com/photo-1512790182412-b19e6d62bc39?auto=format&fit=crop&w=800&q=80',
     retailer: {
       id: 'ret-hohem',
-      name: 'Hohem Official Store',
-      website: 'https://hohem.com',
+      name: 'Hohem Technology Direct',
+      website: 'https://www.hohem.com',
       verified: true
     },
     productUrl: 'https://hohem.com/isteady-v3',
@@ -1345,7 +1345,7 @@ export const CURATED_PRODUCTS: Product[] = [
     retailer: {
       id: 'ret-lumen',
       name: 'Lumen Health Direct',
-      website: 'https://lumen.me',
+      website: 'https://www.lumen.me',
       verified: true
     },
     productUrl: 'https://lumen.me',
@@ -1375,7 +1375,7 @@ export const CURATED_PRODUCTS: Product[] = [
     imageUrl: 'https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=800&q=80',
     retailer: {
       id: 'ret-oralb',
-      name: 'Oral-B Dental Studio',
+      name: 'Oral-B Dental Innovations',
       website: 'https://oralb.com',
       verified: true
     },
@@ -1406,8 +1406,8 @@ export const CURATED_PRODUCTS: Product[] = [
     imageUrl: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80',
     retailer: {
       id: 'ret-withings',
-      name: 'Withings Health Station',
-      website: 'https://withings.com',
+      name: 'Withings Paris',
+      website: 'https://www.withings.com',
       verified: true
     },
     productUrl: 'https://withings.com/body-scan',
@@ -1437,11 +1437,11 @@ export const CURATED_PRODUCTS: Product[] = [
     imageUrl: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&q=80',
     retailer: {
       id: 'ret-opulus',
-      name: 'Opulus Beauty Labs',
-      website: 'https://opulusbeauty.com',
+      name: 'Foreo Sweden',
+      website: 'https://www.foreo.com',
       verified: true
     },
-    productUrl: 'https://opulusbeauty.com',
+    productUrl: 'https://www.foreo.com/luna-collection',
     tags: ['skincare_device', 'luxury_beauty', 'cosmetic_science', 'anti_aging'],
     interests: ['skincare', 'dermatology', 'luxury_beauty', 'science'],
     occasions: ['anniversary', 'birthday', 'celebration'],
@@ -1468,8 +1468,8 @@ export const CURATED_PRODUCTS: Product[] = [
     imageUrl: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=800&q=80',
     retailer: {
       id: 'ret-nura',
-      name: 'Nura Sound Labs',
-      website: 'https://nurasound.com',
+      name: 'Denon PerL Flagship',
+      website: 'https://www.denon.com',
       verified: true
     },
     productUrl: 'https://nurasound.com/nuratrue-pro',
@@ -1499,7 +1499,7 @@ export const CURATED_PRODUCTS: Product[] = [
     imageUrl: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=800&q=80',
     retailer: {
       id: 'ret-somnox',
-      name: 'Somnox Health',
+      name: 'Somnox Netherlands',
       website: 'https://somnox.com',
       verified: true
     },
@@ -1530,8 +1530,8 @@ export const CURATED_PRODUCTS: Product[] = [
     imageUrl: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=800&q=80',
     retailer: {
       id: 'ret-bottega',
-      name: 'Bottega Veneta Milan',
-      website: 'https://bottegaveneta.com',
+      name: 'Bottega Veneta Atelier',
+      website: 'https://www.bottegaveneta.com',
       verified: true
     },
     productUrl: 'https://bottegaveneta.com/pouch',
@@ -1561,8 +1561,8 @@ export const CURATED_PRODUCTS: Product[] = [
     imageUrl: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=800&q=80',
     retailer: {
       id: 'ret-prada',
-      name: 'Prada Galleria Flagship',
-      website: 'https://prada.com',
+      name: 'Prada Milano Flagship',
+      website: 'https://www.prada.com',
       verified: true
     },
     productUrl: 'https://prada.com/re-nylon',
@@ -1592,8 +1592,8 @@ export const CURATED_PRODUCTS: Product[] = [
     imageUrl: 'https://images.unsplash.com/photo-1565026057447-bc90a3dceb87?auto=format&fit=crop&w=800&q=80',
     retailer: {
       id: 'ret-rimowa',
-      name: 'Rimowa Flagship Cologne',
-      website: 'https://rimowa.com',
+      name: 'RIMOWA Cologne',
+      website: 'https://www.rimowa.com',
       verified: true
     },
     productUrl: 'https://rimowa.com/cabin',

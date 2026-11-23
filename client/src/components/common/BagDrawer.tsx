@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { useBag } from '../../context/BagContext';
 import { bagAndWishlistService } from '../../services/bagAndWishlistService';
+import { getDirectArtisanDestination } from '../../utils/productUrlHelper';
 
 /**
  * Validates external checkout URLs strictly for verified HTTPS protocols and non-placeholder destinations.
@@ -40,14 +41,10 @@ function isValidVerifiedHttpsUrl(url?: string): boolean {
 
 /**
  * Returns a guaranteed valid HTTPS destination URL for checkout navigation.
- * Uses official productUrl or retailer website; falls back to official brand store search.
+ * Uses authoritative verified atelier resolver across the entire CHARIS catalog & gift studio.
  */
 function getProductDestinationUrl(product: any): string {
-  const direct = product?.productUrl || product?.retailer?.website;
-  if (direct && isValidVerifiedHttpsUrl(direct)) {
-    return direct;
-  }
-  return `https://www.google.com/search?q=${encodeURIComponent((product?.name || 'luxury gift') + ' official store buy online')}`;
+  return getDirectArtisanDestination(product).url;
 }
 
 export const BagDrawer: React.FC = () => {
@@ -399,25 +396,43 @@ export const BagDrawer: React.FC = () => {
               )}
 
               <div className="space-y-2">
-                <button
-                  type="button"
-                  onClick={handleCheckoutClick}
-                  disabled={selectedCount === 0}
-                  className={`w-full flex items-center justify-center gap-2 py-3 rounded-md text-xs font-semibold uppercase tracking-wider shadow-brutal transition-all cursor-pointer ${
-                    selectedCount > 0
-                      ? 'bg-[#151419] text-[#FAF9F6] hover:bg-[#292820]'
-                      : 'bg-stone-300 text-stone-500 cursor-not-allowed shadow-none'
-                  }`}
-                >
-                  <span>
-                    {selectedCount === 0
-                      ? 'Select Items to Checkout'
-                      : selectedCount === 1
-                      ? 'Direct Artisan Checkout'
-                      : `Checkout ${selectedCount} Selected Items`}
-                  </span>
-                  <ArrowUpRight className="w-4 h-4 text-[#D4A359]" />
-                </button>
+                {selectedCount === 1 ? (
+                  <a
+                    href={getProductDestinationUrl(selectedItems[0].product)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => {
+                      if (activeConsultationId) {
+                        bagAndWishlistService
+                          .checkout(activeConsultationId, [selectedItems[0].product.id])
+                          .catch((err) => console.warn('[BagDrawer] Checkout tracking warning:', err));
+                      }
+                    }}
+                    className="w-full flex items-center justify-center gap-2 py-3 rounded-md text-xs font-semibold uppercase tracking-wider shadow-brutal transition-all cursor-pointer bg-[#151419] text-[#FAF9F6] hover:bg-[#292820]"
+                    title="Open official artisan checkout directly"
+                  >
+                    <span>Direct Artisan Checkout</span>
+                    <ArrowUpRight className="w-4 h-4 text-[#D4A359]" />
+                  </a>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={handleCheckoutClick}
+                    disabled={selectedCount === 0}
+                    className={`w-full flex items-center justify-center gap-2 py-3 rounded-md text-xs font-semibold uppercase tracking-wider shadow-brutal transition-all cursor-pointer ${
+                      selectedCount > 0
+                        ? 'bg-[#151419] text-[#FAF9F6] hover:bg-[#292820]'
+                        : 'bg-stone-300 text-stone-500 cursor-not-allowed shadow-none'
+                    }`}
+                  >
+                    <span>
+                      {selectedCount === 0
+                        ? 'Select Items to Checkout'
+                        : `Checkout ${selectedCount} Selected Items`}
+                    </span>
+                    <ArrowUpRight className="w-4 h-4 text-[#D4A359]" />
+                  </button>
+                )}
                 <p className="text-[10px] text-center text-[#292820]/60">
                   Direct checkout from verified artisans. CHARIS takes zero customer fees.
                 </p>

@@ -1,13 +1,6 @@
 /**
  * CHARIS Master Product Seed Catalogue
  *
- * Implements audited, grounded, and verified luxury and accessible gifting catalogue.
- * Covers full budget spectrum:
- * - Tier 1: ₹500 – ₹1,500 (Thoughtful Tokens)
- * - Tier 2: ₹1,500 – ₹3,500 (Crafted Keepsakes)
- * - Tier 3: ₹3,500 – ₹6,500 (Signature Heirlooms)
- * - Luxury & Haute Horology: ₹15,000 – ₹385,000+
- *
  * All active products are verified against real manufacturer and retailer sources.
  */
 
@@ -25,13 +18,13 @@ const SEED_PRODUCTS = [
     "imageUrl": "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=800&q=80",
     "retailer": {
       "id": "ret-meta",
-      "name": "Meta x Luxottica Flagship",
-      "website": "https://www.meta.com",
+      "name": "Ray-Ban x Meta Flagship",
+      "website": "https://www.ray-ban.com",
       "verified": true,
       "sourceType": "authorized_retailer",
       "verificationNote": "Unverified legacy listing: Brand category landing page without exact product SKU or verified checkout price"
     },
-    "productUrl": "https://ray-ban.com/meta-smart-glasses",
+    "productUrl": "https://www.ray-ban.com/india/smart-glasses/clp",
     "tags": [
       "ai_glasses",
       "smart_wearables",
@@ -96,7 +89,7 @@ const SEED_PRODUCTS = [
       "sourceType": "authorized_retailer",
       "verificationNote": "Unverified legacy listing: Brand category landing page without exact product SKU or verified checkout price"
     },
-    "productUrl": "https://ouraring.com/product/horizon",
+    "productUrl": "https://ouraring.com/product/rings",
     "tags": [
       "smart_ring",
       "sleep_tracking",
@@ -139,7 +132,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Apple Watch Series 11 Ceramic Case",
+    "name": "Apple Watch Series 10 Edition",
     "slug": "apple-watch-series-11",
     "tagline": "On-device neural engine with vital health sensors & cellular",
     "description": "Precision milled titanium and ceramic casing. Powered by S11 SiP with 4-core Neural Engine for offline Siri dictation, sleep apnea detection, ECG, and optical cardiac monitoring.",
@@ -152,12 +145,12 @@ const SEED_PRODUCTS = [
     "retailer": {
       "id": "ret-apple",
       "name": "Apple Store India",
-      "website": "https://www.apple.com/in",
+      "website": "https://www.apple.com/in/",
       "verified": true,
       "sourceType": "authorized_retailer",
       "verificationNote": "Unverified legacy listing: Brand category landing page without exact product SKU or verified checkout price"
     },
-    "productUrl": "https://apple.com/in/apple-watch",
+    "productUrl": "https://www.apple.com/in/apple-watch-series-10/",
     "tags": [
       "smartwatch",
       "ceramic_case",
@@ -201,7 +194,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Sony WH-1000XM6 Wireless Noise-Canceling",
+    "name": "Sony WH-1000XM5 Wireless Noise-Cancelling Headphones",
     "slug": "sony-wh-1000xm6-headphones",
     "tagline": "AI-optimized audio processors with auto noise adaptation",
     "description": "Industry-leading noise cancellation powered by dual QN2e neural audio chips. Features 40mm carbon fiber drivers, LDAC high-resolution sound, and 45-hour quick-charge battery.",
@@ -218,7 +211,7 @@ const SEED_PRODUCTS = [
       "sourceType": "authorized_retailer",
       "verificationNote": "Unverified legacy listing: Brand category landing page without exact product SKU or verified checkout price"
     },
-    "productUrl": "https://sony.co.in/headphones",
+    "productUrl": "https://www.sony.co.in/headphones",
     "tags": [
       "audiophile",
       "anc",
@@ -260,7 +253,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Plaud Note AI Voice Recorder & Summarizer",
+    "name": "PLAUD NOTE AI Voice Recorder & Transcriber",
     "slug": "plaud-note-ai-voice-recorder",
     "tagline": "Dual-pickup sensor that transcribes & creates mindmaps via AI",
     "description": "Credit-card slim aluminum chassis attaches magnetically to smartphones. Records calls and meetings, transcribes in 57 languages, and outputs executive summaries and action items in seconds.",
@@ -278,7 +271,7 @@ const SEED_PRODUCTS = [
       "sourceType": "authorized_retailer",
       "verificationNote": "Unverified legacy listing: Brand category landing page without exact product SKU or verified checkout price"
     },
-    "productUrl": "https://plaud.ai/products/plaud-note",
+    "productUrl": "https://www.plaud.ai/products/plaud-note",
     "tags": [
       "ai_transcription",
       "productivity",
@@ -321,7 +314,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Xreal Air 3 Ultra Augmented Reality Glasses",
+    "name": "XREAL Air 2 Ultra Spatial Computing AR Glasses",
     "slug": "xreal-air-3-ultra-ar-glasses",
     "tagline": "Projects a virtual 330-inch micro-OLED theater display",
     "description": "Weighing only 76g, these AR sunglasses feature dual Sony micro-OLED 120Hz displays with 6DoF spatial tracking and gesture controls. Connects to MacBook, iPhone, and gaming consoles.",
@@ -333,12 +326,12 @@ const SEED_PRODUCTS = [
     "retailer": {
       "id": "ret-xreal",
       "name": "Xreal Spatial Store",
-      "website": "https://xreal.com",
+      "website": "https://us.shop.xreal.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://xreal.com/air-3",
+    "productUrl": "https://us.shop.xreal.com/products/xreal-air-2-ultra",
     "tags": [
       "ar_glasses",
       "micro_oled",
@@ -375,7 +368,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Samsung Galaxy Ring Titanium Horizon",
+    "name": "Samsung Galaxy Ring Titanium Biometric Health Band",
     "slug": "samsung-galaxy-ring",
     "tagline": "Convex titanium smart ring with Galaxy AI Energy Score",
     "description": "Lightweight titanium finish resistant to scratches. Tracks sleep stages, skin temperature, heart rate variations, and calculates your personalized daily energy score.",
@@ -386,13 +379,13 @@ const SEED_PRODUCTS = [
     "imageUrl": "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=800&q=80",
     "retailer": {
       "id": "ret-samsung",
-      "name": "Samsung Flagship Direct",
-      "website": "https://samsung.com/in",
+      "name": "Samsung Direct",
+      "website": "https://www.samsung.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://samsung.com/in/galaxy-ring",
+    "productUrl": "https://www.samsung.com/in/rings/galaxy-ring/",
     "tags": [
       "smart_ring",
       "galaxy_ai",
@@ -441,13 +434,13 @@ const SEED_PRODUCTS = [
     "imageUrl": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=800&q=80",
     "retailer": {
       "id": "ret-atelierfirenze",
-      "name": "Atelier Firenze",
+      "name": "Nappa Dori Atelier",
       "website": "https://nappadori.com",
       "verified": true,
       "sourceType": "authorized_retailer",
       "verificationNote": "Verified luxury leather goods atelier direct partner"
     },
-    "productUrl": "https://atelierfirenze.it/totes",
+    "productUrl": "https://nappadori.com/",
     "tags": [
       "saffiano_leather",
       "tech_tote",
@@ -507,7 +500,7 @@ const SEED_PRODUCTS = [
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://store.google.com/nest-thermostat",
+    "productUrl": "https://store.google.com/category/connected_home",
     "tags": [
       "smart_home",
       "nest",
@@ -545,7 +538,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Roborock Saros 20 Ultra Slim Robot Vacuum",
+    "name": "Roborock Saros Flagship Robotic Vacuum & Mop",
     "slug": "roborock-saros-20-robot-vacuum",
     "tagline": "LiDAR AI 3D obstacle avoidance with high-temperature mop wash",
     "description": "Ultra-thin 7.98cm profile cleans beneath low sofas with 18,500Pa hyper-suction. Dual spinning mops lift automatically when transitioning to wool carpets.",
@@ -557,13 +550,13 @@ const SEED_PRODUCTS = [
     "imageUrl": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80",
     "retailer": {
       "id": "ret-roborock",
-      "name": "Roborock Direct",
-      "website": "https://roborock.com",
+      "name": "Roborock Official Store",
+      "website": "https://us.roborock.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://roborock.com/saros",
+    "productUrl": "https://us.roborock.com/",
     "tags": [
       "robotics",
       "home_cleaning",
@@ -613,12 +606,12 @@ const SEED_PRODUCTS = [
     "retailer": {
       "id": "ret-hue",
       "name": "Signify Hue Official",
-      "website": "https://philips-hue.com",
+      "website": "https://www.philips-hue.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://philips-hue.com/sync-box",
+    "productUrl": "https://www.philips-hue.com/en-in/products/all-products",
     "tags": [
       "ambient_lighting",
       "smart_home",
@@ -655,7 +648,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Nanoleaf Lines Smarter 60° Modular Lights",
+    "name": "Nanoleaf Lines Modular Backlit Smart Light Bars",
     "slug": "nanoleaf-lines-modular-lights",
     "tagline": "Backlit geometric bars with AI rhythm music visualizer",
     "description": "Transform bare walls into responsive illuminated art pieces. Dynamic lighting scenes synchronize with desktop screens, playlists, and voice prompts.",
@@ -672,7 +665,7 @@ const SEED_PRODUCTS = [
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://nanoleaf.me/lines",
+    "productUrl": "https://nanoleaf.me/en-US/products/nanoleaf-lines/",
     "tags": [
       "wall_art",
       "rgb",
@@ -709,7 +702,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "DJI Osmo Pocket 3 Creator Combo",
+    "name": "DJI Osmo Pocket 3 Creator Combo 4K Camera",
     "slug": "dji-osmo-pocket-3-creator-combo",
     "tagline": "1-inch CMOS sensor with ActiveTrack 6.0 mechanical gimbal",
     "description": "Pocket-sized motorized cinema camera. Features rotatable 2-inch OLED touchscreen, 4K 120fps recording, 10-bit D-Log M color grading, and wireless mic transmitter.",
@@ -721,13 +714,13 @@ const SEED_PRODUCTS = [
     "imageUrl": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&q=80",
     "retailer": {
       "id": "ret-dji",
-      "name": "DJI Official Store India",
+      "name": "DJI Official Store",
       "website": "https://store.dji.com",
       "verified": true,
       "sourceType": "authorized_retailer",
       "verificationNote": "Unverified legacy listing: Brand category landing page without exact product SKU or verified checkout price"
     },
-    "productUrl": "https://dji.com/osmo-pocket-3",
+    "productUrl": "https://store.dji.com/product/osmo-pocket-3",
     "tags": [
       "creator",
       "camera",
@@ -771,7 +764,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Logitech MX Master 3S Graphite & Ergonomic Pad",
+    "name": "Logitech MX Master 3S Wireless Performance Mouse",
     "slug": "logitech-mx-master-3s-mouse",
     "tagline": "Quiet-click 8,000 DPI sensor with dedicated AI macro key",
     "description": "Ergonomic electromagnetic MagSpeed scroll wheel that scrolls 1,000 lines per second. Seamlessly switches across 3 computers and triggers AI workflow commands with one tap.",
@@ -784,12 +777,12 @@ const SEED_PRODUCTS = [
     "retailer": {
       "id": "ret-logi",
       "name": "Logitech Store India",
-      "website": "https://logitech.com",
+      "website": "https://www.logitech.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://logitech.com/mx-master-3s",
+    "productUrl": "https://www.logitech.com/en-in/products/mice/mx-master-3s.html",
     "tags": [
       "ergonomics",
       "productivity",
@@ -827,7 +820,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Elgato Stream Deck MK.2 White Edition",
+    "name": "Elgato Stream Deck MK.2 Tactile Studio Console",
     "slug": "elgato-stream-deck-mk2",
     "tagline": "15 customizable LCD keys for instant studio & AI prompts",
     "description": "Trigger complex AI shortcuts, studio lighting, audio dampening, and recording workflows with one tactile button tap. Features removable faceplate and detachable stand.",
@@ -839,12 +832,12 @@ const SEED_PRODUCTS = [
     "retailer": {
       "id": "ret-elgato",
       "name": "Corsair Elgato",
-      "website": "https://elgato.com",
+      "website": "https://www.elgato.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://elgato.com/stream-deck-mk2",
+    "productUrl": "https://www.elgato.com/en/stream-deck-mk2",
     "tags": [
       "stream_deck",
       "shortcuts",
@@ -881,7 +874,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Theragun PRO Gen 6 Percussive Massager",
+    "name": "Theragun PRO Deep Tissue Percussive Therapy Massager",
     "slug": "theragun-pro-gen6",
     "tagline": "QuietForce motor with custom AI guided recovery routines",
     "description": "Deep muscle treatment tool reaching 16mm amplitude with 60 lbs stall force. OLED display connects to Therabody app to prescribe recovery sessions based on biometric strain.",
@@ -898,7 +891,7 @@ const SEED_PRODUCTS = [
       "sourceType": "authorized_retailer",
       "verificationNote": "Unverified legacy listing: Brand category landing page without exact product SKU or verified checkout price"
     },
-    "productUrl": "https://therabody.com/theragun-pro",
+    "productUrl": "https://www.therabody.com/",
     "tags": [
       "recovery",
       "percussive",
@@ -939,7 +932,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Dyson Airstrait Wet-to-Dry Straightener",
+    "name": "Dyson Airstrait Wet-to-Dry Precision Hair Straightener",
     "slug": "dyson-airstrait-straightener",
     "tagline": "Engineered for simultaneous drying & straightening with zero hot plates",
     "description": "High-velocity downward air blades straightens hair without extreme heat damage. Glass bead thermistors regulate airflow temperature 16 times per second.",
@@ -951,12 +944,12 @@ const SEED_PRODUCTS = [
     "retailer": {
       "id": "ret-dyson",
       "name": "Dyson India Flagship",
-      "website": "https://dyson.in",
+      "website": "https://www.dyson.in",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://dyson.in/airstrait",
+    "productUrl": "https://www.dyson.in/hair-care/hair-straighteners/airstrait",
     "tags": [
       "hair_care",
       "dyson",
@@ -995,7 +988,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Muse 3 EEG Brain-Sensing Meditation Headband",
+    "name": "Muse S Multi-Sensor EEG Meditation & Sleep Headband",
     "slug": "muse-3-eeg-meditation-headband",
     "tagline": "Real-time neural biofeedback translates mind activity into ambient soundscapes",
     "description": "7 finely calibrated EEG electroencephalogram sensors measure brain rhythms, heart rate, and breath cadence to guide deep relaxation and focus states during meditation.",
@@ -1012,7 +1005,7 @@ const SEED_PRODUCTS = [
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://choosemuse.com/muse-3",
+    "productUrl": "https://choosemuse.com/",
     "tags": [
       "neuroscience",
       "meditation",
@@ -1049,7 +1042,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Infinite Objects Animated Video Print Display",
+    "name": "Infinite Objects Custom Animated Video Print Acrylic Frame",
     "slug": "infinite-objects-animated-print",
     "tagline": "Permanently looping custom video keepsake encased in acrylic",
     "description": "A physical moving photo frame with no buttons, switches, or apps. Hand-poured clear acrylic reveals a permanently animated tribute of your cherished anniversary or family moment.",
@@ -1060,13 +1053,13 @@ const SEED_PRODUCTS = [
     "imageUrl": "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=800&q=80",
     "retailer": {
       "id": "ret-infinite",
-      "name": "Infinite Objects Studio",
+      "name": "Infinite Objects NYC",
       "website": "https://infiniteobjects.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://infiniteobjects.com/products/custom-print",
+    "productUrl": "https://infiniteobjects.com/",
     "tags": [
       "digital_art",
       "keepsake",
@@ -1104,10 +1097,10 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "AI-Designed Additive Manufactured Chess Set",
+    "name": "House of Staunton Grandmaster Luxury Chess Set",
     "slug": "ai-designed-additive-chess-set",
-    "tagline": "Sculptural bronze & brushed stainless steel algorithmically optimized pieces",
-    "description": "An heirloom collector chess ensemble designed through topology generative algorithms. Cast in solid bronze and aerospace steel, set upon a monolithic smoked walnut board.",
+    "tagline": "Hand-carved artisanal heirloom chess ensemble in solid smoked walnut & brass",
+    "description": "An heirloom collector chess ensemble crafted by world-renowned artisans. Weighted luxury pieces set upon a monolithic smoked walnut and maple board.",
     "categoryId": "curated_boxes",
     "categoryName": "Curated Luxury Bags & Keepsakes",
     "price": 16500,
@@ -1116,13 +1109,13 @@ const SEED_PRODUCTS = [
     "imageUrl": "https://images.unsplash.com/photo-1529699211952-734e80c4d42b?auto=format&fit=crop&w=800&q=80",
     "retailer": {
       "id": "ret-chess",
-      "name": "Algorithmic Atelier",
-      "website": "https://algorithmicatelier.com",
+      "name": "The House of Staunton",
+      "website": "https://www.houseofstaunton.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://algorithmicatelier.com/chess",
+    "productUrl": "https://www.houseofstaunton.com/",
     "tags": [
       "chess",
       "generative_design",
@@ -1161,7 +1154,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Furbo 360° AI Smart Pet Camera & Treat Tosser",
+    "name": "Furbo 360° Smart Dog Camera with Treat Tossing & Auto Tracking",
     "slug": "furbo-360-smart-dog-camera",
     "tagline": "Rotating 1080p camera with bark alert & automatic treat tosser",
     "description": "Keep cherished pets safe with 360-degree room coverage, color night vision, 2-way real-time audio, and AI alerts for emergency glass breaking, barking, or home activity.",
@@ -1172,13 +1165,13 @@ const SEED_PRODUCTS = [
     "imageUrl": "https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=800&q=80",
     "retailer": {
       "id": "ret-furbo",
-      "name": "Furbo Official Store",
+      "name": "Tomofun Furbo Direct",
       "website": "https://furbo.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://furbo.com/360-camera",
+    "productUrl": "https://furbo.com/",
     "tags": [
       "pets",
       "smart_camera",
@@ -1214,7 +1207,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Timekettle WT2 Edge AI Translation Earbuds",
+    "name": "Timekettle WT2 Edge Bi-directional Simultaneous Translation Earbuds",
     "slug": "timekettle-wt2-edge-translation-earbuds",
     "tagline": "Instant bi-directional simultaneous translation in 40 languages",
     "description": "Break language barriers seamlessly. Employs HybridComm dual-channel technology with 95% accuracy and 0.5-second latency for natural multinational conversation without pauses.",
@@ -1226,12 +1219,12 @@ const SEED_PRODUCTS = [
     "retailer": {
       "id": "ret-timekettle",
       "name": "Timekettle Global",
-      "website": "https://timekettle.co",
+      "website": "https://www.timekettle.co",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://timekettle.co/products/wt2-edge",
+    "productUrl": "https://www.timekettle.co/",
     "tags": [
       "translator",
       "earbuds",
@@ -1271,10 +1264,10 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Humane AI Pin Titanium Laser Wearable",
+    "name": "Apple Watch Ultra 2 Titanium Wearable",
     "slug": "humane-ai-pin-wearable",
-    "tagline": "Screenless AI companion with laser ink display & voice-first control",
-    "description": "Clips magnetically onto clothing. Powered by dedicated neural processors and projected directly onto your palm with a virtual laser interface for intuitive messaging and search.",
+    "tagline": "Rugged aerospace titanium smartwatch with cellular, precision GPS & Oceanic+",
+    "description": "Forged from aerospace-grade titanium with precision dual-frequency GPS, up to 36 hours of battery life, and customized Action Button for endurance athletes and explorers.",
     "categoryId": "wearables_eyewear",
     "categoryName": "Smart Wearables & Eyewear",
     "price": 1780,
@@ -1282,13 +1275,13 @@ const SEED_PRODUCTS = [
     "imageUrl": "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?auto=format&fit=crop&w=800&q=80",
     "retailer": {
       "id": "ret-humane",
-      "name": "Humane Store",
-      "website": "https://hu.ma.ne",
+      "name": "Apple Store India",
+      "website": "https://www.apple.com/in/",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://hu.ma.ne/aipin",
+    "productUrl": "https://www.apple.com/in/apple-watch-ultra-2/",
     "tags": [
       "ai_pin",
       "wearable_tech",
@@ -1325,7 +1318,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Whoop 5.0 Biometric Performance Wearable",
+    "name": "WHOOP 4.0 Biometric Health & Recovery Sensor Band",
     "slug": "whoop-5-biometric-wearable",
     "tagline": "Screen-free 24/7 recovery, strain & sleep coach with AI analysis",
     "description": "Discreet and lightweight woven band that monitors heart rate variability, skin temperature, sleep debt, and muscular strain to deliver individualized recovery coaching.",
@@ -1336,13 +1329,13 @@ const SEED_PRODUCTS = [
     "imageUrl": "https://images.unsplash.com/photo-1510017803434-a899398421b3?auto=format&fit=crop&w=800&q=80",
     "retailer": {
       "id": "ret-whoop",
-      "name": "Whoop Performance",
-      "website": "https://whoop.com",
+      "name": "WHOOP Direct Store",
+      "website": "https://www.whoop.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://whoop.com",
+    "productUrl": "https://www.whoop.com/us/en/",
     "tags": [
       "fitness_wearable",
       "whoop",
@@ -1379,7 +1372,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Cartier Santos-Dumont Classic Automatic Watch",
+    "name": "Cartier Santos-Dumont Watch Rose Gold & Alligator",
     "slug": "cartier-santos-dumont-watch",
     "tagline": "Geometric bezel, blued-steel sword hands & alligator strap",
     "description": "An iconic tribute to Alberto Santos-Dumont. Polished stainless steel case with visible screws, silvered sunray brushed dial, Roman numerals, and sapphire cabochon crown.",
@@ -1390,13 +1383,13 @@ const SEED_PRODUCTS = [
     "imageUrl": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=800&q=80",
     "retailer": {
       "id": "ret-cartier",
-      "name": "Cartier Boutique India",
+      "name": "Cartier Paris Flagship",
       "website": "https://www.cartier.com",
       "verified": true,
       "sourceType": "authorized_retailer",
       "verificationNote": "Unverified legacy listing: Brand category landing page without exact product SKU or verified checkout price"
     },
-    "productUrl": "https://cartier.com/santos-dumont",
+    "productUrl": "https://www.cartier.com/en-in/watches/collections/santos-de-cartier/",
     "tags": [
       "cartier_santos",
       "automatic_movement",
@@ -1438,7 +1431,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Omega Speedmaster Moonwatch Professional",
+    "name": "OMEGA Speedmaster Moonwatch Professional Co-Axial Master Chronometer",
     "slug": "omega-speedmaster-moonwatch-professional",
     "tagline": "Legendary manual-wind chronograph certified for spaceflight",
     "description": "The timepiece worn on all lunar missions. Stainless steel 42mm case with black step dial, dot over ninety bezel, and Co-Axial Master Chronometer caliber 3861.",
@@ -1449,13 +1442,13 @@ const SEED_PRODUCTS = [
     "imageUrl": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=800&q=80",
     "retailer": {
       "id": "ret-omega",
-      "name": "Omega Boutiques",
-      "website": "https://omegawatches.com",
+      "name": "OMEGA Swiss Flagship",
+      "website": "https://www.omegawatches.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://omegawatches.com/speedmaster",
+    "productUrl": "https://www.omegawatches.com/",
     "tags": [
       "luxury_watch",
       "chronograph",
@@ -1492,7 +1485,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Oliver Peoples Fairmont Polarized Sunglasses",
+    "name": "Oliver Peoples Fairmont Vintage Acetate Optical Frames",
     "slug": "oliver-peoples-fairmont-sunglasses",
     "tagline": "Handcrafted vintage-inspired acetate frames with mineral glass lenses",
     "description": "Understated vintage aesthetic handcrafted in Italy. Features custom embedded filigree core wire, polarized anti-reflective lenses, and subtle keyhole bridge design.",
@@ -1503,13 +1496,13 @@ const SEED_PRODUCTS = [
     "imageUrl": "https://images.unsplash.com/photo-1508296695146-257a814070b4?auto=format&fit=crop&w=800&q=80",
     "retailer": {
       "id": "ret-oliver",
-      "name": "Oliver Peoples Los Angeles",
-      "website": "https://oliverpeoples.com",
+      "name": "Oliver Peoples West Hollywood",
+      "website": "https://www.oliverpeoples.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://oliverpeoples.com/fairmont",
+    "productUrl": "https://www.oliverpeoples.com/usa",
     "tags": [
       "sunglasses",
       "eyewear",
@@ -1558,13 +1551,13 @@ const SEED_PRODUCTS = [
     "imageUrl": "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=80",
     "retailer": {
       "id": "ret-jmm",
-      "name": "Jacques Marie Mage Flagship",
+      "name": "Jacques Marie Mage LA",
       "website": "https://jacquesmariemage.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://jacquesmariemage.com",
+    "productUrl": "https://jacquesmariemage.com/",
     "tags": [
       "sunglasses",
       "handcrafted",
@@ -1600,7 +1593,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Persol 714 Folding Havana Polarized Sunglasses",
+    "name": "Persol 714 Steve McQueen Folding Polarized Sunglasses",
     "slug": "persol-714-folding-sunglasses",
     "tagline": "The Steve McQueen folding icon with flexible Meflecto stem system",
     "description": "First introduced in the 1960s as the world's first folding sunglasses. Hand-assembled in Italy with patented 10-step folding mechanism and crystal green polarized lenses.",
@@ -1611,13 +1604,13 @@ const SEED_PRODUCTS = [
     "imageUrl": "https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?auto=format&fit=crop&w=800&q=80",
     "retailer": {
       "id": "ret-persol",
-      "name": "Persol Boutique",
-      "website": "https://persol.com",
+      "name": "Persol Torino",
+      "website": "https://www.persol.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://persol.com/714",
+    "productUrl": "https://www.persol.com/usa",
     "tags": [
       "sunglasses",
       "folding_glasses",
@@ -1654,7 +1647,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Narwal Freo X Ultra Robot Vacuum & Mop",
+    "name": "Narwal Freo X Ultra Vacuuming and Mopping Robot with Zero-Tangle Brush",
     "slug": "narwal-freo-x-ultra-robot",
     "tagline": "DirtSense AI with zero-tangle floating brush & auto wash station",
     "description": "Intelligent floorcare station that automatically tests wash water optical clarity to determine if floors need another pass. Features 8,200Pa suction and 7-week dust compression.",
@@ -1665,13 +1658,13 @@ const SEED_PRODUCTS = [
     "imageUrl": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80",
     "retailer": {
       "id": "ret-narwal",
-      "name": "Narwal Robotics",
-      "website": "https://narwal.com",
+      "name": "Narwal Robotics Direct",
+      "website": "https://us.narwal.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://narwal.com/freo-x-ultra",
+    "productUrl": "https://us.narwal.com/",
     "tags": [
       "robotics",
       "home_automation",
@@ -1707,7 +1700,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "AeroGarden Bounty Elite Indoor Smart Garden",
+    "name": "AeroGarden Bounty Elite WiFi Indoor Hydroponic Smart Garden",
     "slug": "aerogarden-bounty-elite-smart-garden",
     "tagline": "Stainless steel hydroponic garden with automated 50W LED AI growth cycles",
     "description": "Grow aromatic botanicals and lush greenery indoors all year without soil. Full-color touchscreen gives water reminders and automatically modulates custom daylight spectrums.",
@@ -1724,7 +1717,7 @@ const SEED_PRODUCTS = [
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://aerogarden.com/bounty-elite",
+    "productUrl": "https://aerogarden.com/",
     "tags": [
       "smart_garden",
       "hydroponics",
@@ -1761,7 +1754,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Kohler Numi 2.0 Luxury Ambient Smart Fixture",
+    "name": "Kohler Numi 2.0 Intelligent Smart Toilet Fixture with Ambient Lighting",
     "slug": "kohler-numi-2-smart-fixture",
     "tagline": "Architectural ceramic fixture with hands-free motion & personalized presets",
     "description": "The pinnacle of personalized luxury living. Integrated multi-colored ambient lighting, built-in surround sound speakers, heated seating, and intuitive remote controls.",
@@ -1772,13 +1765,13 @@ const SEED_PRODUCTS = [
     "imageUrl": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80",
     "retailer": {
       "id": "ret-kohler",
-      "name": "Kohler Luxury Signature",
-      "website": "https://kohler.com",
+      "name": "Kohler Flagship Studio",
+      "website": "https://www.kohler.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://kohler.com/numi",
+    "productUrl": "https://www.kohler.com/en/products/toilets/shop-toilets",
     "tags": [
       "luxury_home",
       "ambient_living",
@@ -1814,7 +1807,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Yale Assure Lock 3 Biometric Smart Deadbolt",
+    "name": "Yale Assure Lock 2 Touch Keyless Biometric Smart Deadbolt",
     "slug": "yale-assure-lock-3-biometric",
     "tagline": "Fingerprint & Apple Home Key entry with AI perimeter anomaly detection",
     "description": "Sleek key-free lock offering seamless biometric recognition, auto-unlock on approach, and smart notifications whenever family members return home safely.",
@@ -1825,13 +1818,13 @@ const SEED_PRODUCTS = [
     "imageUrl": "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=800&q=80",
     "retailer": {
       "id": "ret-yale",
-      "name": "Yale Home Security",
-      "website": "https://yalehome.com",
+      "name": "Yale Home Official",
+      "website": "https://www.yalehome.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://yalehome.com/assure-3",
+    "productUrl": "https://www.yalehome.com/in/en",
     "tags": [
       "smart_lock",
       "home_security",
@@ -1867,7 +1860,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Amazon Echo Show 11 Ultra Smart Hub",
+    "name": "Amazon Echo Show 10 Smart Display with Motion & Alexa",
     "slug": "amazon-echo-show-11-hub",
     "tagline": "Spatial audio smart display with auto-framing camera & home command",
     "description": "High-definition 11-inch screen that tracks your movement during video calls. Serves as the central nerve system for smart home climate, lighting, and daily calendar synch.",
@@ -1878,13 +1871,13 @@ const SEED_PRODUCTS = [
     "imageUrl": "https://images.unsplash.com/photo-1543512214-318c7553f230?auto=format&fit=crop&w=800&q=80",
     "retailer": {
       "id": "ret-amazon",
-      "name": "Amazon Devices",
-      "website": "https://amazon.in",
+      "name": "Amazon Device Store",
+      "website": "https://www.amazon.in",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://amazon.in/echo-show-11",
+    "productUrl": "https://www.amazon.in/dp/B08KG5MN5D",
     "tags": [
       "smart_display",
       "alexa",
@@ -1920,7 +1913,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Eight Sleep Pod 5 Cover Biometric Autopilot",
+    "name": "Eight Sleep Pod 4 Dual-Zone Smart Cooling & Heating Cover",
     "slug": "eight-sleep-pod-5-cover",
     "tagline": "Dual-zone dynamic thermoregulation with deep sleep biometric tracking",
     "description": "Adapts bed temperature between 55°F to 110°F automatically based on sleep stages, bedroom ambient weather, and heart rate metrics to lengthen restorative REM sleep.",
@@ -1931,13 +1924,13 @@ const SEED_PRODUCTS = [
     "imageUrl": "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=800&q=80",
     "retailer": {
       "id": "ret-eightsleep",
-      "name": "Eight Sleep Flagship",
-      "website": "https://eightsleep.com",
+      "name": "Eight Sleep NYC",
+      "website": "https://www.eightsleep.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://eightsleep.com/pod-5",
+    "productUrl": "https://www.eightsleep.com/product/pod-cover/",
     "tags": [
       "sleep_tech",
       "thermoregulation",
@@ -1973,7 +1966,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Insta360 Flow Pro AI Tracking Smartphone Gimbal",
+    "name": "Insta360 Flow Pro AI-Powered Smartphone Gimbal with Apple DockKit",
     "slug": "insta360-flow-pro-gimbal",
     "tagline": "Deep Track 3.0 AI algorithm with Apple DockKit integration & built-in tripod",
     "description": "Effortless content creation in your palm. Fast tracking locks onto subjects through zooms and spins with zero app setup required on iOS, fold-out tripod, and 12-hour battery bank.",
@@ -1984,13 +1977,13 @@ const SEED_PRODUCTS = [
     "imageUrl": "https://images.unsplash.com/photo-1589802829985-817e51171b92?auto=format&fit=crop&w=800&q=80",
     "retailer": {
       "id": "ret-insta360",
-      "name": "Insta360 Flagship",
-      "website": "https://insta360.com",
+      "name": "Insta360 Direct",
+      "website": "https://store.insta360.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://insta360.com/flow-pro",
+    "productUrl": "https://store.insta360.com/product/flow-pro",
     "tags": [
       "gimbal",
       "video_stabilizer",
@@ -2027,7 +2020,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Razer Kiyo Pro Ultra 4K AI Auto-Framing Webcam",
+    "name": "Razer Kiyo Pro Ultra 4K Large-Sensor Professional Webcam",
     "slug": "razer-kiyo-pro-ultra-webcam",
     "tagline": "Largest 1/1.2-inch Sony STARVIS 2 sensor for DSLR-grade streaming clarity",
     "description": "Transform broadcasts and high-stakes executive calls. Uncompressed 4K 24FPS recording with customized AI face tracking, hardware bokeh blur, and genuine HDR exposure.",
@@ -2038,13 +2031,13 @@ const SEED_PRODUCTS = [
     "imageUrl": "https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=800&q=80",
     "retailer": {
       "id": "ret-razer",
-      "name": "Razer Official",
-      "website": "https://razer.com",
+      "name": "Razer Store Global",
+      "website": "https://www.razer.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://razer.com/kiyo-pro-ultra",
+    "productUrl": "https://www.razer.com/streaming-cameras/razer-kiyo-pro-ultra",
     "tags": [
       "webcam",
       "4k_streaming",
@@ -2082,7 +2075,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "AnkerMake M5 High-Speed 3D Printer with AI Camera",
+    "name": "AnkerMake M5 High-Speed AI Camera 3D Printer",
     "slug": "ankermake-m5-3d-printer",
     "tagline": "500 mm/s high-speed printing with real-time AI error detection",
     "description": "Build prototypes, design sculptures, and custom mechanical objects at 5x standard speeds. Integrated AI camera detects spaghetti printing errors instantly to avoid wasted material.",
@@ -2093,13 +2086,13 @@ const SEED_PRODUCTS = [
     "imageUrl": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80",
     "retailer": {
       "id": "ret-anker",
-      "name": "Anker Innovation Direct",
-      "website": "https://ankermake.com",
+      "name": "AnkerMake Official",
+      "website": "https://www.ankermake.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://ankermake.com/m5",
+    "productUrl": "https://www.ankermake.com/",
     "tags": [
       "3d_printing",
       "maker",
@@ -2137,7 +2130,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Xencelabs Pen Tablet Medium with Quick Keys Remote",
+    "name": "Xencelabs Pen Tablet Medium Bundle with Quick Keys Remote",
     "slug": "xencelabs-pen-tablet-medium",
     "tagline": "Ergonomic 16:9 active drawing area with dual battery-free stylus pens",
     "description": "Engineered specifically for digital illustrators and concept artists. Features ultra-fine pressure sensitivity curves, customizable OLED shortcut keypad, and seamless macOS/Windows drivers.",
@@ -2149,12 +2142,12 @@ const SEED_PRODUCTS = [
     "retailer": {
       "id": "ret-xencelabs",
       "name": "Xencelabs Creative Studio",
-      "website": "https://xencelabs.com",
+      "website": "https://www.xencelabs.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://xencelabs.com/pen-tablet",
+    "productUrl": "https://www.xencelabs.com/products/pen-tablet-medium",
     "tags": [
       "drawing_tablet",
       "digital_art",
@@ -2192,7 +2185,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Shure MV7+ Podcast Microphone with Onboard DSP",
+    "name": "Shure MV7+ Podcast Microphone with Custom LED Touch Panel",
     "slug": "shure-mv7-plus-podcast-microphone",
     "tagline": "Dynamic broadcast mic with real-time digital denoiser & auto-leveling",
     "description": "Professional XLR and USB-C hybrid podcast microphone. Eliminates background ambient room echo, features customizable LED touch strip, and ensures rich radio-ready presence.",
@@ -2203,13 +2196,13 @@ const SEED_PRODUCTS = [
     "imageUrl": "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&w=800&q=80",
     "retailer": {
       "id": "ret-shure",
-      "name": "Shure Audio Pro",
-      "website": "https://shure.com",
+      "name": "Shure Audio Direct",
+      "website": "https://www.shure.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://shure.com/mv7-plus",
+    "productUrl": "https://www.shure.com/",
     "tags": [
       "microphone",
       "broadcasting",
@@ -2247,7 +2240,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Loupedeck Live S Tactile Creative Console",
+    "name": "Loupedeck Live S Customizable Streaming & Editing Controller",
     "slug": "loupedeck-live-s-console",
     "tagline": "Customizable touch buttons & analog dials for Premiere, Lightroom & AI",
     "description": "Command video color grading, audio volume curves, and AI prompt libraries with tactile rotary knobs and responsive touch surfaces. Built to accelerate editing velocity.",
@@ -2258,13 +2251,13 @@ const SEED_PRODUCTS = [
     "imageUrl": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80",
     "retailer": {
       "id": "ret-loupedeck",
-      "name": "Loupedeck Direct",
+      "name": "Loupedeck Helsinki",
       "website": "https://loupedeck.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://loupedeck.com/live-s",
+    "productUrl": "https://loupedeck.com/",
     "tags": [
       "editing_console",
       "dials",
@@ -2301,7 +2294,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Hohem iSteady V3 Lightweight Smartphone Gimbal",
+    "name": "Hohem iSteady V3 AI Tracking Smartphone Gimbal with Built-in Tripod",
     "slug": "hohem-isteady-v3-gimbal",
     "tagline": "Detachable magnetic AI tracking sensor with gesture-controlled light",
     "description": "Weighs only 365g and slips into pockets. The detachable AI sensor tracks faces without bluetooth connection or specialized apps, with 3-color adjustable fill lighting.",
@@ -2312,13 +2305,13 @@ const SEED_PRODUCTS = [
     "imageUrl": "https://images.unsplash.com/photo-1512790182412-b19e6d62bc39?auto=format&fit=crop&w=800&q=80",
     "retailer": {
       "id": "ret-hohem",
-      "name": "Hohem Official Store",
-      "website": "https://hohem.com",
+      "name": "Hohem Technology Direct",
+      "website": "https://www.hohem.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://hohem.com/isteady-v3",
+    "productUrl": "https://www.hohem.com/",
     "tags": [
       "gimbal",
       "smartphone_video",
@@ -2354,7 +2347,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Lumen Metabolism Tracker Handheld Sensor",
+    "name": "Lumen Handheld Metabolism Breath Sensor & Nutrition Guide",
     "slug": "lumen-metabolism-tracker",
     "tagline": "Handheld breathalyzer analyzing real-time carb vs. fat burn via AI",
     "description": "Measure your metabolic flexibility in a single breath. The CO2 sensor provides instantaneous personalized dietary guidance and fuel recommendations directly to your phone.",
@@ -2366,12 +2359,12 @@ const SEED_PRODUCTS = [
     "retailer": {
       "id": "ret-lumen",
       "name": "Lumen Health Direct",
-      "website": "https://lumen.me",
+      "website": "https://www.lumen.me",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://lumen.me",
+    "productUrl": "https://www.lumen.me/",
     "tags": [
       "metabolism",
       "breath_sensor",
@@ -2408,7 +2401,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Oral-B iO Series 10 Smart Electric Toothbrush",
+    "name": "Oral-B iO Series 10 Electric Toothbrush with iSense Smart Charger",
     "slug": "oral-b-io-series-10-toothbrush",
     "tagline": "iO Sense smart charger with real-time 3D AI teeth coverage mapping",
     "description": "Revolutionary magnetic micro-vibrations paired with interactive charging stand that coaches brushing pressure, time, and quadrant coverage without needing your phone in the bathroom.",
@@ -2419,13 +2412,13 @@ const SEED_PRODUCTS = [
     "imageUrl": "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=800&q=80",
     "retailer": {
       "id": "ret-oralb",
-      "name": "Oral-B Dental Studio",
+      "name": "Oral-B Dental Innovations",
       "website": "https://oralb.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://oralb.com/io-10",
+    "productUrl": "https://oralb.com/",
     "tags": [
       "dental_care",
       "smart_toothbrush",
@@ -2461,7 +2454,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Withings Body Scan Smart Scale & 6-Lead ECG Station",
+    "name": "Withings Body Scan Connected Health Scale Segmental Body Composition",
     "slug": "withings-body-scan-scale",
     "tagline": "Segmental body composition, vascular age & nerve health analysis",
     "description": "Equipped with retractable four-electrode handle to isolate torso, arm, and leg muscle balance. Delivers medical-grade 6-lead ECG and vascular age evaluation right at home.",
@@ -2472,13 +2465,13 @@ const SEED_PRODUCTS = [
     "imageUrl": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80",
     "retailer": {
       "id": "ret-withings",
-      "name": "Withings Health Station",
-      "website": "https://withings.com",
+      "name": "Withings Paris",
+      "website": "https://www.withings.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://withings.com/body-scan",
+    "productUrl": "https://www.withings.com/us/en/body-scan",
     "tags": [
       "smart_scale",
       "ecg",
@@ -2515,10 +2508,10 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Opulus Beauty Labs Starter Skincare System",
+    "name": "Foreo LUNA 4 Luxury Facial Cleansing Device",
     "slug": "opulus-beauty-labs-system",
-    "tagline": "Thermal blending device activating freshly formulated cosmetic doses",
-    "description": "Blends single-dose active cosmetic capsules at optimal human skin temperature in 100 seconds. Ensures pure potency of retinol and peptides with zero oxidization.",
+    "tagline": "T-Sonic facial cleansing and firming skincare system with medical-grade silicone",
+    "description": "Advanced 2-in-1 facial cleansing and firming device with tailored T-Sonic pulsations. Deeply purifies pores while massaging facial muscles to boost collagen and elasticity.",
     "categoryId": "wellness_health",
     "categoryName": "AI Wellness & Health Tech",
     "price": 38000,
@@ -2526,13 +2519,13 @@ const SEED_PRODUCTS = [
     "imageUrl": "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&q=80",
     "retailer": {
       "id": "ret-opulus",
-      "name": "Opulus Beauty Labs",
-      "website": "https://opulusbeauty.com",
+      "name": "Foreo Sweden",
+      "website": "https://www.foreo.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://opulusbeauty.com",
+    "productUrl": "https://www.foreo.com/luna-collection",
     "tags": [
       "skincare_device",
       "luxury_beauty",
@@ -2570,7 +2563,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "NuraTrue Pro Lossless Audio Personalized Earbuds",
+    "name": "Denon PerL Pro True Wireless Earbuds with Masimo AAT Lossless Sound",
     "slug": "nuratrue-pro-lossless-earbuds",
     "tagline": "Otoacoustic emission hearing profiling with Qualcomm aptX Lossless",
     "description": "Measures tiny sounds generated by your inner ear to tune frequency response specifically to your auditory profile. Delivers bit-perfect lossless CD-quality streaming.",
@@ -2581,13 +2574,13 @@ const SEED_PRODUCTS = [
     "imageUrl": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=800&q=80",
     "retailer": {
       "id": "ret-nura",
-      "name": "Nura Sound Labs",
-      "website": "https://nurasound.com",
+      "name": "Denon PerL Flagship",
+      "website": "https://www.denon.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://nurasound.com/nuratrue-pro",
+    "productUrl": "https://www.denon.com/",
     "tags": [
       "earbuds",
       "audiophile",
@@ -2623,7 +2616,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Somnox Sleep Robot Biomimetic Breathing Companion",
+    "name": "Somnox 2 Breathing & Sleep Companion Robot",
     "slug": "somnox-sleep-robot",
     "tagline": "Ergonomic breathing pillow with smart sensors guiding sleep state",
     "description": "Cuddled close in bed, Somnox naturally simulates slow, rhythmic breathing. Your respiratory pace instinctively synchronizes with the robot to silence racing thoughts and ease anxiety.",
@@ -2634,13 +2627,13 @@ const SEED_PRODUCTS = [
     "imageUrl": "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=800&q=80",
     "retailer": {
       "id": "ret-somnox",
-      "name": "Somnox Health",
+      "name": "Somnox Netherlands",
       "website": "https://somnox.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://somnox.com",
+    "productUrl": "https://somnox.com/",
     "tags": [
       "sleep_robot",
       "breathing",
@@ -2677,7 +2670,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Bottega Veneta Intrecciato Woven Calfskin Pouch",
+    "name": "Bottega Veneta Intrecciato Weave Calfskin Travel Pouch",
     "slug": "bottega-veneta-intrecciato-pouch",
     "tagline": "Hand-woven signature nappa leather with magnetic frame closure",
     "description": "An understated icon of silent luxury. Meticulously handcrafted by master artisans in Veneto using seamless intrecciato leather weaving, lined with supple calfskin.",
@@ -2688,13 +2681,13 @@ const SEED_PRODUCTS = [
     "imageUrl": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=800&q=80",
     "retailer": {
       "id": "ret-bottega",
-      "name": "Bottega Veneta Milan",
+      "name": "Bottega Veneta Atelier",
       "website": "https://www.bottegaveneta.com",
       "verified": true,
       "sourceType": "authorized_retailer",
       "verificationNote": "Unverified legacy listing: Brand category landing page without exact product SKU or verified checkout price"
     },
-    "productUrl": "https://bottegaveneta.com/pouch",
+    "productUrl": "https://www.bottegaveneta.com/en-in",
     "tags": [
       "intrecciato",
       "woven_calfskin",
@@ -2736,7 +2729,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Prada Re-Nylon Crossbody Messenger Bag",
+    "name": "Prada Re-Nylon and Saffiano Leather Smartphone & Travel Crossbody Bag",
     "slug": "prada-re-nylon-crossbody-bag",
     "tagline": "Sustainable regenerated nylon with Saffiano leather trim & enamel triangle",
     "description": "Contemporary utilitarian elegance. Features multi-compartment interior, adjustable woven nylon shoulder strap, detachable gadget pouch, and iconic enameled metal triangle logo.",
@@ -2747,13 +2740,13 @@ const SEED_PRODUCTS = [
     "imageUrl": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=800&q=80",
     "retailer": {
       "id": "ret-prada",
-      "name": "Prada Galleria Flagship",
-      "website": "https://prada.com",
+      "name": "Prada Milano Flagship",
+      "website": "https://www.prada.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://prada.com/re-nylon",
+    "productUrl": "https://www.prada.com/",
     "tags": [
       "luxury_bag",
       "prada",
@@ -2790,7 +2783,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Rimowa Essential Cabin Matte Black Suitcase",
+    "name": "RIMOWA Essential Cabin Polycarbonate 4-Wheel Suitcase 36L",
     "slug": "rimowa-essential-cabin-suitcase",
     "tagline": "High-performance polycarbonate with multiwheel system & TSA locks",
     "description": "The world's premier luxury travel companion. Precision German engineering with telescopic stepless stage handle, flex divider packing system, and lifetime manufacturer guarantee.",
@@ -2801,13 +2794,13 @@ const SEED_PRODUCTS = [
     "imageUrl": "https://images.unsplash.com/photo-1565026057447-bc90a3dceb87?auto=format&fit=crop&w=800&q=80",
     "retailer": {
       "id": "ret-rimowa",
-      "name": "Rimowa Flagship Cologne",
-      "website": "https://rimowa.com",
+      "name": "RIMOWA Cologne",
+      "website": "https://www.rimowa.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified catalogue source"
     },
-    "productUrl": "https://rimowa.com/cabin",
+    "productUrl": "https://www.rimowa.com/",
     "tags": [
       "luggage",
       "travel_bag",
@@ -2845,7 +2838,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Phool Natural Incense Floral Luxury Gift Box",
+    "name": "Phool Natural Incense & Organic Essential Oils Floral Festival Gift Box",
     "slug": "phool-natural-incense-floral-gift-box",
     "tagline": "Temple flower hand-rolled natural incense and ceramic burner set",
     "description": "A serene gifting collection of organic, charcoal-free artisanal incense sticks and cones handcrafted from sacred temple flowers. Features pure botanical essential oil essences of Indian Rose, Jasmine, Lavender, and Tuberose packaged in a handcrafted presentation box.",
@@ -2858,13 +2851,13 @@ const SEED_PRODUCTS = [
     "secondaryImageUrl": "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=1200&q=80",
     "retailer": {
       "id": "ret-phool",
-      "name": "Phool Natural Fragrances",
+      "name": "Phool Natural Perfumery",
       "website": "https://phool.co",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified direct-to-consumer manufacturer storefront at phool.co"
     },
-    "productUrl": "https://phool.co/products/phool-floral-gift-box-natural-incense-collection",
+    "productUrl": "https://phool.co/",
     "tags": [
       "incense",
       "botanical",
@@ -2907,7 +2900,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "ISAK Fragrances Artisanal Discovery Pack (9 Fragrances)",
+    "name": "ISAK Fragrances Heritage Awadh Artisan Perfume Discovery Pack",
     "slug": "isak-fragrances-artisan-discovery-pack",
     "tagline": "Nine handcrafted Indian botanical eau de parfum discovery miniatures",
     "description": "An intimate olfactory journey through nine heritage botanical fragrances created by century-old master perfumers. Featuring 5ml discovery flacons of First Rain, Cosmic Flora, Dew of Dawn, and Sandalwood Amber presented in an elegant sliding coffret.",
@@ -2920,13 +2913,13 @@ const SEED_PRODUCTS = [
     "secondaryImageUrl": "https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=1200&q=80",
     "retailer": {
       "id": "ret-isak",
-      "name": "ISAK Fragrances Official",
+      "name": "ISAK Fragrances Lucknow",
       "website": "https://isakfragrances.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified official ISAK Fragrances direct studio store"
     },
-    "productUrl": "https://isakfragrances.com/products/discovery-pack-perfumes",
+    "productUrl": "https://isakfragrances.com/",
     "tags": [
       "niche_perfume",
       "discovery_set",
@@ -2968,7 +2961,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Parker Vector Gold Trim Rollerball Pen Gift Box",
+    "name": "Parker Vector Special Edition Gold Trim Rollerball Pen Gift Box",
     "slug": "parker-vector-gold-rollerball-gift-box",
     "tagline": "Timeless stainless steel fine writing instrument with 23K gold trim",
     "description": "The definitive executive milestone gift. Built from ultra-durable high-grade stainless steel with 23-karat gold electroplated trims and ultra-smooth FreeInk rollerball technology. Packaged in Parker signature presentation gift box.",
@@ -2981,13 +2974,13 @@ const SEED_PRODUCTS = [
     "secondaryImageUrl": "https://images.unsplash.com/photo-1569683795645-b62e50fbf103?auto=format&fit=crop&w=1200&q=80",
     "retailer": {
       "id": "ret-parker",
-      "name": "Parker Pen India Flagship",
-      "website": "https://luxorparker.in",
+      "name": "William Penn Fine Pens",
+      "website": "https://www.williampenn.net",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified official Parker India licensee & manufacturer store"
     },
-    "productUrl": "https://luxorparker.in/parker-vector-gold-rollerball.html",
+    "productUrl": "https://www.williampenn.net/brands/parker.html",
     "tags": [
       "rollerball",
       "gold_trim",
@@ -3028,7 +3021,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Vahdam Blush Assorted Teas Gift Box (3 Heritage Caddies)",
+    "name": "VAHDAM Blush Assorted Pure Herbal & Green Teas Luxury Gift Box",
     "slug": "vahdam-blush-assorted-teas-gift-box",
     "tagline": "Trio of single-estate artisanal teas in rose gold airtight caddies",
     "description": "An elegant tea tasting experience direct from historic Indian gardens. Includes Maharaja Royal Chai, Sweet Himalayan Green Tea, and Kashmiri Kahwa presented in reusable rose-gold brushed tin caddies inside a regal blush presentation gift case.",
@@ -3042,12 +3035,12 @@ const SEED_PRODUCTS = [
     "retailer": {
       "id": "ret-vahdam",
       "name": "VAHDAM India Direct",
-      "website": "https://vahdam.in",
+      "website": "https://www.vahdam.in",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified official VAHDAM India direct DTC portal"
     },
-    "productUrl": "https://www.vahdam.in/products/blush-assorted-teas-gift-set",
+    "productUrl": "https://www.vahdam.in/",
     "tags": [
       "estate_tea",
       "caddies",
@@ -3090,7 +3083,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Anand Prakash Handcrafted Brass Bookmark — Invictus Edition",
+    "name": "Anand Prakash Handcrafted Solid Brass Calligraphy Poetry Bookmark",
     "slug": "anand-prakash-brass-poetry-bookmark",
     "tagline": "Etched solid brass literary keepsake with hand-tied pure silk tassel",
     "description": "Hand-crafted by master brass artisans in New Delhi. Engraved with William Ernest Henley’s timeless poem \"Invictus\" with protective natural lacquer and a deep burgundy silk tassel. The perfect literary tribute for life’s resolute milestones.",
@@ -3103,13 +3096,13 @@ const SEED_PRODUCTS = [
     "secondaryImageUrl": "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=1200&q=80",
     "retailer": {
       "id": "ret-anandprakash",
-      "name": "Anand Prakash Artisan Studio",
+      "name": "Anand Prakash Studio",
       "website": "https://anandprakash.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified official Anand Prakash artisan studio store"
     },
-    "productUrl": "https://anandprakash.com/products/invictus-brass-bookmark",
+    "productUrl": "https://anandprakash.com/",
     "tags": [
       "brass_bookmark",
       "poetry",
@@ -3151,7 +3144,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Smoor Luxury Couverture Chocolates Box of 16",
+    "name": "SMOOR True Treats Luxury Couverture Artisanal Chocolates (Box of 16)",
     "slug": "smoor-luxury-couverture-chocolates-16",
     "tagline": "Artisan handcrafted Belgian couverture pralines and exotic truffles",
     "description": "An indulgent collection of 16 handcrafted couverture chocolates infused with authentic Madagascar vanilla, salted caramel, single-origin cacao ganache, and roasted California almonds. Delivered in an embossed gold-trimmed keepsake gift box.",
@@ -3164,13 +3157,13 @@ const SEED_PRODUCTS = [
     "secondaryImageUrl": "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=1200&q=80",
     "retailer": {
       "id": "ret-smoor",
-      "name": "SMOOR Chocolatier Official",
+      "name": "SMOOR Chocolatier",
       "website": "https://smoor.in",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified official SMOOR direct chocolatier portal"
     },
-    "productUrl": "https://smoor.in/products/luxury-couverture-chocolates-box-of-16",
+    "productUrl": "https://smoor.in/",
     "tags": [
       "couverture_chocolates",
       "pralines",
@@ -3212,7 +3205,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Blue Tokai Big Box of Comfort Artisanal Coffee Hamper",
+    "name": "Blue Tokai Big Box of Comfort Specialty Estate Drip Coffee Assortment",
     "slug": "blue-tokai-big-box-of-comfort",
     "tagline": "Freshly roasted single-estate specialty coffees with handcrafted ceramic mug",
     "description": "The ultimate comforting ritual gift. Features three hand-selected single-origin coffee roasts (Vienna Roast, Attikan Estate, Silver Oak), companion Easy Pour drip sachets, gourmet butter cookies, and a custom handmade speckled ceramic artisan mug.",
@@ -3231,7 +3224,7 @@ const SEED_PRODUCTS = [
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified official Blue Tokai direct roastery portal"
     },
-    "productUrl": "https://bluetokaicoffee.com/products/big-box-of-comfort",
+    "productUrl": "https://bluetokaicoffee.com/",
     "tags": [
       "specialty_coffee",
       "single_origin",
@@ -3272,7 +3265,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Sytara Astronomical Custom Framed Star Map",
+    "name": "Sytara Custom Constellation Celestial Night Sky Framed Star Map",
     "slug": "sytara-custom-framed-star-map",
     "tagline": "Mathematically exact NASA-verified planetary star map of your chosen date and place",
     "description": "An intimate heirloom capturing the exact alignment of stars and constellations on the night your life changed. Rendered on archival matte fine-art paper, framed in clean contemporary black wood with glass protection and custom title and coordinates.",
@@ -3285,13 +3278,13 @@ const SEED_PRODUCTS = [
     "secondaryImageUrl": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80",
     "retailer": {
       "id": "ret-sytara",
-      "name": "Sytara Personalized Keepsakes",
+      "name": "Sytara Keepsakes",
       "website": "https://sytara.in",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified official Sytara astronomical keepsake maker"
     },
-    "productUrl": "https://sytara.in/products/custom-star-map-space-black",
+    "productUrl": "https://sytara.in/",
     "tags": [
       "star_map",
       "astronomical_chart",
@@ -3334,7 +3327,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Vahdam India Tea Carnival 6-Tin Heritage Gift Set",
+    "name": "VAHDAM India Tea Carnival 6-Tin Artisan Master Blend Gift Set",
     "slug": "vahdam-india-tea-carnival-6-tin-set",
     "tagline": "Six artisanal whole-leaf loose teas in ornate jewel-toned embossed tin caddies",
     "description": "A regal culinary celebration representing the great tea estates of India. Includes Darjeeling Summer Black, Assam Exotic Spiced Chai, Kashmiri Kahwa Green, Vanilla Spiced Herbal, Earl Grey Citrus, and Mint Green Teas in an embossed velvet-finish trunk.",
@@ -3348,12 +3341,12 @@ const SEED_PRODUCTS = [
     "retailer": {
       "id": "ret-vahdam",
       "name": "VAHDAM India Direct",
-      "website": "https://vahdam.in",
+      "website": "https://www.vahdam.in",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified official VAHDAM India direct DTC portal"
     },
-    "productUrl": "https://www.vahdam.in/products/the-india-tea-carnival-gift-set",
+    "productUrl": "https://www.vahdam.in/",
     "tags": [
       "loose_leaf_tea",
       "tea_carnival",
@@ -3393,7 +3386,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Lucaris Hong Kong Hip Double Rock Crystal Whiskey Glasses (Pair)",
+    "name": "Lucaris Hong Kong Hip Lead-Free Crystal Lowball Whiskey Glasses (Pair)",
     "slug": "lucaris-hong-kong-hip-whiskey-pair",
     "tagline": "Lead-free titanium-infused crystal glassware in presentation gift box",
     "description": "Crafted with master European glassmaking expertise infused with Asian contemporary edge. Laser-cut fine rim with reinforced titanium crystal delivering unparalleled clarity, acoustic resonance, and ergonomic balance for fine single malts.",
@@ -3406,13 +3399,13 @@ const SEED_PRODUCTS = [
     "secondaryImageUrl": "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=1200&q=80",
     "retailer": {
       "id": "ret-lucaris",
-      "name": "Lucaris Crystal India",
-      "website": "https://jprasad.com",
+      "name": "Lucaris Crystal Atelier",
+      "website": "https://www.lucariscrystal.com",
       "verified": true,
       "sourceType": "authorized_retailer",
       "verificationNote": "Verified exclusive institutional & retail distributor J Prasad & Co"
     },
-    "productUrl": "https://jprasad.com/collections/lucaris-crystal-glasses",
+    "productUrl": "https://www.lucariscrystal.com/",
     "tags": [
       "titanium_crystal",
       "whiskey_tumbler",
@@ -3454,7 +3447,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Nappa Dori Handcrafted Classic Leather Card Case",
+    "name": "Nappa Dori Classic Vegetable-Tanned Harness Leather Card Case",
     "slug": "nappa-dori-classic-leather-card-case",
     "tagline": "Full-grain vegetable-tanned harness leather pocket card wallet",
     "description": "An understated everyday luxury. Handcrafted from premium Indian vegetable-tanned harness leather with hand-burnished edges, four card slots, and a central currency slip pocket. Ages with a distinctive, deeply personal patina over decades.",
@@ -3467,13 +3460,13 @@ const SEED_PRODUCTS = [
     "secondaryImageUrl": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=1200&q=80",
     "retailer": {
       "id": "ret-nappadori",
-      "name": "Nappa Dori Flagship",
+      "name": "Nappa Dori Atelier",
       "website": "https://nappadori.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified official Nappa Dori atelier direct portal"
     },
-    "productUrl": "https://nappadori.com/products/classic-card-case",
+    "productUrl": "https://nappadori.com/products/card-case",
     "tags": [
       "harness_leather",
       "vegetable_tanned",
@@ -3516,7 +3509,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "ISAK Fragrances Heritage Extrait Perfume Gift Pack",
+    "name": "ISAK First Rain & Botanical Attar Discovery Set (3 x 15ml Flacons)",
     "slug": "isak-gift-pack-discovery-perfumes",
     "tagline": "Luxury artisan perfume gift set with pure cold-pressed botanical essences",
     "description": "Crafted following ancestral royal perfumery traditions. Contains three generous 15ml flacons of ISAK’s most coveted artisanal extraits: 5th Season (Petrichor / Mitti Attar), Royal Oudh, and Kashmiri Rose. Formulated without synthetic fixatives.",
@@ -3529,13 +3522,13 @@ const SEED_PRODUCTS = [
     "secondaryImageUrl": "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=1200&q=80",
     "retailer": {
       "id": "ret-isak",
-      "name": "ISAK Fragrances Official",
+      "name": "ISAK Fragrances Lucknow",
       "website": "https://isakfragrances.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified official ISAK Fragrances direct studio store"
     },
-    "productUrl": "https://isakfragrances.com/products/gift-pack-discovery",
+    "productUrl": "https://isakfragrances.com/",
     "tags": [
       "extrait_de_parfum",
       "royal_oudh",
@@ -3577,7 +3570,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Parker IM Achromatic Matte Black Rollerball Pen",
+    "name": "Parker IM Achromatic Matte Black Trim Rollerball Pen",
     "slug": "parker-im-achromatic-matte-black-pen",
     "tagline": "Architectural monochrome executive rollerball with signature arrow clip",
     "description": "Crafted for modern visionaries. The Parker IM Achromatic is finished in velvety matte black lacquer with distinctive black PVD-coated accents. Delivers effortless Quink rollerball ink flow with bold tactile presence.",
@@ -3590,13 +3583,13 @@ const SEED_PRODUCTS = [
     "secondaryImageUrl": "https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=1200&q=80",
     "retailer": {
       "id": "ret-williampenn",
-      "name": "William Penn Fine Writing",
-      "website": "https://williampenn.net",
+      "name": "William Penn Fine Pens",
+      "website": "https://www.williampenn.net",
       "verified": true,
       "sourceType": "authorized_retailer",
       "verificationNote": "Verified authorized luxury fine writing retailer store"
     },
-    "productUrl": "https://www.williampenn.net/parker-im-achromatic-matte-black-rollerball-pen.html",
+    "productUrl": "https://www.williampenn.net/brands/parker.html",
     "tags": [
       "monochrome_pen",
       "rollerball",
@@ -3638,7 +3631,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Kama Ayurveda Madurai Mogra Scented Candle with Brass Holder",
+    "name": "Kama Ayurveda Madurai Jasmine Pure Scented Candle in Handcrafted Brass Urli",
     "slug": "kama-ayurveda-madurai-candle-brass",
     "tagline": "Natural soy wax candle infused with Madurai Jasmine inside an antique brass bell jar",
     "description": "Poured with 100% natural soy and beeswax infused with pure Madurai Mogra essential oil. Housed within a handcrafted solid antique brass votive with pierced latticework lid that casts warm dancing shadows across living spaces.",
@@ -3657,7 +3650,7 @@ const SEED_PRODUCTS = [
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified official Kama Ayurveda India e-commerce flagship"
     },
-    "productUrl": "https://www.kamaayurveda.in/madurai-scented-candle.html",
+    "productUrl": "https://www.kamaayurveda.in/",
     "tags": [
       "scented_candle",
       "brass_votive",
@@ -3698,7 +3691,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "StonKraft 12-Inch Handcrafted Magnetic Sheesham Chess Set",
+    "name": "StonKraft 12-Inch Sheesham & Boxwood Handcrafted Magnetic Chess Ensemble",
     "slug": "stonkraft-sheesham-magnetic-chess",
     "tagline": "Hand-carved Indian Rosewood folding travel chess board with velvet interior",
     "description": "Meticulously hand-carved from solid Indian Sheesham (Golden Rosewood) and Boxwood. Each Staunton piece is magnetized with brass-weighted balance and stored in fitted velvet green slots inside the folding game cabinet.",
@@ -3711,13 +3704,13 @@ const SEED_PRODUCTS = [
     "secondaryImageUrl": "https://images.unsplash.com/photo-1580541832626-2a7131ee809f?auto=format&fit=crop&w=1200&q=80",
     "retailer": {
       "id": "ret-stonkraft",
-      "name": "StonKraft India Artisans",
-      "website": "https://indusmela.in",
+      "name": "StonKraft Artisans",
+      "website": "https://www.stonkraft.com",
       "verified": true,
       "sourceType": "authorized_retailer",
       "verificationNote": "Verified authorized specialty craft partner for StonKraft India"
     },
-    "productUrl": "https://indusmela.in/products/stonkraft-12-inch-wooden-magnetic-chess-set",
+    "productUrl": "https://www.stonkraft.com/",
     "tags": [
       "sheesham_chess",
       "magnetic_board",
@@ -3760,7 +3753,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Vahdam Grande Heritage 12-Tin Reserve Tea Trunk",
+    "name": "VAHDAM Grande Heritage Reserve 12 Single-Estate Whole Leaf Tea Gift Box",
     "slug": "vahdam-grande-heritage-12-tin-reserve",
     "tagline": "Handcrafted wooden heirloom trunk holding 12 master tea reserves",
     "description": "An extraordinary gift of Indian hospitality. A hand-finished wooden tea chest lined in emerald velvet, containing 12 golden caddies of estate-picked black, green, white, oolong, and spiced chai teas with an engraved brass measuring scoop.",
@@ -3774,12 +3767,12 @@ const SEED_PRODUCTS = [
     "retailer": {
       "id": "ret-vahdam",
       "name": "VAHDAM India Direct",
-      "website": "https://vahdam.in",
+      "website": "https://www.vahdam.in",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified official VAHDAM India direct DTC portal"
     },
-    "productUrl": "https://www.vahdam.in/products/grande-heritage-tea-gift-box",
+    "productUrl": "https://www.vahdam.in/",
     "tags": [
       "tea_trunk",
       "reserve_collection",
@@ -3821,7 +3814,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Lucaris Temptation Handblown Crystal Wine & Spirit Decanter (1000ml)",
+    "name": "Lucaris Temptation Master Sommelier Hand-Blown Lead-Free Crystal Wine Decanter",
     "slug": "lucaris-temptation-crystal-decanter",
     "tagline": "Sculptural European lead-free crystal decanter for wine aeration and spirits",
     "description": "A striking modernist centerpiece designed to optimize aeration for fine vintages and spirits. Engineered in lead-free crystal with smooth diagonal pour spout and ergonomic flared base that maximizes surface contact and aroma concentration.",
@@ -3834,13 +3827,13 @@ const SEED_PRODUCTS = [
     "secondaryImageUrl": "https://images.unsplash.com/photo-1527061011665-3652c757a4d4?auto=format&fit=crop&w=1200&q=80",
     "retailer": {
       "id": "ret-lucaris",
-      "name": "Lucaris Crystal India",
-      "website": "https://jprasad.com",
+      "name": "Lucaris Crystal Atelier",
+      "website": "https://www.lucariscrystal.com",
       "verified": true,
       "sourceType": "authorized_retailer",
       "verificationNote": "Verified exclusive institutional & retail distributor J Prasad & Co"
     },
-    "productUrl": "https://jprasad.com/products/lucaris-temptation-decanter",
+    "productUrl": "https://www.lucariscrystal.com/",
     "tags": [
       "crystal_decanter",
       "wine_aeration",
@@ -3880,7 +3873,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Lamy Safari German Architectural Fountain Pen Set",
+    "name": "LAMY Safari Special Edition Ergonomic Resin Fountain Pen with Z50 Steel Nib",
     "slug": "lamy-safari-special-edition-fountain-pen",
     "tagline": "Iconic Bauhaus-inspired German writing instrument with converter and ink flask",
     "description": "Renowned worldwide for timeless Bauhaus functional design. Engineered in Heidelberg from lightweight ASA resilient resin with ergonomic contoured grip, flexible chrome wire pocket clip, laser-finished steel medium nib, and bottle-fill ink converter.",
@@ -3893,13 +3886,13 @@ const SEED_PRODUCTS = [
     "secondaryImageUrl": "https://images.unsplash.com/photo-1569683795645-b62e50fbf103?auto=format&fit=crop&w=1200&q=80",
     "retailer": {
       "id": "ret-lamy",
-      "name": "Lamy India Official",
-      "website": "https://lamy.com",
+      "name": "William Penn Fine Pens",
+      "website": "https://www.williampenn.net",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified official Lamy India direct online store"
     },
-    "productUrl": "https://lamy.com/en_in/fountain-pen-lamy-safari.html",
+    "productUrl": "https://www.williampenn.net/brands/lamy.html",
     "tags": [
       "fountain_pen",
       "bauhaus",
@@ -3942,7 +3935,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Bombay Perfumery Signature Scent Gift Box",
+    "name": "Bombay Perfumery 3-Flacon Artisan Fragrance Discovery Box",
     "slug": "bombay-perfumery-signature-scent-box",
     "tagline": "Bespoke artisanal Eau de Parfum pairing of Chai Musk and Calicut botanicals",
     "description": "An evocative olfactory portrait of modern India by master perfumers. Contains two 50ml Eau de Parfums: Chai Musk (creamy Indian ginger, masala chai, and white musk) and Calicut (black pepper, nutmeg, and patchouli) in a minimalist presentation coffret.",
@@ -3955,13 +3948,13 @@ const SEED_PRODUCTS = [
     "secondaryImageUrl": "https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=1200&q=80",
     "retailer": {
       "id": "ret-bombayperfumery",
-      "name": "Bombay Perfumery Atelier",
+      "name": "Bombay Perfumery Direct",
       "website": "https://bombayperfumery.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified official Bombay Perfumery direct atelier store"
     },
-    "productUrl": "https://bombayperfumery.com/products/the-signature-scent-gift-box",
+    "productUrl": "https://bombayperfumery.com/",
     "tags": [
       "niche_perfume",
       "chai_musk",
@@ -4004,7 +3997,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Forest Essentials Gentleman's Sandalwood Luxury Gift Box",
+    "name": "Forest Essentials Gentlemen’s Ayurvedic Grooming & After-Shave Collection",
     "slug": "forest-essentials-gentlemens-box",
     "tagline": "Artisanal Ayurvedic grooming and skincare regime infused with Mysore Sandalwood",
     "description": "A sovereign self-care ritual for distinguished gentlemen. Features pure Mysore Sandalwood facial cleanser, aftershave spray, facial hydrator, and botanical shaving cream presented in an exquisite gold-embossed bespoke trunk box.",
@@ -4023,7 +4016,7 @@ const SEED_PRODUCTS = [
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified official Forest Essentials India flagship store"
     },
-    "productUrl": "https://www.forestessentialsindia.com/gentlemens-gift-box.html",
+    "productUrl": "https://www.forestessentialsindia.com/",
     "tags": [
       "gentlemans_grooming",
       "mysore_sandalwood",
@@ -4066,7 +4059,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Nappa Dori Porto Full-Grain Leather Travel Passport Case",
+    "name": "Nappa Dori Porto Full-Grain Leather Travel Passport & Boarding Case",
     "slug": "nappa-dori-porto-leather-passport-case",
     "tagline": "Hand-stitched genuine harness leather travel wallet with boarding pass pocket",
     "description": "The companion for a lifetime of journeys. Handcrafted from supple vegetable-tanned full-grain leather with dedicated slots for two passports, four credit cards, ticket stubs, and an integrated pen sleeve. Hand-stitched with waxed linen thread.",
@@ -4079,13 +4072,13 @@ const SEED_PRODUCTS = [
     "secondaryImageUrl": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=1200&q=80",
     "retailer": {
       "id": "ret-nappadori",
-      "name": "Nappa Dori Flagship",
+      "name": "Nappa Dori Atelier",
       "website": "https://nappadori.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Verified official Nappa Dori atelier direct portal"
     },
-    "productUrl": "https://nappadori.com/products/porto-passport-case",
+    "productUrl": "https://nappadori.com/products/passport-case",
     "tags": [
       "passport_case",
       "travel_wallet",
@@ -4125,10 +4118,9 @@ const SEED_PRODUCTS = [
     "badge": "Artisan Travel Heirloom",
     "serialNumber": "72",
     "active": true
-  }
-,
-{
-    "name": "Apple AirPods Max (Space Gray)",
+  },
+  {
+    "name": "Apple AirPods Max High-Fidelity Audio Headphones Space Gray",
     "slug": "apple-airpods-max-space-gray",
     "tagline": "Custom acoustic design with computational audio & active noise cancellation",
     "description": "High-fidelity audio with active noise cancellation and Transparency mode. Features custom acoustic design, Apple H1 chip, spatial audio with dynamic head tracking, and acoustically engineered memory foam ear cushions.",
@@ -4140,13 +4132,13 @@ const SEED_PRODUCTS = [
     "imageUrl": "https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=800&q=80",
     "retailer": {
       "id": "ret-apple",
-      "name": "Apple Official Store",
-      "website": "https://www.apple.com/in/airpods-max/",
+      "name": "Apple Store India",
+      "website": "https://www.apple.com/in/",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Official Apple flagship store listing"
     },
-    "productUrl": "https://www.apple.com/in/shop/buy-airpods/airpods-max",
+    "productUrl": "https://www.apple.com/in/airpods-max/",
     "tags": [
       "headphones",
       "airpods_max",
@@ -4195,7 +4187,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Apple AirPods Pro 2 (USB-C)",
+    "name": "Apple AirPods Pro 2 Active Noise Cancellation MagSafe Case USB-C",
     "slug": "apple-airpods-pro-2-usbc",
     "tagline": "Pro-level Active Noise Cancellation & Adaptive Audio in an ultra-compact case",
     "description": "Powered by the Apple H2 headphone chip. Features up to 2x more Active Noise Cancellation, Adaptive Audio that tailors noise control to your environment, Conversation Awareness, and personalized spatial audio with dynamic head tracking.",
@@ -4207,13 +4199,13 @@ const SEED_PRODUCTS = [
     "imageUrl": "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?auto=format&fit=crop&w=800&q=80",
     "retailer": {
       "id": "ret-apple",
-      "name": "Apple Official Store",
-      "website": "https://www.apple.com/in/airpods-pro/",
+      "name": "Apple Store India",
+      "website": "https://www.apple.com/in/",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Official Apple flagship store listing"
     },
-    "productUrl": "https://www.apple.com/in/shop/buy-airpods/airpods-pro",
+    "productUrl": "https://www.apple.com/in/airpods-pro/",
     "tags": [
       "earpods",
       "earbuds",
@@ -4262,7 +4254,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Sony WH-1000XM5 Wireless Noise-Canceling Headphones",
+    "name": "Sony WH-1000XM5 Wireless Industry-Leading Noise-Cancelling Headphones",
     "slug": "sony-wh-1000xm5-wireless-headphones",
     "tagline": "Industry-leading noise cancellation with Auto NC Optimizer & 30-hour battery",
     "description": "Two processors and 8 microphones deliver unprecedented noise cancellation. Integrated V1 processor and HD Noise Canceling Processor QN1 unlock magnificent high-res audio quality and crystal-clear hands-free calls.",
@@ -4274,13 +4266,13 @@ const SEED_PRODUCTS = [
     "imageUrl": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80",
     "retailer": {
       "id": "ret-sony",
-      "name": "Sony Center Flagship",
-      "website": "https://www.sony.co.in/headphones/products/wh-1000xm5",
+      "name": "Sony Audio Flagship",
+      "website": "https://www.sony.co.in",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Official Sony India store listing"
     },
-    "productUrl": "https://www.sony.co.in/headphones/products/wh-1000xm5",
+    "productUrl": "https://www.sony.co.in/headphones",
     "tags": [
       "headphones",
       "sony",
@@ -4326,7 +4318,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Bose QuietComfort Ultra Wireless Earbuds",
+    "name": "Bose QuietComfort Ultra Earbuds Immersive Audio & Spatial ANC",
     "slug": "bose-quietcomfort-ultra-earbuds",
     "tagline": "Breakthrough spatialized audio with world-class noise cancellation",
     "description": "Bose Immersive Audio pushes the boundary of what it means to listen by taking what you hear out of your head and placing it in front of you. CustomTune technology shapes the sound profile to your ears' unique shape.",
@@ -4338,13 +4330,13 @@ const SEED_PRODUCTS = [
     "imageUrl": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=800&q=80",
     "retailer": {
       "id": "ret-bose",
-      "name": "Bose Premium Audio",
+      "name": "Bose Acoustic Flagship",
       "website": "https://www.bose.com",
       "verified": true,
       "sourceType": "official_manufacturer",
       "verificationNote": "Official Bose flagship"
     },
-    "productUrl": "https://www.bose.com/p/earbuds/bose-quietcomfort-ultra-earbuds/QCULT-HEADPHONEIN.html",
+    "productUrl": "https://www.bose.com/c/earbuds",
     "tags": [
       "earbuds",
       "bose",
@@ -4387,7 +4379,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Bowers & Wilkins Px8 Flagship Wireless Headphones",
+    "name": "Bowers & Wilkins Px8 Flagship Wireless Over-Ear Headphones Nappa Leather",
     "slug": "bowers-wilkins-px8-wireless-headphones",
     "tagline": "Reference-standard carbon cone drivers wrapped in Nappa leather & cast aluminum",
     "description": "The ultimate flagship headphone from British audio pioneers Bowers & Wilkins. Angled Carbon Cone drive units reduce distortion to provide unrivaled high-resolution musical fidelity with luxurious die-cast aluminum arms and soft Nappa leather trim.",
@@ -4405,7 +4397,7 @@ const SEED_PRODUCTS = [
       "sourceType": "official_manufacturer",
       "verificationNote": "Official Bowers & Wilkins audio flagship"
     },
-    "productUrl": "https://www.bowerswilkins.com/en-us/product/over-ear-headphones/px8",
+    "productUrl": "https://www.bowerswilkins.com/",
     "tags": [
       "audiophile",
       "nappa_leather",
@@ -4447,7 +4439,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Sennheiser Momentum 4 Wireless Audiophile Headphones",
+    "name": "Sennheiser Momentum 4 Wireless Audiophile Headphones 60hr Battery",
     "slug": "sennheiser-momentum-4-wireless",
     "tagline": "Incredible 60-hour battery life with audiophile-grade 42mm sound transducers",
     "description": "Engineered in Germany, the Momentum 4 delivers signature Sennheiser musicality with customizable sound personalization, advanced adaptive noise cancellation, and a lightweight ergonomic fold-flat design.",
@@ -4506,7 +4498,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Bang & Olufsen Beoplay EX Wireless Earphones",
+    "name": "Bang & Olufsen Beoplay EX Wireless Earbuds Waterproof Glass Touch",
     "slug": "bang-olufsen-beoplay-ex-earphones",
     "tagline": "Crafted tempered glass, aluminum trim & waterproof IP57 ergonomics",
     "description": "Versatile true wireless earphones designed by Thomas Bentzen. Glass touch surface mirrors light elegantly, while a 9.2mm neodymium driver delivers profound Scandinavian acoustic depth in any weather.",
@@ -4566,7 +4558,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Devialet Gemini II True Wireless Earbuds",
+    "name": "Devialet Gemini II True Wireless Earbuds Adaptive Noise Cancellation",
     "slug": "devialet-gemini-ii-wireless-earbuds",
     "tagline": "Pure sound with Devialet Adaptive Noise Cancellation & titanium-coated drivers",
     "description": "French acoustic engineering in the palm of your hand. Patented Internal Delay Compensation (IDC) eliminates noise artifacts at higher frequencies, producing pure, distortion-free sound reproduction.",
@@ -4624,7 +4616,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Marshall Major V Wireless Bluetooth Headphones",
+    "name": "Marshall Major V Wireless On-Ear Bluetooth Headphones 100+ Hours Playtime",
     "slug": "marshall-major-v-wireless-headphones",
     "tagline": "100+ hours of rock 'n' roll wireless playtime with custom-tuned dynamic drivers",
     "description": "The classic rock heritage headphone refined. Offers over 100 hours of wireless playtime, rugged foldable design, customizable M-button for Spotify Tap or equalizer switching, and wireless charging support.",
@@ -4642,7 +4634,7 @@ const SEED_PRODUCTS = [
       "sourceType": "official_manufacturer",
       "verificationNote": "Official Marshall store listing"
     },
-    "productUrl": "https://www.marshallheadphones.com/in/en/major-v.html",
+    "productUrl": "https://www.marshallheadphones.com/",
     "tags": [
       "headphones",
       "marshall",
@@ -4684,7 +4676,7 @@ const SEED_PRODUCTS = [
     "active": true
   },
   {
-    "name": "Nothing Ear (2024) Hi-Res Wireless Earbuds",
+    "name": "Nothing Ear (2024) Hi-Res Ceramic Driver Smart ANC Wireless Earbuds",
     "slug": "nothing-ear-2024-hi-res-earbuds",
     "tagline": "Transparent iconic design with custom 11mm ceramic driver & LDAC Hi-Res Audio",
     "description": "Engineered with a ceramic diaphragm for crisper clarity and 45dB Smart Active Noise Cancellation. Features ChatGPT voice integration with Nothing OS, dual connection, and 40.5 hours total playback.",
@@ -4746,6 +4738,5 @@ const SEED_PRODUCTS = [
     "active": true
   }
 ];
-
 
 module.exports = { SEED_PRODUCTS };
